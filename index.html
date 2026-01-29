@@ -1,0 +1,2935 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VALTERA</title>
+  <link rel="icon" href="assets/FavIcon/more-rounded-bottom.png" type="image/png">
+  <link rel="alternate icon" href="assets/FavIcon/more-rounded-bottom.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Poppins:wght@400;500;600;700;800&amp;family=Nunito:wght@400;500;600;700;800&amp;family=Nunito+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #b8c6d4 100%);
+      background-attachment: fixed;
+      color: #333;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-blue: #2ba7fc;
+      --bright-blue: #46affa;
+      --dark-gray: #292929;
+      --light-gray: #f5f5f5;
+    }
+
+    /* Font Classes */
+    .brand-font {
+      font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 700;
+    }
+
+    .content-font {
+      font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 500;
+    }
+    
+    .special-section-font {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Article Page Styles */
+    #articlePage {
+      display: none;
+      width: 100%;
+      min-height: 100%;
+      background: linear-gradient(135deg, #f8f9fa 0%, #b8c6d4 100%);
+      background-attachment: fixed;
+    }
+
+    #homePage {
+      display: block;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #2ba7fc;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 1.08rem 3rem; /* subtle increase to make navbar just a little thicker */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 2.03rem; /* subtle increase to match slightly thicker navbar */
+      font-weight: 900;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-cta-btn {
+      color: #2ba7fc !important;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      background-color: white;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 15px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-cta-btn:hover {
+      background-color: #111827 !important;
+      color: white !important;
+      box-shadow: 0 6px 20px 0 rgba(17, 24, 39, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-menu a:hover {
+      background: #f5f5f5;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+    }
+
+    .hamburger {
+      width: 30px;
+      height: 24px;
+      position: relative;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background: white;
+      border-radius: 3px;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: 0.25s ease-in-out;
+    }
+
+    .hamburger-top {
+      top: 0;
+    }
+
+    .hamburger-middle {
+      top: 10px;
+    }
+
+    .hamburger-bottom {
+      top: 20px;
+    }
+
+    .hamburger.open .hamburger-top {
+      top: 10px;
+      transform: rotate(135deg);
+    }
+
+    .hamburger.open .hamburger-middle {
+      opacity: 0;
+      left: -60px;
+    }
+
+    .hamburger.open .hamburger-bottom {
+      top: 10px;
+      transform: rotate(-135deg);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 99;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .mobile-menu.active {
+      max-height: 500px;
+    }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--dark-gray);
+      font-weight: 500;
+    }
+
+    /* Article Styles */
+    .article-hero {
+      background: linear-gradient(135deg, #2ba7fc 0%, #1e8fd9 100%);
+      padding: 8rem 2rem 4rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .article-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .article-hero p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .article-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .toc-sidebar {
+      position: sticky;
+      top: 120px;
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .toc-title {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--dark-gray);
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .toc-item {
+      margin-bottom: 0.75rem;
+    }
+
+    .toc-link {
+      text-decoration: none;
+      color: #666;
+      transition: all 0.3s ease;
+      display: block;
+      padding: 0.5rem 0;
+      border-left: 3px solid transparent;
+      padding-left: 0.75rem;
+    }
+
+    .toc-link:hover {
+      color: var(--primary-blue);
+    }
+
+    .toc-link.active {
+      color: var(--primary-blue);
+      font-weight: 600;
+      border-left-color: var(--primary-blue);
+    }
+
+    .article-content {
+      background: white;
+      border-radius: 12px;
+      padding: 3rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .article-section {
+      margin-bottom: 3rem;
+    }
+
+    .article-section h2 {
+      font-size: 2rem;
+      color: var(--dark-gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .article-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-section ul {
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+
+    .article-section li {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: 10rem 2rem 4rem 2rem;
+      background: transparent;
+      min-height: 100%;
+      overflow: visible;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* background logo removed */
+
+    .fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .floating {
+      animation: floatUpDown 5s ease-in-out infinite;
+    }
+
+    /* Scene Card */
+    .scene-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Dropdown Styles */
+    .custom-dropdown {
+      position: relative;
+    }
+
+    .dropdown-button {
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .dropdown-button:hover {
+      border-color: var(--primary-blue);
+    }
+
+    .dropdown-menu {
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .dropdown-option:hover {
+      background: #f5f5f5;
+    }
+
+    .dropdown-option.selected {
+      background: #e8f4fd;
+    }
+
+    .dropdown-option.selected .checkmark {
+      display: block !important;
+    }
+
+    /* View Toggle Buttons */
+    .view-toggle-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      padding: 0 2rem;
+    }
+
+    .view-toggle-btn {
+      background: white;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .view-toggle-btn:hover {
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    .view-toggle-btn.active {
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
+      color: white;
+    }
+
+    /* Lenders Section */
+    #lenders {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .lenders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .lenders-grid.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .lender-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .lender-card button {
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc);
+      background-size: 200% auto;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4);
+      border-radius: 9999px;
+    }
+
+    .lender-card button:hover {
+      background-color: #111827 !important;
+      background-image: none !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px 0 rgba(17, 24, 39, 0.4) !important;
+    }
+
+    /* Features Section */
+    .section {
+      width: 100%;
+    }
+
+    .section-title {
+      text-align: center;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .mission-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(43, 167, 252, 0.25) !important;
+    }
+
+    .energetic-text {
+      color: var(--primary-blue);
+    }
+
+    /* Footer */
+    .footer {
+      background: #292929;
+      padding: 3rem 2rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .footer-tagline {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #666;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-blue) !important;
+    }
+
+    .footer-divider {
+      height: 1px;
+      margin: 2rem 0;
+    }
+
+    .footer-copyright {
+      font-size: 0.9rem;
+    }
+
+    .footer-connect-box {
+      background: white;
+      padding: 3rem;
+      margin: 0 auto 3rem auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .connect-btn {
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 9999px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc);
+      background-size: 200% auto;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4);
+      font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .connect-btn:hover {
+      background-color: #111827;
+      background-image: none;
+      box-shadow: 0 6px 20px 0 rgba(17, 24, 39, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Mission Content Section */
+    .mission-content-section {
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      max-width: 1000px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+      margin: auto;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #666;
+      transition: color 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      color: #2ba7fc;
+      background: #f5f5f5;
+    }
+
+    @media (max-width: 768px) {
+      .modal-overlay {
+        padding: 0;
+        align-items: flex-start;
+      }
+
+      .modal-content {
+        border-radius: 0;
+        padding: 1.5rem 1rem;
+        max-height: 100vh;
+        height: 100%;
+        margin: 0;
+        width: 100%;
+      }
+
+      .modal-close {
+        top: 1rem;
+        right: 1rem;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    /* Lender modal header spacing: move logo down a bit on small screens */
+    .lender-modal-header {
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      #lenderModal .lender-modal-header {
+        margin-top: 1.5rem; /* push lender logo lower on mobile */
+      }
+    }
+
+    .loan-officer-card {
+      background: #f3f4f6;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .loan-officer-photo {
+      width: 144px !important;
+      height: 144px !important;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .loan-officer-photo img {
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      display: block !important;
+      cursor: pointer !important;
+    }
+
+    /* Hover effect: blue ring around photo */
+    .loan-officer-photo img {
+      transition: box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    .loan-officer-photo img:hover {
+      box-shadow: 0 0 0 2px #2ba7fc;
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 767px) {
+      .loan-officer-photo {
+        width: 173px !important;
+        height: 173px !important;
+      }
+    }
+
+    /* Ensure officer names in modal stay on a single line unless space allows; increase width so full names show */
+    #lenderModal .loan-officer-header .loan-officer-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+      text-align: center;
+    }
+
+    @media (max-width: 767px) {
+      #lenderModal .loan-officer-header .loan-officer-name {
+        max-width: 120px;
+      }
+    }
+
+    .loan-officer-card:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .loan-officer-name {
+      font-size: 1.125rem;
+      font-weight: 800;
+      color: #111827;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .loan-officer-name:hover {
+      color: #2ba7fc;
+    }
+
+    .loan-officer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.875rem; /* match bio paragraph */
+      font-weight: 400;
+    }
+
+    .contact-item {
+      display: block;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item.phone {
+      color: #2ba7fc;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+
+    .contact-item.phone:hover {
+      color: #000000;
+      text-decoration: underline;
+    }
+
+    .contact-item.email {
+      color: #2ba7fc;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+
+    .contact-item.email:hover {
+      color: #000000;
+      text-decoration: underline;
+    }
+
+    .contact-item.nmls {
+      color: #6b7280;
+      font-size: 0.875rem;
+      font-weight: 400;
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 767px) {
+      /* Mobile: add a thin grey stripe under the NMLS line */
+      #lenderModal .contact-item.nmls {
+        border-bottom: 2px solid #6b7280; /* grey pin stripe */
+        padding-bottom: 0.2rem;
+        margin-bottom: 0.5rem; /* a little bit of space between stripe and bio */
+      }
+    }
+
+    .bio-wrapper {
+      position: relative;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bio-content {
+      transition: max-height 0.4s ease-out;
+      overflow: hidden;
+      position: relative;
+      font-size: 0.875rem;
+      color: #4b5563;
+      line-height: 1.6;
+      width: 100%;
+    }
+
+    /* Bio text inside modal: left-align text so left edges line up, but constrict width for consistent layout */
+    #lenderModal .loan-officer-card .bio-content {
+      text-align: left;
+      max-width: 520px;
+      margin: 0; /* keep block positioned by .bio-wrapper so left edge aligns across cards */
+    }
+
+    .bio-content.collapsed {
+      max-height: 6rem;
+    }
+
+    .bio-content.collapsed::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2.5rem;
+      background: linear-gradient(to bottom, transparent, #f3f4f6);
+      pointer-events: none;
+    }
+
+    .arrow-icon {
+      transition: transform 0.3s ease;
+      width: 20px;
+      height: 20px;
+      color: #2ba7fc;
+      margin-top: 0.25rem;
+    }
+
+    .bio-wrapper.expanded .arrow-icon {
+      transform: rotate(180deg);
+    }
+
+    .arrow-container {
+      display: flex;
+      justify-content: center;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .bio-wrapper:hover .arrow-container {
+      opacity: 1;
+    }
+
+    @media (min-width: 768px) {
+      .loan-officer-card {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .loan-officer-header {
+        width: 16.666667%;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .bio-wrapper {
+        width: 50%;
+        padding: 0 1rem;
+      }
+
+      .loan-officer-contact {
+        width: 33.333333%;
+        flex-shrink: 0;
+        align-items: flex-end;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .loan-officer-card {
+        padding: 0.75rem; /* tighten vertical padding */
+        gap: 0.25rem; /* reduce spacing between sections */
+        flex-direction: column;
+      }
+
+      .loan-officer-name {
+        font-size: 1.5rem;
+        width: 100%;
+        order: 1;
+        color: #2ba7fc;
+        text-align: center;
+        font-weight: 800;
+        margin-top: 0; /* remove space above name */
+        margin-bottom: 0; /* remove space between name and contact */
+        padding-bottom: 0;
+      }
+
+      .loan-officer-contact {
+        width: 100%;
+        align-items: center; /* center align contact info on mobile */
+        order: 2;
+        text-align: center;
+        gap: 0.125rem; /* slightly increased spacing between phone / email / NMLS */
+      }
+
+      .loan-officer-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* center photo and name */
+        gap: 0; /* remove gap between photo and name */
+      }
+
+      .loan-officer-photo {
+        margin: 0 auto; /* center the photo container */
+        margin-bottom: 0; /* remove extra space below photo */
+      }
+
+      /* Slightly increased contact line-height for readability on mobile */
+      #lenderModal .contact-item {
+        line-height: 1.05; /* small increase */
+      }
+
+      .bio-wrapper {
+        width: 100%;
+        order: 3;
+      }
+
+      .contact-item.phone {
+        font-size: 1.125rem; /* slightly larger on mobile */
+        font-weight: 600;
+      }
+
+      .contact-item.email {
+        font-size: 1.125rem; /* slightly larger on mobile */
+        font-weight: 600;
+      }
+
+      /* Make NMLS slightly smaller on mobile */
+      .contact-item.nmls {
+        font-size: 0.75rem;
+      }
+
+      .bio-content {
+        font-size: 0.8rem;
+      }
+
+      /* Allow specific long names (e.g., Stephanie Bevard) to wrap on mobile */
+      .full-name-mobile {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        max-width: none !important;
+        display: inline-block;
+      }
+
+      /* Let all loan-officer names wrap on mobile (prevent truncation) */
+      #lenderModal .loan-officer-header .loan-officer-name {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        max-width: none !important;
+        text-align: center;
+        font-weight: 800 !important;
+        color: #000000 !important;
+      }
+
+      .bio-content.collapsed {
+        max-height: 5rem;
+      }
+
+      .arrow-icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.7rem 1.7rem 0.7rem 2rem; /* tiny extra right padding on mobile to nudge buttons barely left */
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .article-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .toc-sidebar {
+        position: static;
+      }
+
+      .article-hero h1 {
+        font-size: 2rem;
+      }
+
+      .article-hero p {
+        font-size: 1.1rem;
+      }
+
+      .article-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .hero {
+        padding: 7rem 1rem 2rem 1rem;
+      }
+
+      /* giant logo removed */
+
+      .hero h1 {
+        font-size: 1.9rem !important;
+        line-height: 1.15 !important;
+        letter-spacing: -0.01em; 
+        margin-bottom: 0.6rem !important;
+      }
+
+      .hero p {
+        font-size: 0.90rem !important;
+        line-height: 1.35 !important;
+        margin-bottom: 1rem !important;
+        color: #666 !important;
+        max-width: 36ch !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      /* Slightly smaller first line in hero on mobile */
+      .hero-subline {
+        font-size: 0.82rem !important;
+        line-height: 1.25 !important;
+        display: inline-block;
+      }
+
+      .hero-text {
+        padding: 0 1rem !important;
+        max-width: 100% !important;
+      }
+
+      /* Tighter scene card on small screens */
+      .scene-card, #sceneCard {
+        padding: 1rem 1rem !important;
+      }
+
+      .scene-card {
+        padding: 1.5rem 1rem;
+      }
+
+      #sceneCard {
+        padding: 2rem 1rem !important;
+      }
+
+      #sceneCard h3 {
+        font-size: 1.5rem !important;
+        margin-bottom: 1.5rem !important;
+      }
+
+      .footer-connect-box {
+        padding: 2rem 1.5rem !important;
+        margin-top: 4rem !important;
+      }
+
+      .footer-connect-box h2 {
+        font-size: 1.5rem !important;
+      }
+
+      .footer-connect-box p {
+        font-size: 1rem !important;
+      }
+
+      .connect-btn {
+        padding: 0.875rem 1.5rem !important;
+        font-size: 0.9rem !important;
+      }
+
+      .footer-logo {
+        font-size: 1.5rem !important;
+      }
+
+      .footer-tagline {
+        font-size: 0.9rem !important;
+      }
+
+      .footer-links {
+        flex-direction: column !important;
+        gap: 1rem !important;
+      }
+
+      .footer-copyright {
+        font-size: 0.85rem !important;
+      }
+
+      .lenders-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mission-content-section {
+        padding: 2rem 1rem !important;
+        margin-top: 4rem !important;
+      }
+
+      .mission-content-section h2 {
+        font-size: 2rem !important;
+        margin-bottom: 2rem !important;
+      }
+
+      .mission-title {
+        font-size: 2rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 1.5rem !important;
+        text-align: left !important;
+      }
+
+      .mission-box {
+        text-align: center !important;
+        padding: 1.5rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+      }
+
+      .mission-box h3 {
+        font-size: 1.25rem !important;
+      }
+
+      .mission-box p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+      }
+
+      .features-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        align-items: stretch !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+
+      .mission-box > div:first-child {
+        width: 60px !important;
+        height: 60px !important;
+        margin-bottom: 1rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .mission-box svg {
+        width: 32px !important;
+        height: 32px !important;
+      }
+
+      .mission-content-section > div:last-child {
+        padding: 2rem 1.5rem !important;
+        border-radius: 20px !important;
+      }
+
+      .mission-flex-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        margin-bottom: 0 !important;
+        grid-template-columns: none !important;
+      }
+
+      .mission-svg-container {
+        flex: 1 !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        padding-top: 0.5rem !important;
+      }
+
+      .mission-text {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        text-align: left !important;
+        max-width: 100% !important;
+      }
+
+      .fade-in {
+        padding: 1.5rem !important;
+      }
+
+      .mission-content-section .special-section-font p {
+        font-size: 1.4rem !important;
+        line-height: 1.6 !important;
+      }
+
+      .mission-simple-box {
+        padding: 1.5rem !important;
+        margin: 1.5rem 0 !important;
+      }
+
+      .mission-simple-box p {
+        font-size: 1.1rem !important;
+        line-height: 1.5 !important;
+      }
+
+      .empowering-buyer-box {
+        padding: 1.5rem !important;
+        max-width: 100% !important;
+      }
+
+      .empowering-buyer-box h4 {
+        font-size: 1.25rem !important;
+        line-height: 1.4 !important;
+      }
+
+      .mission-content-section .special-section-font h3 {
+        font-size: 1.5rem !important;
+        margin-bottom: 1rem !important;
+      }
+
+      .mission-content-section .special-section-font h4 {
+        font-size: 1.25rem !important;
+      }
+
+      .mission-content-section .special-section-font p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+      }
+
+      #missionSceneCard {
+        padding: 0.5rem !important;
+      }
+
+      #missionSceneCard svg {
+        max-width: 280px !important;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Article Page -->
+  <div id="articlePage"><!-- Navbar for Article Page -->
+  <nav class="navbar"><a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" class="logo brand-font">VALTERA</a>
+   <ul class="nav-links content-font">
+   <li><a href="javascript:void(0)" onclick="articleNavPartnerHandler()">Partner With Us</a></li>
+     <li class="nav-dropdown"><a href="javascript:void(0)" onclick="toggleResultsDropdownArticle()" style="display: flex; align-items: center; gap: 0.5rem;"> Resources 
+       <svg class="nav-dropdown-arrow" id="resultsDropdownArrowArticle" style="width: 16px; height: 16px; transition: transform 0.3s ease;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline>
+       </svg></a>
+      <div class="nav-dropdown-menu" id="resultsDropdownMenuArticle" style="position: absolute; top: calc(100% + 24px); left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; display: none; min-width: 300px; padding: 0.5rem 0;"><a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100); toggleResultsDropdownArticle();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Our Mission</a> <a href="javascript:void(0)" onclick="scrollToTop(); toggleResultsDropdownArticle();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a>
+      </div></li>
+    <li><a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" class="nav-cta-btn">FIND A LENDER</a></li>
+    </ul>
+    <div class="mobile-menu-btn"><button id="mobile-menu-btn-article" class="hamburger focus:outline-none"> <span class="hamburger-top"></span> <span class="hamburger-middle"></span> <span class="hamburger-bottom"></span> </button>
+    </div>
+   </nav><!-- Mobile Menu for Article Page -->
+  <div id="mobile-menu-article" class="mobile-menu" onclick="handleMobileMenuArticleClick(event)">
+  <nav style="width: 100%; padding: 0 0 2rem 0; display: flex; flex-direction: column;"><a href="javascript:void(0)" onclick="closeMobileMenuArticle(); articleNavPartnerHandler()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Partner With Us</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Our Mission</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); scrollToTop()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); navigateToHomePage(); scrollToTop()" style="width: calc(100% - 4rem); padding: 1rem 2.5rem; margin: 0.5rem 2rem 0 2rem; border-radius: 9999px; text-align: center; display: block; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; color: white; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); transition: all 0.3s ease-in-out;">FIND A LENDER</a>
+  </nav>
+   </div><!-- Article Hero -->
+   <section class="article-hero" style="background: #2ba7fc;">
+    <h1 class="brand-font">Understanding RESPA, ABAs, and Consumer Protection</h1>
+    <p class="content-font">How Valtera ensures transparency and protects your right to choose</p>
+   </section><!-- Article Container -->
+   <div class="article-container"><!-- Table of Contents -->
+    <aside class="toc-sidebar">
+     <h3 class="toc-title brand-font" style="color: #2ba7fc;">Table of Contents</h3>
+     <div style="height: 1px; background: #ddd; margin: 1rem 0;"></div>
+     <ul class="toc-list">
+      <li class="toc-item"><a id="toc-link-respa" href="javascript:void(0)" onclick="scrollToRespa()" class="toc-link content-font">What is RESPA?</a></li>
+      <li class="toc-item"><a id="toc-link-aba" href="javascript:void(0)" onclick="scrollToABA()" class="toc-link content-font">What Is an ABA?</a></li>
+      <li class="toc-item"><a id="toc-link-market" href="javascript:void(0)" onclick="scrollToMarket()" class="toc-link content-font">What's Happening in the Market</a></li>
+      <li class="toc-item"><a id="toc-link-risk" href="javascript:void(0)" onclick="scrollToRisk()" class="toc-link content-font">Why ABAs Are at Risk</a></li>
+      <li class="toc-item"><a id="toc-link-commitment" href="javascript:void(0)" onclick="scrollToCommitment()" class="toc-link content-font">Our Commitment</a></li>
+     </ul>
+    </aside><!-- Article Content -->
+    <main class="article-content">
+     <section id="what-is-respa" class="article-section">
+      <h2 class="brand-font" style="color: #2ba7fc;">What Is the Real Estate Settlement Procedures Act (RESPA)?</h2>
+      <div style="height: 3px; background: #2ba7fc; width: 100%; margin: 1rem 0 1.5rem 0; border-radius: 2px;"></div>
+      <p class="content-font">The <strong style="color: black;">Real Estate Settlement Procedures Act (RESPA)</strong> is a federal consumer protection law that requires clear disclosure of all mortgage costs and prohibits kickbacks or unearned fees in exchange for referrals of real estate settlement services, to help consumers make informed choices and reduce closing costs.</p>
+     </section>
+     <section id="affiliated-business" class="article-section">
+      <h2 class="brand-font" style="color: #2ba7fc;">What Is an Affiliated Business Arrangement (ABA)?</h2>
+      <div style="height: 3px; background: #2ba7fc; width: 100%; margin: 1rem 0 1.5rem 0; border-radius: 2px;"></div>
+      <p class="content-font"><strong style="color: black;">Affiliated Business Arrangement (ABA)</strong> occurs when a real estate brokerage, agent, or related professional has a formal ownership or financial connection with another service provider—such as a mortgage lender, title company, or insurance agency.</p>
+      <p class="content-font">In these relationships, the brokerage may refer clients to the affiliated business for convenience or as part of a preferred service package. Federal law allows these relationships under RESPA, as long as the connection is clearly disclosed through an ABA disclosure statement and consumers are free to shop for other providers.</p>
+     </section>
+     <section id="consumer-protection" class="article-section">
+      <h2 class="brand-font" style="color: #2ba7fc;">What's Happening in the Market Right Now</h2>
+      <div style="height: 3px; background: #2ba7fc; width: 100%; margin: 1rem 0 1.5rem 0; border-radius: 2px;"></div>
+      <p class="content-font">Today's real estate and mortgage market is seeing increased scrutiny around ABAs. Regulators and industry observers have expressed concern that some affiliated arrangements may limit competition or steer consumers toward one specific lender, potentially reducing access to better rates or terms elsewhere.</p>
+      <p class="content-font">As the market evolves, brokerages with ABAs are under more pressure to prove they are acting in the consumer’s best interest—not simply channeling business to an affiliated partner. This shift is driving demand for <strong style="color: black;">greater transparency, lender choice, and independent verification</strong> of how consumers are connected to financial services.</p>
+     </section>
+     <section id="abas-at-risk" class="article-section">
+      <h2 class="brand-font" style="color: #2ba7fc;">Why ABAs Are at Risk—and How We Help Mitigate That Risk</h2>
+      <div style="height: 3px; background: #2ba7fc; width: 100%; margin: 1rem 0 1.5rem 0; border-radius: 2px;"></div>
+      <p class="content-font">ABAs face increasing risk as regulators and consumers challenge practices that appear to "push" one lender over others. When a single lender is promoted too aggressively, it can create concerns about fairness, market competition, and compliance.</p>
+      <div style="background: white; border-radius: 12px; padding: 2rem; margin: 2rem 0; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+       <p class="content-font" style="margin-bottom: 1rem;">Our approach helps <strong style="color: black;">lessen that risk</strong> by:</p>
+       <ul class="content-font" style="list-style-type: disc; padding-left: 2rem;">
+        <li style="margin-bottom: 0.75rem;"><strong style="color: black;">Encouraging multiple lender options</strong> for every client to preserve the consumer's lending choice.</li>
+        <li style="margin-bottom: 0.75rem;"><strong style="color: black;">Providing tools and visibility</strong> that make lender choice transparent and trackable.</li>
+        <li style="margin-bottom: 0.75rem;"><strong style="color: black;">Train Real Estate Agents</strong> to uphold RESPA compliance by ensuring consumers maintain full autonomy of choice—supported by the presentation of at least three to five lender options.</li>
+       </ul>
+      </div>
+      <div style="background: #f0f4f8; border-left: 4px solid #2ba7fc; border-radius: 0 12px 12px 0; padding: 1.5rem 2rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);">
+       <p class="content-font" style="color: #333333; font-size: 1.1rem; line-height: 1.8; margin: 0;">By empowering brokerages and consumers alike, our goal is to safeguard what matters most: <strong style="color: #000000;">trust, compliance, and consumer choice,</strong> so that consumers have the best lending choice available.</p>
+      </div>
+     </section>
+     <section id="valtera-commitment" class="article-section">
+      <h2 class="brand-font" style="color: #2ba7fc;">Our Commitment: Supporting Choice—No Matter the Structure</h2>
+      <div style="height: 3px; background: #2ba7fc; width: 100%; margin: 1rem 0 1.5rem 0; border-radius: 2px;"></div>
+      <div style="background: #2ba7fc; border-radius: 20px; padding: 2rem; margin: 2rem 0;">
+       <h4 class="brand-font" style="color: white; font-size: 1.4rem; font-weight: 700; margin: 0 0 1rem 0;">Our Commitment</h4>
+       <p class="content-font" style="color: white; margin: 0;">Whether a real estate brokerage or lender that operates within an ABA or not, <strong style="color: white;">our mission is to protect the customer's right to choose.</strong> We believe buyers should always have access to a range of qualified lenders so they can compare options and make confident, informed decisions.</p>
+      </div>
+      <p class="content-font">We work with real estate brokerages and lenders of all types to ensure that transparency and consumer choice remain at the center of the process. Our platform bridges the gap—making it simple for real estate brokerages and lenders to demonstrate integrity and for buyers to explore multiple lending options with clarity and confidence. The result is a stronger, more transparent and cost-effective lending experience that empowers consumers to secure a loan that truly fits their needs.</p>
+     </section>
+    </main>
+   </div><!-- Footer -->
+  <footer id="connect-article" class="footer" style="background: transparent; margin-top: 4rem;">
+   <div class="footer-content" style="margin-top: 4rem;">
+    <div class="footer-logo brand-font" onclick="navigateToHomePage(); scrollToTop()" style="color: white; cursor: pointer;">
+    VALTERA
+    </div>
+    <p class="footer-tagline content-font" style="color: white; margin-top: -0.5rem;">Connecting Buyers With Quality Lenders</p>
+   <div class="footer-links content-font"><a href="javascript:void(0)" onclick="navigateHomeThenAlignStripe()" style="color: white;">Partner With Us</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="color: white;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" style="color: white;">Find A Lender</a>
+    </div>
+    <div class="footer-divider" style="background: linear-gradient(90deg, transparent, white, transparent);"></div>
+    <p class="footer-copyright content-font" style="color: white; margin-bottom: 3rem;">© 2026 Valtera. All rights reserved.</p>
+   </div>
+  </footer>
+  </div><!-- Main Home Page -->
+  <div id="homePage"><!-- Navbar -->
+  <nav class="navbar"><a href="javascript:void(0)" onclick="closeMobileMenu(); navigateToHomePage(); scrollToTop()" class="logo brand-font">VALTERA</a>
+    <ul class="nav-links content-font">
+    <li><a href="javascript:void(0)" onclick="goToPartner()">Partner With Us</a></li>
+     <li class="nav-dropdown"><a href="javascript:void(0)" onclick="toggleResultsDropdown()" style="display: flex; align-items: center; gap: 0.5rem;"> Resources 
+       <svg class="nav-dropdown-arrow" id="resultsDropdownArrow" style="width: 16px; height: 16px; transition: transform 0.3s ease;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline>
+       </svg></a>
+      <div class="nav-dropdown-menu" id="resultsDropdownMenu" style="position: absolute; top: calc(100% + 24px); left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; display: none; min-width: 300px; padding: 0.5rem 0;"><a href="javascript:void(0)" onclick="scrollToSection('mission-content'); toggleResultsDropdown();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToRespaPage(); toggleResultsDropdown();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a>
+      </div></li>
+    <li><a href="javascript:void(0)" onclick="goToHeroWithPadding()" class="nav-cta-btn">FIND A LENDER</a></li>
+    </ul>
+    <div class="mobile-menu-btn"><button id="mobile-menu-btn" class="hamburger focus:outline-none"> <span class="hamburger-top"></span> <span class="hamburger-middle"></span> <span class="hamburger-bottom"></span> </button>
+    </div>
+   </nav><!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu" onclick="handleMobileMenuClick(event)">
+  <nav style="width: 100%; padding: 0 0 2rem 0; display: flex; flex-direction: column;"><a href="javascript:void(0)" onclick="closeMobileMenu(); goToPartner()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Partner With Us</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); scrollToSection('mission-content')" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Our Mission</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); navigateToRespaPage()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); goToHeroWithPadding()" style="width: calc(100% - 4rem); padding: 1rem 2.5rem; margin: 0.5rem 2rem 0 2rem; border-radius: 9999px; text-align: center; display: block; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; color: white; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); transition: all 0.3s ease-in-out;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)'; this.style.transform='translateY(0)';">FIND A LENDER</a>
+   </nav>
+   </div><!-- Hero Section -->
+   <main>
+    <section id="hero" class="hero">
+    <!-- background logo removed -->
+     <div class="hero-content">
+      <div class="hero-text fade-in" style="text-align: center; max-width: 800px; margin: 0 auto;">
+       <h1 class="brand-font" style="font-size: 4rem; text-align: center; margin-top: 0.5rem; font-weight: 900;"><span style="color: black;">Find a Quality Lender</span></h1>
+      <p class="content-font" style="font-size: 1.3rem; color: #666; margin-bottom: 2.5rem; line-height: 1.6;"><span class="hero-subline">Connect with trusted, vetted lenders in your area.</span> <br>
+       We've done the research so you don't have to.</p>
+       <div class="visual" style="margin-top: 3rem;">
+        <div class="scene-card" id="sceneCard" style="max-width: 1200px; padding: 3.33rem 5rem;">
+         <h3 style="color: #2ba7fc; font-weight: 700; letter-spacing: 0.05em; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; text-transform: uppercase; font-size: 2rem; margin-bottom: 2rem;"><strong>Find A Lender</strong></h3>
+         <div class="state-selector">
+          <div class="search-card">
+           <div style="display: flex; gap: 2rem; align-items: center;">
+            <div class="custom-dropdown" style="flex: 1; position: relative;"><button class="dropdown-button modern-select" id="stateButton" onclick="toggleDropdown()" style="width: 100%; text-align: left; background: white; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 0.67rem 1rem; font-size: 1rem; border: 2px solid #ddd; border-radius: 12px; transition: all 0.3s ease; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 600;"> <span id="selectedState" style="font-size: 1.33rem; text-align: left;">Choose a State</span>
+              <svg style="width: 20px; height: 20px; transition: transform 0.3s ease;" id="dropdownArrow" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline>
+              </svg></button>
+             <div class="dropdown-menu" id="dropdownMenu" style="position: absolute; top: 100%; left: 0; right: 0; background: white; border: 2px solid #ddd; border-radius: 8px; z-index: 1000; display: none; max-height: 320px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+              <div class="dropdown-option" id="option-default" onclick="selectState('', 'Choose a State')" style="padding: 0.4rem 0.75rem 0.4rem 1.5rem; cursor: pointer; transition: all 0.2s ease; color: black; display: flex; align-items: center; gap: 0.5em; border-bottom: 1px solid #f0f0f0;">
+               <svg class="checkmark" style="display: none; width: 16px; height: 16px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="#2ba7fc" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20,6 9,17 4,12"></polyline>
+               </svg><span>Choose a State</span>
+              </div><!-- State options will be added via JavaScript -->
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- View Toggle Buttons -->
+    <div class="view-toggle-buttons" id="viewToggleButtons" style="display: none;"><button class="view-toggle-btn active" id="gridViewBtn" onclick="toggleView('grid')">
+      <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1" /> <rect x="14" y="3" width="7" height="7" rx="1" /> <rect x="3" y="14" width="7" height="7" rx="1" /> <rect x="14" y="14" width="7" height="7" rx="1" />
+      </svg></button> <button class="view-toggle-btn" id="listViewBtn" onclick="toggleView('list')">
+      <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor"><rect x="3" y="6" width="18" height="2" rx="1" /> <rect x="3" y="12" width="18" height="2" rx="1" /> <rect x="3" y="18" width="18" height="2" rx="1" />
+      </svg></button>
+    </div><!-- Lenders Section -->
+    <section id="lenders">
+     <div class="lenders-grid" id="lendersGrid"><!-- Lender cards will be dynamically inserted here -->
+     </div>
+    </section><!-- Mission Content Section -->
+    <section id="mission-content" class="mission-content-section" style="margin-top: 8rem; opacity: 0; transform: translateY(50px); transition: opacity 0.8s ease, transform 0.8s ease;">
+     <div class="footer-divider" style="background: linear-gradient(90deg, transparent, black, transparent); width: 100%; height: 1px; margin: 0 0 3rem 0;"></div><!-- Our Mission Title -->
+     <h2 class="brand-font" style="font-size: 3rem; color: #111827; text-align: center; margin-bottom: 3rem; font-weight: 700;">Our Mission</h2><!-- Three Feature Boxes -->
+     <div style="max-width: 1200px; margin: 0 auto 4rem auto; padding: 0 2rem;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;"><!-- Box 1: Quality Assured -->
+       <div class="hover-card mission-box" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; text-align: center; cursor: pointer;">
+        <div style="width: 80px; height: 80px; background: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+         <svg style="width: 44px; height: 44px;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path> <polyline points="22 4 12 14.01 9 11.01"></polyline>
+         </svg>
+        </div>
+        <h3 class="brand-font" style="font-size: 1.5rem; color: #2ba7fc; margin-bottom: 1rem; font-weight: 700;">Quality Assured</h3>
+        <p class="content-font" style="font-size: 1.1rem; line-height: 1.6; color: #666; margin: 0;">We carefully vet every lender to ensure they meet our high standards for service and reliability.</p>
+       </div><!-- Box 2: Informed Expertise -->
+       <div class="hover-card mission-box" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; text-align: center; cursor: pointer;">
+        <div style="width: 80px; height: 80px; background: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+         <svg style="width: 44px; height: 44px;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path> <circle cx="12" cy="10" r="3" />
+         </svg>
+        </div>
+        <h3 class="brand-font" style="font-size: 1.5rem; color: #2ba7fc; margin-bottom: 1rem; font-weight: 700;">Informed Expertise</h3>
+        <p class="content-font" style="font-size: 1.1rem; line-height: 1.6; color: #666; margin: 0;">In addition to the national landscape, our partners understand your local market inside and out, providing insights that make a difference.</p>
+       </div><!-- Box 3: Customer First -->
+       <div class="hover-card mission-box" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; text-align: center; cursor: pointer;">
+        <div style="width: 80px; height: 80px; background: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+         <svg style="width: 44px; height: 44px;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+         </svg>
+        </div>
+        <h3 class="brand-font" style="font-size: 1.5rem; color: #2ba7fc; margin-bottom: 1rem; font-weight: 700;">Customer First</h3>
+        <p class="content-font" style="font-size: 1.1rem; line-height: 1.6; color: #666; margin: 0;">We prioritize your success, connecting you with experienced lenders who offer competitive rates and exceptional service.</p>
+       </div>
+      </div>
+     </div><!-- Mission Content Section -->
+    <div class="fade-in" style="background: white; border-radius: 25px; padding: 3rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); margin-bottom: -4rem;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+       <h1 class="special-section-font mission-title" style="font-size: 4rem; font-weight: 800; margin-bottom: 2rem; line-height: 1.1; text-align: center;"><span style="color: #000000;">Empowering homebuyers with</span> <span style="color: transparent; background: linear-gradient(to right, #000000, #2ba7fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">clarity, choice, and confidence</span></h1>
+      <div class="mission-flex-container" style="max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 1fr 400px; gap: 3rem; align-items: start; margin-bottom: -2rem;">
+       <div>
+         <p class="special-section-font mission-text" style="font-size: 1.4rem; color: #666; line-height: 1.6; text-align: left; margin: 0 0 1.5rem 0; max-width: 36ch;">At Valtera, we believe homebuyers deserve clarity, choice, and confidence when financing their future. Too often, buyers face unnecessary costs, which can equal, on average, an additional <strong style="color: #000000;">$2,300 in upfront expenses</strong>; these additional costs can be avoided by exploring multiple lending options.</p>
+       </div>
+       <div class="mission-svg-container">
+         <div class="visual">
+          <div class="scene-card floating" id="missionSceneCard" style="background: transparent; box-shadow: none; padding: 1rem;">
+           <svg viewbox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%; max-width: 400px; border-radius: 20px;"><defs>
+             <lineargradient id="skyGrad" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#2ba7fc" />
+              <stop offset="100%" stop-color="#0f5086" />
+             </lineargradient>
+             <lineargradient id="grassGrad" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#0b3b61" />
+              <stop offset="100%" stop-color="#05203a" />
+             </lineargradient>
+            </defs> <rect x="0" y="0" width="1200" height="800" fill="url(#skyGrad)" /> <g opacity="0.4" fill="white">
+             <ellipse cx="200" cy="120" rx="90" ry="40" />
+             <ellipse cx="270" cy="130" rx="70" ry="30" />
+             <ellipse cx="880" cy="160" rx="100" ry="45" />
+             <ellipse cx="960" cy="170" rx="80" ry="35" />
+             <ellipse cx="500" cy="100" rx="60" ry="25" />
+             <ellipse cx="750" cy="140" rx="75" ry="35" />
+            </g> <rect x="0" y="500" width="1200" height="300" fill="url(#grassGrad)" /> <g>
+             <rect x="145" y="580" width="15" height="60" fill="#0b3b61" opacity="0.8" />
+             <circle cx="152" cy="580" r="55" fill="#1676b3" opacity="0.9" />
+             <circle cx="140" cy="570" r="40" fill="#2ba7fc" opacity="0.7" />
+             <circle cx="165" cy="575" r="35" fill="#2ba7fc" opacity="0.7" />
+             <circle cx="152" cy="555" r="30" fill="#5dc4ff" opacity="0.6" />
+            </g> <g>
+             <rect x="1045" y="590" width="18" height="70" fill="#0b3b61" opacity="0.8" />
+             <circle cx="1054" cy="590" r="60" fill="#1676b3" opacity="0.9" />
+             <circle cx="1040" cy="580" r="45" fill="#2ba7fc" opacity="0.7" />
+             <circle cx="1070" cy="585" r="40" fill="#2ba7fc" opacity="0.7" />
+             <circle cx="1054" cy="565" r="35" fill="#5dc4ff" opacity="0.6" />
+            </g> <g>
+             <ellipse cx="350" cy="650" rx="80" ry="35" fill="#2ba7fc" opacity="0.2" />
+             <ellipse cx="350" cy="650" rx="75" ry="30" fill="#1676b3" opacity="0.1" />
+            </g> <g>
+             <ellipse cx="850" cy="670" rx="90" ry="40" fill="#2ba7fc" opacity="0.2" />
+             <ellipse cx="850" cy="670" rx="85" ry="35" fill="#1676b3" opacity="0.1" />
+            </g> <g fill="#1676b3" opacity="0.6">
+             <ellipse cx="250" cy="720" rx="30" ry="20" />
+             <ellipse cx="280" cy="730" rx="25" ry="15" />
+             <ellipse cx="950" cy="740" rx="35" ry="25" />
+             <ellipse cx="920" cy="750" rx="28" ry="18" />
+            </g> <g id="houseGroup" transform="translate(300, 180)">
+             <g transform="translate(620,180)">
+              <rect x="45" y="280" width="20" height="80" fill="#0b3b61" opacity="0.8" />
+              <circle cx="55" cy="280" r="65" fill="#1676b3" opacity="0.9" />
+              <circle cx="40" cy="270" r="50" fill="#2ba7fc" opacity="0.7" />
+              <circle cx="70" cy="275" r="45" fill="#2ba7fc" opacity="0.7" />
+              <circle cx="55" cy="250" r="40" fill="#5dc4ff" opacity="0.6" />
+             </g>
+             <rect x="0" y="200" width="600" height="300" rx="15" fill="#1676b3" opacity="0.95" />
+             <polygon points="0,200 300,40 600,200" fill="#0b3b61" />
+             <polygon points="10,190 300,50 590,190" fill="#0f5086" opacity="0.8" />
+             <rect x="420" y="60" width="45" height="110" fill="#0b3b61" />
+             <rect x="415" y="55" width="55" height="15" fill="#0f5086" />
+             <rect x="265" y="350" width="70" height="150" rx="2" fill="#05203a" />
+             <rect x="270" y="355" width="60" height="140" rx="1" fill="#0b3b61" />
+             <rect x="275" y="365" width="50" height="8" fill="#5dc4ff" opacity="0.6" />
+             <rect x="275" y="380" width="50" height="8" fill="#5dc4ff" opacity="0.6" />
+             <rect x="275" y="395" width="50" height="8" fill="#5dc4ff" opacity="0.6" />
+             <circle cx="320" cy="425" r="4" fill="#5dc4ff" />
+             <g>
+              <rect x="90" y="250" width="120" height="100" rx="8" fill="#5dc4ff" opacity="0.9" />
+              <rect x="95" y="255" width="110" height="90" rx="6" fill="#2ba7fc" opacity="0.7" />
+              <line x1="150" y1="255" x2="150" y2="345" stroke="#0f5086" stroke-width="3" />
+              <line x1="95" y1="300" x2="205" y2="300" stroke="#0f5086" stroke-width="3" />
+             </g>
+             <g>
+              <rect x="390" y="250" width="120" height="100" rx="8" fill="#5dc4ff" opacity="0.9" />
+              <rect x="395" y="255" width="110" height="90" rx="6" fill="#2ba7fc" opacity="0.7" />
+              <line x1="450" y1="255" x2="450" y2="345" stroke="#0f5086" stroke-width="3" />
+              <line x1="395" y1="300" x2="505" y2="300" stroke="#0f5086" stroke-width="3" />
+             </g>
+             <rect x="240" y="480" width="120" height="20" rx="10" fill="#0f5086" opacity="0.8" />
+             <rect x="250" y="470" width="100" height="10" fill="#1676b3" opacity="0.6" />
+             <rect x="255" y="350" width="8" height="130" fill="#0f5086" />
+             <rect x="337" y="350" width="8" height="130" fill="#0f5086" />
+             <rect x="85" y="350" width="130" height="15" rx="7" fill="#0f5086" opacity="0.7" />
+             <rect x="385" y="350" width="130" height="15" rx="7" fill="#0f5086" opacity="0.7" />
+            </g>
+           </svg>
+          </div>
+         </div>
+        </div>
+       </div>
+      <div style="max-width: 1050px; margin: 2rem auto 0 auto; text-align: left;">
+       <p class="special-section-font mission-text" style="font-size: 1.4rem; color: #666; line-height: 1.6;">While industry best practices encourage agents to provide clients with at least three lending recommendations, many buyers are only recommended a single preferred lender. This lack of comparing lending options can result in missed opportunities for better rates and meaningful savings.</p>
+
+        <div style="margin: 2rem 0;">
+         <div class="mission-simple-box" style="background: #000000; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); padding: 2rem; color: white; text-align: left; max-width: 100%; margin: 0 auto;">
+          <p class="special-section-font" style="font-size: 1.5rem; font-weight: 600; line-height: 1.4; margin: 0;">Our mission is simple: empower buyers with transparent access to quality lending options.</p>
+         </div>
+        </div>
+
+        <p class="special-section-font mission-text" style="font-size: 1.4rem; color: #666; line-height: 1.6; margin-bottom: 1.5rem;">We carefully vet experienced mortgage lenders to ensure they meet the highest standards of <strong style="color: #000000;">compliance, competitiveness, and service</strong>. By connecting buyers with lenders who combine national-level expertise with deep local insight, we help create a more competitive and efficient home financing process.</p>
+
+        <!-- BEGIN: Mission carousel (inserted) -->
+        <div class="mission-carousel-section" style="padding: 2rem 0; width: 100vw; margin-left: calc(50% - 50vw); box-sizing: border-box;">
+          <style>
+            /* make the carousel reach the left/right edges of the white mission card (3rem padding on the card) */
+            .mission-carousel-viewport{width:100%;max-width:none;margin:0;overflow:hidden;padding:0}
+            .mission-carousel-track{display:flex;gap:18px;width:max-content;align-items:center}
+            .mission-carousel-card{flex:0 0 auto;width:480px;height:300px;border-radius:12px;overflow:hidden;box-shadow:0 10px 20px rgba(0,0,0,0.15);background:#fff}
+            .mission-carousel-card img{width:100%;height:100%;object-fit:cover;display:block}
+            @media (max-width:768px){.mission-carousel-card{width:360px;height:230px}}
+          </style>
+          <div class="mission-carousel-viewport">
+            <div class="mission-carousel-track" id="missionCarouselTrack">
+              <!-- cards will be populated from assets/carousel-img -->
+            </div>
+          </div>
+        </div>
+        <script>
+        (function(){
+          const init = () => {
+            const track = document.getElementById('missionCarouselTrack');
+            if (!track) return;
+            const gap = 18;
+            const intervalTime = 4500;
+            const slideSpeed = 700;
+            const cloneCount = 3;
+
+            // Image list from assets/carousel-img
+            const imageList = [
+              'assets/carousel-img/Carousel1.png',
+              'assets/carousel-img/Carousel2.jpg',
+              'assets/carousel-img/Carousel3.png',
+              'assets/carousel-img/Carousel4.png',
+              'assets/carousel-img/Carousel5.png',
+              'assets/carousel-img/Carousel6.png',
+              'assets/carousel-img/Carousel7.png',
+              'assets/carousel-img/Carousel8.png',
+              'assets/carousel-img/Carousel9.png'
+            ];
+
+            // Populate cards from imageList if none exist
+            let cards = track.querySelectorAll('.mission-carousel-card');
+            if (!cards || cards.length === 0) {
+              imageList.forEach(src => {
+                const card = document.createElement('div');
+                card.className = 'mission-carousel-card';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = '';
+                card.appendChild(img);
+                track.appendChild(card);
+              });
+            }
+
+            cards = track.querySelectorAll('.mission-carousel-card');
+            const realSlideCount = cards.length;
+
+            for (let i = 0; i < cloneCount; i++) {
+              // clone the first cards for buffer
+              const node = cards[i].cloneNode(true);
+              track.appendChild(node);
+            }
+
+            cards = track.querySelectorAll('.mission-carousel-card');
+            const getCardWidth = () => cards[0].offsetWidth;
+            let cardWidth = getCardWidth();
+            let index = 0;
+
+            const moveToNext = () => {
+              index++;
+              track.style.transition = `transform ${slideSpeed}ms ease-in-out`;
+              track.style.transform = `translateX(-${index * (cardWidth + gap)}px)`;
+            };
+
+            track.addEventListener('transitionend', () => {
+              if (index >= realSlideCount) {
+                track.style.transition = 'none';
+                index = index - realSlideCount;
+                track.style.transform = `translateX(-${index * (cardWidth + gap)}px)`;
+              }
+            });
+
+            let iv = setInterval(moveToNext, intervalTime);
+
+            // Recalculate widths on resize
+            window.addEventListener('resize', () => {
+              cardWidth = getCardWidth();
+            });
+          };
+          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+        })();
+        </script>
+        <!-- END: Mission carousel -->
+
+        <h3 class="special-section-font" style="font-size: 2rem; font-weight: 700; color: #000000; margin-bottom: 1.5rem;">A Shared Mission</h3>
+        <p class="special-section-font mission-text" style="font-size: 1.4rem; color: #666; line-height: 1.6; margin-bottom: 2rem;">Whether you're an agent, brokerage, or lender, our mission is shared: to build trust, foster collaboration, and align our efforts toward <strong style="color: transparent; background: linear-gradient(to right, #000000, #2ba7fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">a single purpose—delivering better outcomes for the buyer.</strong></p>
+
+        <div class="empowering-buyer-box" style="background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); padding: 2rem; max-width: 600px; margin: 0 auto; text-align: center;">
+         <h4 class="special-section-font" style="font-size: 2rem; font-weight: 700; color: #2ba7fc; margin: 0;">One mission, one focus: empowering the buyer.</h4>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Footer -->
+    <footer id="connect" class="footer" style="background: transparent; margin-top: 4rem;">
+     <div class="footer-divider" style="background: linear-gradient(90deg, transparent, black, transparent); width: 100%; height: 1px; margin: 0 0 3rem 0;"></div>
+     <div class="footer-connect-box" style="margin-top: 7rem; border-radius: 25px; max-width: 1000px;">
+      <h2 class="section-title brand-font" style="color: #333; text-align: center; font-size: 2rem; margin-bottom: 2rem;">Help Your Buyers</h2>
+      <p style="font-size: 1.1rem; margin-bottom: 1rem; text-align: center;" class="content-font">Are you a Real Estate Broker or Mortgage Lender who meets our high standards?<br>
+        See if you qualify to join our network of approved partners.</p>
+      <div style="text-align: center;"><button class="connect-btn dynamic-btn" onclick="window.open('https://qualtricsxm6qnzs6dft.qualtrics.com/jfe/form/SV_bd3yvuc12hARwPQ', '_blank')">Partner With Us</button>
+      </div>
+     </div>
+     <div class="footer-content">
+      <div class="footer-logo brand-font" onclick="scrollToSection('hero')" style="margin-top: 6rem; color: white; cursor: pointer;">
+       VALTERA
+      </div>
+      <p class="footer-tagline content-font" style="color: white; margin-top: -0.5rem;">Connecting Buyers With Quality Lenders</p>
+      <div class="footer-links content-font"><a href="javascript:void(0)" onclick="goToPartner()" style="color: white;">Partner With Us</a> <a href="javascript:void(0)" onclick="scrollToSection('mission-content')" style="color: white;">Our Mission</a> <a href="javascript:void(0)" onclick="scrollToSection('hero')" style="color: white;">Find A Lender</a>
+      </div>
+      <div class="footer-divider" style="background: linear-gradient(90deg, transparent, white, transparent);"></div>
+      <p class="footer-copyright content-font" style="color: white; margin-bottom: 3rem;">© 2026 Valtera. All rights reserved.</p>
+     </div>
+    </footer>
+   </main>
+  </div><!-- End of homePage --> <!-- Modal Overlay -->
+  <div id="lenderModal" class="modal-overlay" onclick="handleModalClick(event)">
+   <div class="modal-content" onclick="event.stopPropagation()"><button class="modal-close" onclick="closeLenderModal()">×</button>
+    <div id="modalBody"><!-- Modal content will be dynamically inserted here -->
+    </div>
+   </div>
+  </div>
+  <script>
+    // Lender data with loan officers
+    const lendersData = {
+      'Lender Option 1': {
+        name: 'Lender Option 1',
+        logo: 'assets/lenders/lender1.svg',
+        url: 'https://www.firstcolonymortgage.com/',
+        rating: 5.00,
+        programs: 'FHA, Conventional, Rural Housing (RDA), VA Loan, Utah Housing, Reverse Mortgage',
+        loanOfficers: [
+          { name: 'Stephanie Bevard', phone: '(801) 361-7433', email: 'stephanie@firstcolonymortgage.com', photo: 'assets/loan-officers/StephanieBevard.png', url: 'https://firstcolonymortgage.com/loan-officer/stephanie-bevard/', nmls: 'NMLS#20250 | AZ LO-1026616', bio: 'Stephanie Bevard is a trusted mortgage loan officer with over 35 years of experience helping clients achieve their homeownership goals. Since writing her first loan in 1989, she has worked full-time in the mortgage industry, guiding borrowers with clarity, care, and expertise. Stephanie is known for her responsiveness, problem-solving mindset, and commitment to seeing every loan through to closing. Her guiding principle is simple: If you are working, I am working. She works relentlessly so you can move forward with confidence.' },
+          { name: 'Sarah Johnson', phone: '(555) 123-4568', email: 'sarah.johnson@lender1.com', photo: '', nmls: '', bio: 'Dedicated loan officer passionate about making homeownership accessible. Expert in VA loans and renovation financing. Provides comprehensive support from application to closing with tailored solutions for each client.' },
+          { name: 'Michael Chen', phone: '(555) 123-4569', email: 'michael.chen@lender1.com', photo: '', nmls: '', bio: 'Seasoned mortgage advisor specializing in complex loan scenarios. Extensive knowledge of conventional and government-backed loan programs. Known for clear communication and helping clients navigate the lending process with confidence.' }
+        ]
+      },
+      'Lender Option 2': {
+        name: 'Lender Option 2',
+        logo: 'assets/lenders/Lender2.png',
+        url: 'https://stevenbarton.equityrealestateusa.com/index.php',
+        rating: 5.00,
+        programs: 'Conventional, Jumbo, First-Time Buyer',
+        loanOfficers: [
+          { name: 'Emily Rodriguez', phone: '(555) 234-5678', email: 'emily.rodriguez@lender2.com', bio: 'Top-performing loan officer with a track record of excellence. Specializes in conventional and jumbo loans for high-value properties. Provides white-glove service and works closely with clients to secure optimal rates and terms.' },
+          { name: 'David Brown', phone: '(555) 234-5679', email: 'david.brown@lender2.com', bio: 'Mortgage expert focused on first-time homebuyers and investment properties. Patient educator who takes time to explain all loan options. Known for finding creative financing solutions and helping clients build wealth through real estate.' },
+          { name: 'Lisa Martinez', phone: '(555) 234-5680', email: 'lisa.martinez@lender2.com', bio: 'Client-focused mortgage professional with expertise in luxury home financing. Deep understanding of jumbo loan requirements and competitive rate structures. Maintains strong relationships with underwriters to expedite approvals and provide exceptional service.' }
+        ]
+      },
+      'Lender Option 3': {
+        name: 'Lender Option 3',
+        logo: 'assets/lenders/lender3.svg',
+        url: 'https://stevenbarton.equityrealestateusa.com/index.php',
+        rating: 5.00,
+        programs: 'FHA, VA, Conventional',
+        loanOfficers: [
+          { name: 'Robert Taylor', phone: '(555) 345-6789', email: 'robert.taylor@lender3.com', bio: 'Veteran mortgage specialist with comprehensive knowledge of VA loan benefits. Dedicated to serving military families and veterans. Streamlines the loan process to minimize stress and helps those who served achieve homeownership with optimal terms.' },
+          { name: 'Jennifer Wilson', phone: '(555) 345-6790', email: 'jennifer.wilson@lender3.com', bio: 'Experienced loan officer specializing in FHA and conventional financing. Known for quick response times and clear communication. Helps clients improve credit profiles and qualify for better rates while making homeownership dreams a reality.' },
+          { name: 'James Anderson', phone: '(555) 345-6791', email: 'james.anderson@lender3.com', bio: 'Mortgage advisor with strong analytical skills and market knowledge. Excels at comparing loan products to find the best fit for each client. Proactive communicator who builds long-term relationships based on trust and exceptional service.' }
+        ]
+      },
+      'Lender Option 4': {
+        name: 'Lender Option 4',
+        logo: 'assets/lenders/lender4.svg',
+        url: 'https://stevenbarton.equityrealestateusa.com/index.php',
+        rating: 5.00,
+        programs: 'Construction, Refinancing, Investment',
+        loanOfficers: [
+          { name: 'Patricia Thomas', phone: '(555) 456-7890', email: 'patricia.thomas@lender4.com', bio: 'Construction loan specialist with extensive experience in new home financing. Guides clients through construction-to-permanent loans and works with builders to ensure smooth project funding. Expert at coordinating draw schedules efficiently.' },
+          { name: 'Christopher Lee', phone: '(555) 456-7891', email: 'christopher.lee@lender4.com', bio: 'Refinancing expert who helps homeowners lower monthly payments and tap into home equity. Analyzes market trends to identify optimal refinancing opportunities. Explains cash-out refinance options for home improvements and debt consolidation effectively.' },
+          { name: 'Amanda White', phone: '(555) 456-7892', email: 'amanda.white@lender4.com', bio: 'Investment property financing specialist with deep understanding of rental property loans. Helps investors build wealth through real estate portfolios. Expert in analyzing cash flow and providing financing solutions for single-family and multi-unit properties.' }
+        ]
+      },
+      'Lender Option 5': {
+        name: 'Lender Option 5',
+        logo: 'assets/lenders/lender5.svg',
+        url: 'https://stevenbarton.equityrealestateusa.com/index.php',
+        rating: 5.00,
+        programs: 'USDA, FHA, VA, Conventional',
+        loanOfficers: [
+          { name: 'Daniel Garcia', phone: '(555) 567-8901', email: 'daniel.garcia@lender5.com', bio: 'USDA loan specialist helping rural homebuyers achieve zero-down financing. Deep knowledge of eligible areas and income requirements. Passionate about serving communities outside metropolitan areas and making rural homeownership accessible with expert guidance.' },
+          { name: 'Michelle Harris', phone: '(555) 567-8902', email: 'michelle.harris@lender5.com', bio: 'Versatile loan officer with expertise across all major loan programs. Known for thorough needs analysis and matching clients with the best loan type. Excellent at comparing FHA, VA, conventional, and USDA options side by side.' },
+          { name: 'Kevin Clark', phone: '(555) 567-8903', email: 'kevin.clark@lender5.com', bio: 'Mortgage professional dedicated to finding the lowest rates and best terms. Strong negotiation skills and lender relationships. Provides comprehensive pre-approval services and helps clients save money through strategic loan selection and optimal timing.' }
+        ]
+      }
+    };
+
+    // Modal scroll memory: remembers per-lender modal scroll positions
+    window.lenderModalScrollPositions = {};
+    window._currentLenderModalName = null;
+    window._modalScrollHandler = null;
+
+    // All 50 US States
+    const states = [
+      { code: 'AL', name: 'Alabama' },
+      { code: 'AK', name: 'Alaska' },
+      { code: 'AZ', name: 'Arizona' },
+      { code: 'AR', name: 'Arkansas' },
+      { code: 'CA', name: 'California' },
+      { code: 'CO', name: 'Colorado' },
+      { code: 'CT', name: 'Connecticut' },
+      { code: 'DE', name: 'Delaware' },
+      { code: 'FL', name: 'Florida' },
+      { code: 'GA', name: 'Georgia' },
+      { code: 'HI', name: 'Hawaii' },
+      { code: 'ID', name: 'Idaho' },
+      { code: 'IL', name: 'Illinois' },
+      { code: 'IN', name: 'Indiana' },
+      { code: 'IA', name: 'Iowa' },
+      { code: 'KS', name: 'Kansas' },
+      { code: 'KY', name: 'Kentucky' },
+      { code: 'LA', name: 'Louisiana' },
+      { code: 'ME', name: 'Maine' },
+      { code: 'MD', name: 'Maryland' },
+      { code: 'MA', name: 'Massachusetts' },
+      { code: 'MI', name: 'Michigan' },
+      { code: 'MN', name: 'Minnesota' },
+      { code: 'MS', name: 'Mississippi' },
+      { code: 'MO', name: 'Missouri' },
+      { code: 'MT', name: 'Montana' },
+      { code: 'NE', name: 'Nebraska' },
+      { code: 'NV', name: 'Nevada' },
+      { code: 'NH', name: 'New Hampshire' },
+      { code: 'NJ', name: 'New Jersey' },
+      { code: 'NM', name: 'New Mexico' },
+      { code: 'NY', name: 'New York' },
+      { code: 'NC', name: 'North Carolina' },
+      { code: 'ND', name: 'North Dakota' },
+      { code: 'OH', name: 'Ohio' },
+      { code: 'OK', name: 'Oklahoma' },
+      { code: 'OR', name: 'Oregon' },
+      { code: 'PA', name: 'Pennsylvania' },
+      { code: 'RI', name: 'Rhode Island' },
+      { code: 'SC', name: 'South Carolina' },
+      { code: 'SD', name: 'South Dakota' },
+      { code: 'TN', name: 'Tennessee' },
+      { code: 'TX', name: 'Texas' },
+      { code: 'UT', name: 'Utah' },
+      { code: 'VT', name: 'Vermont' },
+      { code: 'VA', name: 'Virginia' },
+      { code: 'WA', name: 'Washington' },
+      { code: 'WV', name: 'West Virginia' },
+      { code: 'WI', name: 'Wisconsin' },
+      { code: 'WY', name: 'Wyoming' }
+    ];
+
+    // Populate state dropdown
+    function populateStates() {
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      states.forEach(state => {
+        const option = document.createElement('div');
+        option.className = 'dropdown-option';
+        option.onclick = () => selectState(state.code, state.name);
+        option.style.cssText = 'padding: 0.4rem 0.75rem 0.4rem 1.5rem; cursor: pointer; transition: all 0.2s ease; color: black; display: flex; align-items: center; gap: 0.5em; border-bottom: 1px solid #f0f0f0;';
+        option.innerHTML = `
+          <svg class="checkmark" style="display: none; width: 16px; height: 16px; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="#2ba7fc" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter">
+            <polyline points="20,6 9,17 4,12"></polyline>
+          </svg>
+          <span>${state.name}</span>
+        `;
+        dropdownMenu.appendChild(option);
+      });
+    }
+
+    // Toggle dropdown
+    function toggleDropdown() {
+      const menu = document.getElementById('dropdownMenu');
+      const arrow = document.getElementById('dropdownArrow');
+      const button = document.getElementById('stateButton');
+      const isOpen = menu.style.display === 'block';
+      
+      menu.style.display = isOpen ? 'none' : 'block';
+      arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      button.style.borderColor = isOpen ? '#ddd' : '#2ba7fc';
+    }
+
+    // Track current selected state
+    let currentSelectedState = '';
+
+    // Select state
+    function selectState(code, name) {
+      document.getElementById('selectedState').textContent = name;
+      currentSelectedState = code;
+      
+      // Update checkmarks and reset text colors
+      const allOptions = document.querySelectorAll('.dropdown-option');
+      allOptions.forEach(option => {
+        const checkmark = option.querySelector('.checkmark');
+        const span = option.querySelector('span');
+        checkmark.style.display = 'none';
+        span.style.color = 'black';
+        option.classList.remove('selected');
+      });
+      
+      // Show checkmark for selected option and update text color
+      if (code === '') {
+        // Handle "Choose a State" option
+        const defaultOption = document.getElementById('option-default');
+        if (defaultOption) {
+          const checkmark = defaultOption.querySelector('.checkmark');
+          const span = defaultOption.querySelector('span');
+          checkmark.style.display = 'block';
+          span.style.color = '#2ba7fc';
+          defaultOption.classList.add('selected');
+        }
+      } else {
+        // Handle state options
+        allOptions.forEach(option => {
+          const span = option.querySelector('span');
+          if (span && span.textContent === name) {
+            const checkmark = option.querySelector('.checkmark');
+            checkmark.style.display = 'block';
+            span.style.color = '#2ba7fc';
+            option.classList.add('selected');
+          }
+        });
+      }
+      
+      // Reset button border color to grey
+      const button = document.getElementById('stateButton');
+      button.style.borderColor = '#ddd';
+      
+      toggleDropdown();
+      
+      // Trigger the state change handler
+      handleStateChange();
+    }
+
+    // Add hover effects for dropdown options
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownOptions = document.querySelectorAll('.dropdown-option');
+      dropdownOptions.forEach(option => {
+        option.addEventListener('mouseenter', function() {
+          this.style.backgroundColor = 'rgba(43, 167, 252, 0.1)';
+        });
+        option.addEventListener('mouseleave', function() {
+          this.style.backgroundColor = 'transparent';
+        });
+      });
+    });
+
+    // Bio toggle function
+    function toggleBio(bioId, wrapperId) {
+      const bioContent = document.getElementById(bioId);
+      const wrapper = document.getElementById(wrapperId);
+
+      if (!bioContent || !wrapper) return;
+
+      const isCollapsed = bioContent.classList.contains('collapsed');
+
+      // Remove any existing transitionend handler to avoid duplicates
+      if (bioContent._toggleBioTransitionHandler) {
+        bioContent.removeEventListener('transitionend', bioContent._toggleBioTransitionHandler);
+        bioContent._toggleBioTransitionHandler = null;
+      }
+
+      if (isCollapsed) {
+        // Opening: animate from current visible height to full scrollHeight
+        // Ensure we're starting from the current computed height
+        const startHeight = bioContent.clientHeight;
+        // Remove collapsed class so CSS max-height rule no longer forces the collapsed max
+        bioContent.classList.remove('collapsed');
+        // Set explicit start maxHeight to current height
+        bioContent.style.maxHeight = startHeight + 'px';
+
+        // Next frame, expand to full scrollHeight to trigger the CSS transition
+        requestAnimationFrame(() => {
+          bioContent.style.maxHeight = bioContent.scrollHeight + 'px';
+        });
+
+        // When transition ends, clear inline maxHeight to allow natural height changes
+        bioContent._toggleBioTransitionHandler = function (e) {
+          if (e.propertyName === 'max-height') {
+            bioContent.style.maxHeight = null;
+            bioContent.removeEventListener('transitionend', bioContent._toggleBioTransitionHandler);
+            bioContent._toggleBioTransitionHandler = null;
+          }
+        };
+        bioContent.addEventListener('transitionend', bioContent._toggleBioTransitionHandler);
+
+        wrapper.classList.add('expanded');
+      } else {
+        // Closing: animate from full height to collapsed (CSS rule)
+        // Ensure start point: set inline maxHeight to current full height
+        bioContent.style.maxHeight = bioContent.scrollHeight + 'px';
+
+        // Force a frame then apply the collapsed class which contains the smaller max-height
+        requestAnimationFrame(() => {
+          bioContent.classList.add('collapsed');
+          // Remove inline maxHeight so the CSS collapsed rule takes effect and transitions
+          bioContent.style.maxHeight = null;
+        });
+
+        wrapper.classList.remove('expanded');
+      }
+    }
+
+    // Helper function to get first N words
+    function getFirstWords(text, wordCount) {
+      const words = text.split(' ');
+      return words.slice(0, wordCount).join(' ') + (words.length > wordCount ? '...' : '');
+    }
+
+    // Modal functions
+    function openLenderModal(lenderName) {
+      const lender = lendersData[lenderName];
+      if (!lender) return;
+
+      const modal = document.getElementById('lenderModal');
+      const existingModalContent = modal.querySelector('.modal-content');
+
+      // If switching from another lender, save previous scroll and remove its handler
+      if (window._currentLenderModalName && window._currentLenderModalName !== lenderName && existingModalContent) {
+        window.lenderModalScrollPositions[window._currentLenderModalName] = existingModalContent.scrollTop || 0;
+        if (window._modalScrollHandler) {
+          existingModalContent.removeEventListener('scroll', window._modalScrollHandler);
+          window._modalScrollHandler = null;
+        }
+      }
+
+      const modalBody = document.getElementById('modalBody');
+
+      // Generate star rating HTML
+      const starsHTML = generateModalStarRating(lender.rating);
+
+      // Generate loan officers HTML with expandable bios
+      let officersHTML = '';
+      lender.loanOfficers.forEach((officer, index) => {
+        const bioId = `bio-${lenderName.replace(/\s+/g, '-')}-${index}`;
+        const wrapperId = `wrapper-${lenderName.replace(/\s+/g, '-')}-${index}`;
+        const fullBio = officer.bio || "Experienced loan officer dedicated to helping clients achieve their homeownership goals with personalized service and expert guidance through every step of the mortgage process.";
+        
+        officersHTML += `
+          <div class="loan-officer-card">
+              <div class="loan-officer-header">
+                <div class="loan-officer-photo">
+                ${officer.photo ? `${officer.name === 'Sarah Johnson' ? `<img src="${officer.photo}" alt="${officer.name}" onclick="window.open('${officer.url || lender.url}', '_blank', 'noopener,noreferrer')" style="object-position:50% 30%;">` : (officer.name === 'Michael Chen' ? `<img src="${officer.photo}" alt="${officer.name}" onclick="window.open('${officer.url || lender.url}', '_blank', 'noopener,noreferrer')" style="object-position:50% 10%;">` : `<img src="${officer.photo}" alt="${officer.name}" onclick="window.open('${officer.url || lender.url}', '_blank', 'noopener,noreferrer')">`)}` : `<svg width="144" height="144" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Profile placeholder"><rect width="72" height="72" rx="12" fill="#f3f4f6"/><circle cx="36" cy="24" r="10" fill="#c4c4c4"/><path d="M12 60c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#c4c4c4"/></svg>`}
+              </div>
+              <div class="loan-officer-name content-font${officer.name === 'Stephanie Bevard' ? ' full-name-mobile' : ''}" onclick="window.open('${officer.url || lender.url}', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='#111827'">${officer.name}</div>
+            </div>
+            <div class="bio-wrapper" id="${wrapperId}" onclick="toggleBio('${bioId}', '${wrapperId}')">
+              <div class="bio-content collapsed content-font" id="${bioId}">${fullBio}</div>
+              <div class="arrow-container">
+                <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="loan-officer-contact">
+              <a href="tel:${officer.phone ? officer.phone.replace(/[^0-9]/g, '') : ''}" class="contact-item phone content-font">${officer.phone || ''}</a>
+              <a href="mailto:${officer.email || ''}" class="contact-item email content-font">${officer.email || ''}</a>
+              <div class="contact-item nmls content-font">${officer.nmls || 'NMLS: —'}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      // Apply consistent styling for all lenders.
+      let logoHTML = '';
+      if (lender.logo) {
+        if (lender.name === 'Lender Option 1') {
+          const logoSrc = 'assets/lenders/Lender1.png';
+          logoHTML = lender.url ? `<a href="${lender.url}" target="_blank" rel="noopener noreferrer"><img src="${logoSrc}" alt="${lender.name} logo" style="height:72px; object-fit:contain;"></a>` : `<img src="${logoSrc}" alt="${lender.name} logo" style="height:72px; object-fit:contain;">`;
+        } else {
+          logoHTML = lender.url ? `<a href="${lender.url}" target="_blank" rel="noopener noreferrer"><span class="lender-modal-logo" style="font-size:1.25rem; font-weight:700; color:#2ba7fc;">${lender.name}</span></a>` : `<span class="lender-modal-logo" style="font-size:1.25rem; font-weight:700; color:#2ba7fc;">${lender.name}</span>`;
+        }
+      }
+
+      // License line / Equal Housing logo (show license text + logo for Lender Option 1; logo-only for others)
+      const licenseLine = lender.name === 'Lender Option 1' ? '<div style="display:flex; justify-content:flex-end; align-items:flex-end; gap:1rem; color: #6b7280; font-size: 0.85rem; margin-top: 0; margin-bottom: 0; line-height:1;">' +
+        '<span style="display:inline-block; transform: translateY(-6px);">UT Lic# 5492455 | AZ Lic# BK-0928118 | NMLS# 3112</span>' +
+        '<img src="assets/Equal%20Housing%20Opportunity/EqualHousingOpportunity-BlackLogo.png" alt="Equal Housing Opportunity" style="height:48px; object-fit:contain; display:block; margin:6px 0 0 8px; vertical-align:bottom;">' +
+        '</div>' : '<div style="display:flex; justify-content:flex-end; align-items:flex-end; gap:1rem; color: #6b7280; font-size: 0.85rem; margin-top: 0; margin-bottom: 0; line-height:1;">' +
+        '<span style="display:inline-block; transform: translateY(-6px);">NMLS# —</span>' +
+        '<img src="assets/Equal%20Housing%20Opportunity/EqualHousingOpportunity-BlackLogo.png" alt="Equal Housing Opportunity" style="height:48px; object-fit:contain; display:block; margin:6px 0 0 8px; vertical-align:bottom;">' +
+        '</div>';
+
+      modalBody.innerHTML = `
+        <div class="lender-modal-header" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom:1rem;">
+          ${logoHTML}
+        </div>
+        <div style="margin-bottom: 1.5rem; text-align:center;">${starsHTML}</div>
+        <div style="height: 2px; background: linear-gradient(90deg, #2ba7fc, transparent); margin-bottom: 2rem; margin-top: 0; "></div>
+        <h3 class="brand-font" style="font-size: 1.5rem; color: #2ba7fc; margin-bottom: 1.5rem;">Loan Officers</h3>
+        ${officersHTML}
+        ${licenseLine}
+      `;
+
+      // Make modal active and restore or initialize scroll position
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Restore saved scroll for this lender (if any)
+      const modalContentAfter = modal.querySelector('.modal-content');
+      const saved = window.lenderModalScrollPositions[lenderName] || 0;
+      // Use setTimeout to allow layout to settle before setting scrollTop
+      setTimeout(() => {
+        modalContentAfter.scrollTop = saved;
+      }, 0);
+
+      // Attach scroll handler to remember position
+      if (window._modalScrollHandler) {
+        // remove any previous handler just in case
+        modalContentAfter.removeEventListener('scroll', window._modalScrollHandler);
+        window._modalScrollHandler = null;
+      }
+
+      window._modalScrollHandler = function() {
+        window.lenderModalScrollPositions[lenderName] = modalContentAfter.scrollTop;
+        window._currentLenderModalName = lenderName;
+      };
+      modalContentAfter.addEventListener('scroll', window._modalScrollHandler);
+      window._currentLenderModalName = lenderName;
+    }
+
+    function closeLenderModal() {
+      const modal = document.getElementById('lenderModal');
+      const modalContent = modal.querySelector('.modal-content');
+      if (modalContent && window._currentLenderModalName) {
+        // Save current scroll position for current lender
+        window.lenderModalScrollPositions[window._currentLenderModalName] = modalContent.scrollTop || 0;
+        // Remove scroll handler
+        if (window._modalScrollHandler) {
+          modalContent.removeEventListener('scroll', window._modalScrollHandler);
+          window._modalScrollHandler = null;
+        }
+        window._currentLenderModalName = null;
+      }
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleModalClick(event) {
+      if (event.target.id === 'lenderModal') {
+        closeLenderModal();
+      }
+    }
+
+    // Generate star rating for modal
+    function generateModalStarRating(rating) {
+      const fullStars = Math.floor(rating);
+      const decimal = rating - fullStars;
+      let starsHTML = '<div style="display: flex; align-items: center; gap: 0.25rem;">';
+      
+      for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<span style="color: #FFD700; font-size: 1.5rem; line-height: 1;">★</span>';
+      }
+      
+      if (decimal > 0) {
+        const percentFilled = decimal * 100;
+        starsHTML += '<span style="position: relative; display: inline-block; font-size: 1.5rem; line-height: 1;">';
+        starsHTML += '<span style="color: #ddd;">★</span>';
+        starsHTML += `<span style="position: absolute; left: 0; top: 0; color: #FFD700; overflow: hidden; width: ${percentFilled}%;">★</span>`;
+        starsHTML += '</span>';
+      }
+      
+      const totalStarsShown = Math.ceil(rating);
+      const emptyStars = 5 - totalStarsShown;
+      for (let i = 0; i < emptyStars; i++) {
+        starsHTML += '<span style="color: #ddd; font-size: 1.5rem; line-height: 1;">★</span>';
+      }
+      
+      starsHTML += `<span style="color: #666; font-weight: 600; margin-left: 0.5rem; font-size: 1.25rem;">${rating.toFixed(2)}</span>`;
+      starsHTML += '</div>';
+      
+      return starsHTML;
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+      const dropdown = document.querySelector('.custom-dropdown');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      const dropdownArrow = document.getElementById('dropdownArrow');
+      const stateButton = document.getElementById('stateButton');
+      
+      if (dropdown && !dropdown.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+        dropdownArrow.style.transform = 'rotate(0deg)';
+        stateButton.style.borderColor = '#ddd';
+        stateButton.style.boxShadow = 'none';
+      }
+
+      // Close Results dropdown when clicking outside (home page)
+      const resultsDropdown = document.querySelector('#homePage .nav-dropdown');
+      const resultsDropdownMenu = document.getElementById('resultsDropdownMenu');
+      const resultsDropdownArrow = document.getElementById('resultsDropdownArrow');
+      
+      if (resultsDropdown && !resultsDropdown.contains(event.target)) {
+        if (resultsDropdownMenu) resultsDropdownMenu.style.display = 'none';
+        if (resultsDropdownArrow) resultsDropdownArrow.classList.remove('rotated');
+      }
+
+      // Close Results dropdown when clicking outside (article page)
+      const resultsDropdownArticle = document.querySelector('#articlePage .nav-dropdown');
+      const resultsDropdownMenuArticle = document.getElementById('resultsDropdownMenuArticle');
+      const resultsDropdownArrowArticle = document.getElementById('resultsDropdownArrowArticle');
+      
+      if (resultsDropdownArticle && !resultsDropdownArticle.contains(event.target)) {
+        if (resultsDropdownMenuArticle) resultsDropdownMenuArticle.style.display = 'none';
+        if (resultsDropdownArrowArticle) resultsDropdownArrowArticle.classList.remove('rotated');
+      }
+
+      // Close mobile menu when clicking outside (home page)
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const body = document.body;
+      
+      if (mobileMenu && mobileMenu.classList.contains('active') && 
+          !mobileMenu.contains(event.target) && 
+          !mobileMenuBtn.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+        mobileMenuBtn.classList.remove('open');
+      }
+
+      // Close mobile menu when clicking outside (article page)
+      const mobileMenuArticle = document.getElementById('mobile-menu-article');
+      const mobileMenuBtnArticle = document.getElementById('mobile-menu-btn-article');
+      
+      if (mobileMenuArticle && mobileMenuArticle.classList.contains('active') && 
+          !mobileMenuArticle.contains(event.target) && 
+          !mobileMenuBtnArticle.contains(event.target)) {
+        mobileMenuArticle.classList.remove('active');
+        mobileMenuBtnArticle.classList.remove('open');
+      }
+    });
+
+    // Close dropdown when tapping/touching outside on mobile
+    document.addEventListener('touchstart', function(event) {
+      const dropdown = document.querySelector('.custom-dropdown');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      const dropdownArrow = document.getElementById('dropdownArrow');
+      const stateButton = document.getElementById('stateButton');
+      
+      if (dropdown && !dropdown.contains(event.target)) {
+        dropdownMenu.style.display = 'none';
+        dropdownArrow.style.transform = 'rotate(0deg)';
+        stateButton.style.borderColor = '#ddd';
+        stateButton.style.boxShadow = 'none';
+      }
+    });
+
+    // Navigation functions
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigateToRespaPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('articlePage').style.display = 'block';
+      scrollToTop();
+    }
+
+    // Scroll to hero with padding. If already on home and at top, scroll smoothly to show space
+    // above the 'Find a Quality Lender' heading. Otherwise navigate home then scroll.
+    function goToHeroWithPadding() {
+      const homePage = document.getElementById('homePage');
+      const isHomeVisible = homePage && homePage.style.display !== 'none';
+      const atTop = (window.pageYOffset || document.documentElement.scrollTop || 0) < 40;
+
+      const doScroll = () => {
+        const heading = document.querySelector('#hero .brand-font') || document.querySelector('#hero h1') || document.getElementById('hero');
+        const padding = 80; // space above heading
+        if (heading) {
+          const top = heading.getBoundingClientRect().top + window.pageYOffset - padding;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        } else {
+          scrollToSection('hero');
+        }
+      };
+
+      if (isHomeVisible && atTop) {
+        doScroll();
+      } else {
+        navigateToHomePage();
+        setTimeout(doScroll, 220);
+      }
+    }
+
+    function navigateToHomePage() {
+      document.getElementById('articlePage').style.display = 'none';
+      document.getElementById('homePage').style.display = 'block';
+      scrollToTop();
+    }
+
+    function goToPartner() {
+      const articlePage = document.getElementById('articlePage');
+      const isDesktop = window.innerWidth > 768;
+
+      if (articlePage && articlePage.style.display !== 'none') {
+        // If coming from article page, navigate home first then align/scroll
+        navigateToHomePage();
+        if (isDesktop) {
+          // allow layout to settle, then align the stripe to top
+          setTimeout(() => {
+            alignStripeToTop();
+          }, 350);
+        } else {
+          setTimeout(() => scrollToSection('connect'), 200);
+        }
+      } else {
+        // Already on home page
+        if (isDesktop) {
+          alignStripeToTop();
+        } else {
+          scrollToSection('connect');
+        }
+      }
+    }
+
+    function scrollToConnectBox() {
+      const connectBox = document.querySelector('.footer-connect-box');
+      if (connectBox) {
+        const boxRect = connectBox.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const scrollTop = window.pageYOffset + boxRect.top - (viewportHeight / 2) + (boxRect.height / 2);
+        
+        window.scrollTo({
+          top: scrollTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    function scrollToConnectTop() {
+      const connectBox = document.querySelector('.footer-connect-box');
+      if (connectBox) {
+        const navbar = document.querySelector('.navbar');
+        const navHeight = navbar ? navbar.offsetHeight : 0;
+        const rect = connectBox.getBoundingClientRect();
+        const top = window.pageYOffset + rect.top - navHeight;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    }
+
+    function alignStripeToTop() {
+      // Find the divider immediately before the footer connect box
+      const connectBox = document.querySelector('.footer-connect-box');
+      if (!connectBox) return;
+      let stripe = connectBox.previousElementSibling;
+      // If previous sibling isn't the stripe, search backwards for a .footer-divider
+      while (stripe && !stripe.classList.contains('footer-divider')) {
+        stripe = stripe.previousElementSibling;
+      }
+      if (!stripe) return;
+      const rect = stripe.getBoundingClientRect();
+      const top = window.pageYOffset + rect.top;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
+    function navigateHomeThenAlignStripe() {
+      navigateToHomePage();
+      // Ensure home page is shown, then jump to footer, then smooth-scroll up to the stripe
+      setTimeout(() => {
+        const footer = document.getElementById('connect');
+        if (footer) footer.scrollIntoView({ behavior: 'auto' });
+        setTimeout(() => {
+          alignStripeToTop();
+        }, 350);
+      }, 200);
+    }
+
+    function navigateHomeThenScrollBelowStripe() {
+      navigateToHomePage();
+      setTimeout(() => {
+        const connectBox = document.querySelector('.footer-connect-box');
+        if (!connectBox) return;
+        // find the divider (stripe) right before the connect box
+        let stripe = connectBox.previousElementSibling;
+        while (stripe && !stripe.classList.contains('footer-divider')) {
+          stripe = stripe.previousElementSibling;
+        }
+        if (!stripe) return;
+        const stripeRect = stripe.getBoundingClientRect();
+        const stripeTop = window.pageYOffset + stripeRect.top;
+        const stripeHeight = stripeRect.height || 1;
+        // Scroll so the top of the viewport is just below the stripe
+        const target = stripeTop + stripeHeight + 4; // small 4px buffer
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      }, 250);
+    }
+
+    function articleNavPartnerHandler() {
+      // If the user is at the top of the article page, use the down-scroll behavior.
+      const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (y < 40) {
+        navigateHomeThenScrollBelowStripe();
+      } else {
+        navigateHomeThenAlignStripe();
+      }
+    }
+
+    function scrollToMissionBoxes() {
+      const missionSection = document.getElementById('mission-content');
+      if (missionSection) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const sectionTop = missionSection.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        
+        window.scrollTo({
+          top: sectionTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    // Mobile menu functions
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      menu.classList.toggle('active');
+      btn.classList.toggle('open');
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      menu.classList.remove('active');
+      btn.classList.remove('open');
+    }
+
+    function toggleMobileMenuArticle() {
+      const menu = document.getElementById('mobile-menu-article');
+      const btn = document.getElementById('mobile-menu-btn-article');
+      menu.classList.toggle('active');
+      btn.classList.toggle('open');
+    }
+
+    function closeMobileMenuArticle() {
+      const menu = document.getElementById('mobile-menu-article');
+      const btn = document.getElementById('mobile-menu-btn-article');
+      menu.classList.remove('active');
+      btn.classList.remove('open');
+    }
+
+    function handleMobileMenuClick(event) {
+      if (event.target.id === 'mobile-menu') {
+        closeMobileMenu();
+      }
+    }
+
+    function handleMobileMenuArticleClick(event) {
+      if (event.target.id === 'mobile-menu-article') {
+        closeMobileMenuArticle();
+      }
+    }
+
+    // Results dropdown
+    function toggleResultsDropdown() {
+      const menu = document.getElementById('resultsDropdownMenu');
+      const arrow = document.getElementById('resultsDropdownArrow');
+      const isOpen = menu.style.display === 'block';
+      
+      menu.style.display = isOpen ? 'none' : 'block';
+      arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    function toggleResultsDropdownArticle() {
+      const menu = document.getElementById('resultsDropdownMenuArticle');
+      const arrow = document.getElementById('resultsDropdownArrowArticle');
+      const isOpen = menu.style.display === 'block';
+      
+      menu.style.display = isOpen ? 'none' : 'block';
+      arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    // Handle state selection change
+    function handleStateChange() {
+      const lendersGrid = document.getElementById('lendersGrid');
+      const viewToggleButtons = document.getElementById('viewToggleButtons');
+      const selectedValue = currentSelectedState;
+
+      if (selectedValue) {
+        if (selectedValue === 'UT') {
+          // Show toggle buttons for Utah
+          viewToggleButtons.style.display = 'flex';
+          // Reset to grid view
+          document.getElementById('gridViewBtn').classList.add('active');
+          document.getElementById('listViewBtn').classList.remove('active');
+          lendersGrid.style.display = 'grid';
+          lendersGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(300px, 1fr))';
+          lendersGrid.innerHTML = getGridViewHTML();
+          lendersGrid.classList.add('show');
+          // Scroll to show the first two lender cards in the center
+          setTimeout(() => {
+            const firstCard = lendersGrid.querySelector('.lender-card, .lenders-list-container');
+            if (firstCard) {
+              const cardRect = firstCard.getBoundingClientRect();
+              const viewportHeight = window.innerHeight;
+              const scrollTop = window.pageYOffset + cardRect.top - (viewportHeight / 2) + (cardRect.height / 2);
+              
+              window.scrollTo({
+                top: scrollTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 100);
+        } else {
+          // Show coming soon message for other states
+          viewToggleButtons.style.display = 'none';
+          lendersGrid.style.display = 'block';
+          lendersGrid.style.gridTemplateColumns = 'none';
+          lendersGrid.innerHTML = getComingSoonHTML();
+          lendersGrid.classList.add('show');
+          // Scroll to show the coming soon message
+          setTimeout(() => {
+            const comingSoonCard = lendersGrid.querySelector('.coming-soon-card');
+            if (comingSoonCard) {
+              const cardRect = comingSoonCard.getBoundingClientRect();
+              const viewportHeight = window.innerHeight;
+              const scrollTop = window.pageYOffset + cardRect.top - (viewportHeight / 2) + (cardRect.height / 2);
+              
+              window.scrollTo({
+                top: scrollTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 100);
+        }
+      } else {
+        // Hide results and toggle buttons when no state selected
+        viewToggleButtons.style.display = 'none';
+        lendersGrid.classList.remove('show');
+        lendersGrid.innerHTML = '';
+      }
+    }
+
+    // Generate star rating HTML with visual partial fills
+    function generateStarRating(rating) {
+      const fullStars = Math.floor(rating);
+      const decimal = rating - fullStars;
+      let starsHTML = '';
+      
+      // Full stars
+      for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<span style="color: #FFD700; font-size: 1.2rem;">★</span>';
+      }
+      
+      // Partial star (if rating has decimal)
+      if (decimal > 0) {
+        const percentFilled = decimal * 100;
+        starsHTML += '<span style="position: relative; display: inline-block; font-size: 1.2rem; line-height: 1;">';
+        starsHTML += '<span style="color: #ddd;">★</span>';
+        starsHTML += `<span style="position: absolute; left: 0; top: 0; color: #FFD700; overflow: hidden; width: ${percentFilled}%;">★</span>`;
+        starsHTML += '</span>';
+      }
+      
+      // Empty stars
+      const totalStarsShown = Math.ceil(rating);
+      const emptyStars = 5 - totalStarsShown;
+      for (let i = 0; i < emptyStars; i++) {
+        starsHTML += '<span style="color: #ddd; font-size: 1.2rem;">★</span>';
+      }
+      
+      starsHTML += ` <span style="color: #666; font-weight: 600; margin-left: 0.5rem;">${rating.toFixed(2)}</span>`;
+      
+      return starsHTML;
+    }
+
+    // View toggle functionality
+    function toggleView(viewType) {
+      const gridBtn = document.getElementById('gridViewBtn');
+      const listBtn = document.getElementById('listViewBtn');
+      const lendersGrid = document.getElementById('lendersGrid');
+
+      if (viewType === 'grid') {
+        gridBtn.classList.add('active');
+        listBtn.classList.remove('active');
+        lendersGrid.style.display = 'grid';
+        lendersGrid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(300px, 1fr))';
+        lendersGrid.innerHTML = getGridViewHTML();
+      } else {
+        listBtn.classList.add('active');
+        gridBtn.classList.remove('active');
+        lendersGrid.style.display = 'block';
+        lendersGrid.style.gridTemplateColumns = 'none';
+        lendersGrid.innerHTML = getListViewHTML();
+      }
+    }
+
+    // Generate visual star rating HTML for grid view (inline style version)
+    function generateGridViewStarRating(rating) {
+      const fullStars = Math.floor(rating);
+      const decimal = rating - fullStars;
+      let starsHTML = '<div style="display: flex; align-items: center; gap: 0.15rem;">';
+      
+      // Full stars
+      for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<span style="color: #FFD700; font-size: 1.2rem; line-height: 1;">★</span>';
+      }
+      
+      // Partial star (if rating has decimal)
+      if (decimal > 0) {
+        const percentFilled = decimal * 100;
+        starsHTML += '<span style="position: relative; display: inline-block; font-size: 1.2rem; line-height: 1;">';
+        starsHTML += '<span style="color: #ddd;">★</span>';
+        starsHTML += `<span style="position: absolute; left: 0; top: 0; color: #FFD700; overflow: hidden; width: ${percentFilled}%;">★</span>`;
+        starsHTML += '</span>';
+      }
+      
+      // Empty stars
+      const totalStarsShown = Math.ceil(rating);
+      const emptyStars = 5 - totalStarsShown;
+      for (let i = 0; i < emptyStars; i++) {
+        starsHTML += '<span style="color: #ddd; font-size: 1.2rem; line-height: 1;">★</span>';
+      }
+      
+      starsHTML += `<span style="color: #666; font-weight: 600; margin-left: 0.5rem; font-size: 1rem;">${rating.toFixed(2)}</span>`;
+      starsHTML += '</div>';
+      
+      return starsHTML;
+    }
+
+    // Get grid view HTML
+    function getGridViewHTML() {
+      return `
+        <div class="lender-card hover-card" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; border: 2px solid transparent; display: flex; flex-direction: column;">
+          <div style="flex: 1;">
+            <div class="lender-name" style="cursor: pointer; font-weight: 700; color: #292929; transition: color 0.3s ease; font-size: 1.5rem; margin-bottom: 0.75rem; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onclick="window.open('https://www.firstcolonymortgage.com/', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='#292929'"><img src="assets/lenders/Lender1.png" alt="Lender Option 1 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> <!-- original: <span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 1</span> --><!-- <img src="assets/lenders/lender1.svg" alt="Lender Option 1 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></div>
+            <div class="lender-rating" style="margin-bottom: 1rem;">${generateGridViewStarRating(5.00)}</div>
+            <div class="lender-programs" style="color: #666; margin-bottom: 1.5rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">FHA, Conventional, Rural Housing (RDA), VA Loan, Utah Housing, Reverse Mortgage</div>
+          </div>
+          <button class="contact-btn dynamic-btn" style="width: 100%; color: white; padding: 0.875rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; margin-top: auto;" onclick="openLenderModal('Lender Option 1')">View Loan Officers</button>
+        </div>
+        
+        <div class="lender-card hover-card" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; border: 2px solid transparent; display: flex; flex-direction: column;">
+          <div style="flex: 1;">
+            <div class="lender-name" style="cursor: pointer; font-weight: 700; color: #292929; transition: color 0.3s ease; font-size: 1.5rem; margin-bottom: 0.75rem; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='#292929'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 2</span><!-- <img src="assets/lenders/Lender2.png" alt="Lender Option 2 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></div>
+            <div class="lender-rating" style="margin-bottom: 1rem;">${generateGridViewStarRating(5.00)}</div>
+            <div class="lender-programs" style="color: #666; margin-bottom: 1.5rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">Conventional, Jumbo, First-Time Buyer</div>
+          </div>
+          <button class="contact-btn dynamic-btn" style="width: 100%; color: white; padding: 0.875rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; margin-top: auto;" onclick="openLenderModal('Lender Option 2')">View Loan Officers</button>
+        </div>
+        
+        <div class="lender-card hover-card" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; border: 2px solid transparent; display: flex; flex-direction: column;">
+          <div style="flex: 1;">
+            <div class="lender-name" style="cursor: pointer; font-weight: 700; color: #292929; transition: color 0.3s ease; font-size: 1.5rem; margin-bottom: 0.75rem; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='#292929'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 3</span><!-- <img src="assets/lenders/lender3.svg" alt="Lender Option 3 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></div>
+            <div class="lender-rating" style="margin-bottom: 1rem;">${generateGridViewStarRating(5.00)}</div>
+            <div class="lender-programs" style="color: #666; margin-bottom: 1.5rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">FHA, VA, Conventional</div>
+          </div>
+          <button class="contact-btn dynamic-btn" style="width: 100%; color: white; padding: 0.875rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; margin-top: auto;" onclick="openLenderModal('Lender Option 3')">View Loan Officers</button>
+        </div>
+        
+        <div class="lender-card hover-card" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; border: 2px solid transparent; display: flex; flex-direction: column;">
+          <div style="flex: 1;">
+            <div class="lender-name" style="cursor: pointer; font-weight: 700; color: #292929; transition: color 0.3s ease; font-size: 1.5rem; margin-bottom: 0.75rem; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='#292929'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 4</span><!-- <img src="assets/lenders/lender4.svg" alt="Lender Option 4 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></div>
+            <div class="lender-rating" style="margin-bottom: 1rem;">${generateGridViewStarRating(5.00)}</div>
+            <div class="lender-programs" style="color: #666; margin-bottom: 1.5rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">Construction, Refinancing, Investment</div>
+          </div>
+          <button class="contact-btn dynamic-btn" style="width: 100%; color: white; padding: 0.875rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; margin-top: auto;" onclick="openLenderModal('Lender Option 4')">View Loan Officers</button>
+        </div>
+        
+        <div class="lender-card hover-card" style="background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); transition: all 0.3s ease; border: 2px solid transparent; display: flex; flex-direction: column;">
+          <div style="flex: 1;">
+            <div class="lender-name" style="cursor: pointer; font-weight: 700; color: #292929; transition: color 0.3s ease; font-size: 1.5rem; margin-bottom: 0.75rem; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='#292929'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 5</span><!-- <img src="assets/lenders/lender5.svg" alt="Lender Option 5 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></div>
+            <div class="lender-rating" style="margin-bottom: 1rem;">${generateGridViewStarRating(5.00)}</div>
+            <div class="lender-programs" style="color: #666; margin-bottom: 1.5rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">USDA, FHA, VA, Conventional</div>
+          </div>
+          <button class="contact-btn dynamic-btn" style="width: 100%; color: white; padding: 0.875rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; margin-top: auto;" onclick="openLenderModal('Lender Option 5')">View Loan Officers</button>
+        </div>
+      `;
+    }
+
+    // Generate visual star rating HTML for list view (inline style version)
+    function generateListViewStarRating(rating) {
+      const fullStars = Math.floor(rating);
+      const decimal = rating - fullStars;
+      let starsHTML = '<div style="display: flex; align-items: center; gap: 0.15rem;">';
+      
+      // Full stars
+      for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<span style="color: #FFD700; font-size: 1.3rem; line-height: 1;">★</span>';
+      }
+      
+      // Partial star (if rating has decimal)
+      if (decimal > 0) {
+        const percentFilled = decimal * 100;
+        starsHTML += '<span style="position: relative; display: inline-block; font-size: 1.3rem; line-height: 1;">';
+        starsHTML += '<span style="color: #ddd;">★</span>';
+        starsHTML += `<span style="position: absolute; left: 0; top: 0; color: #FFD700; overflow: hidden; width: ${percentFilled}%;">★</span>`;
+        starsHTML += '</span>';
+      }
+      
+      // Empty stars
+      const totalStarsShown = Math.ceil(rating);
+      const emptyStars = 5 - totalStarsShown;
+      for (let i = 0; i < emptyStars; i++) {
+        starsHTML += '<span style="color: #ddd; font-size: 1.3rem; line-height: 1;">★</span>';
+      }
+      
+      starsHTML += `<span style="color: #666; font-weight: 600; margin-left: 0.5rem; font-size: 1.1rem;">${rating.toFixed(2)}</span>`;
+      starsHTML += '</div>';
+      
+      return starsHTML;
+    }
+
+    // Get list view HTML with visual star ratings
+    function getListViewHTML() {
+      return `
+        <div class="lenders-list-container" style="max-width: 1000px; margin: 0 auto;">
+          <div style="background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
+            <!-- Lender Option 1 -->
+            <div style="padding: 1.5rem; border-bottom: 2px solid #f0f0f0; border-radius: 8px; transition: background-color 0.3s ease; margin: 0 -1.5rem;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                  <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark-gray); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; cursor: pointer; transition: color 0.3s ease;" onclick="window.open('https://www.firstcolonymortgage.com/', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='var(--dark-gray)'"><img src="assets/lenders/Lender1.png" alt="Lender Option 1 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> <!-- original: <span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 1</span> --><!-- <img src="assets/lenders/lender1.svg" alt="Lender Option 1 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></h3>
+                  <div style="margin-bottom: 0.75rem;">${generateListViewStarRating(5.00)}</div>
+                  <div style="color: #666; margin-bottom: 0.75rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">FHA, Conventional, Rural Housing (RDA), VA Loan, Utah Housing, Reverse Mortgage</div>
+                </div>
+                <button onclick="openLenderModal('Lender Option 1')" style="color: white; padding: 0.875rem 2rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); white-space: nowrap; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)';">View Loan Officers</button>
+              </div>
+            </div>
+
+            <!-- Lender Option 2 -->
+            <div style="padding: 1.5rem; border-bottom: 2px solid #f0f0f0; border-radius: 8px; transition: background-color 0.3s ease; margin: 0 -1.5rem;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                  <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark-gray); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; cursor: pointer; transition: color 0.3s ease;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='var(--dark-gray)'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 2</span><!-- <img src="assets/lenders/Lender2.png" alt="Lender Option 2 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></h3>
+                  <div style="margin-bottom: 0.75rem;">${generateListViewStarRating(5.00)}</div>
+                  <div style="color: #666; margin-bottom: 0.75rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">Conventional, Jumbo, First-Time Buyer</div>
+                </div>
+                <button onclick="openLenderModal('Lender Option 2')" style="color: white; padding: 0.875rem 2rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); white-space: nowrap; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)';">View Loan Officers</button>
+              </div>
+            </div>
+
+            <!-- Lender Option 3 -->
+            <div style="padding: 1.5rem; border-bottom: 2px solid #f0f0f0; border-radius: 8px; transition: background-color 0.3s ease; margin: 0 -1.5rem;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                  <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark-gray); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; cursor: pointer; transition: color 0.3s ease;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='var(--dark-gray)'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 3</span><!-- <img src="assets/lenders/lender3.svg" alt="Lender Option 3 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></h3>
+                  <div style="margin-bottom: 0.75rem;">${generateListViewStarRating(5.00)}</div>
+                  <div style="color: #666; margin-bottom: 0.75rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">FHA, VA, Conventional</div>
+                </div>
+                <button onclick="openLenderModal('Lender Option 3')" style="color: white; padding: 0.875rem 2rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); white-space: nowrap; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)';">View Loan Officers</button>
+              </div>
+            </div>
+
+            <!-- Lender Option 4 -->
+            <div style="padding: 1.5rem; border-bottom: 2px solid #f0f0f0; border-radius: 8px; transition: background-color 0.3s ease; margin: 0 -1.5rem;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                  <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark-gray); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; cursor: pointer; transition: color 0.3s ease;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='var(--dark-gray)'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 4</span><!-- <img src="assets/lenders/lender4.svg" alt="Lender Option 4 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></h3>
+                  <div style="margin-bottom: 0.75rem;">${generateListViewStarRating(5.00)}</div>
+                  <div style="color: #666; margin-bottom: 0.75rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">Construction, Refinancing, Investment</div>
+                </div>
+                <button onclick="openLenderModal('Lender Option 4')" style="color: white; padding: 0.875rem 2rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); white-space: nowrap; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)';">View Loan Officers</button>
+              </div>
+            </div>
+
+            <!-- Lender Option 5 -->
+            <div style="padding: 1.5rem; border-radius: 8px; transition: background-color 0.3s ease; margin: 0 -1.5rem;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                  <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark-gray); font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; cursor: pointer; transition: color 0.3s ease;" onclick="window.open('https://stevenbarton.equityrealestateusa.com/index.php', '_blank', 'noopener,noreferrer')" onmouseover="this.style.color='#2ba7fc'" onmouseout="this.style.color='var(--dark-gray)'"><span class="lender-placeholder" style="font-size:1.25rem; font-weight:700; color:inherit; vertical-align:middle;">Lender Option 5</span><!-- <img src="assets/lenders/lender5.svg" alt="Lender Option 5 logo" style="height:34px; object-fit:contain; vertical-align:middle;"> --></h3>
+                  <div style="margin-bottom: 0.75rem;">${generateListViewStarRating(5.00)}</div>
+                  <div style="color: #666; margin-bottom: 0.75rem; line-height: 1.6; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">USDA, FHA, VA, Conventional</div>
+                </div>
+                <button onclick="openLenderModal('Lender Option 5')" style="color: white; padding: 0.875rem 2rem; border: none; border-radius: 9999px; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; transition: all 0.3s ease-in-out; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); white-space: nowrap; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)';">View Loan Officers</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Get coming soon HTML
+    function getComingSoonHTML() {
+      return `
+        <div class="coming-soon-card" style="background: white; border-radius: 20px; padding: 3rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); max-width: 600px; margin: 0 auto; text-align: center;">
+          <div style="width: 80px; height: 80px; background: black; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+            <svg style="width: 44px; height: 44px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <h3 style="font-size: 2rem; color: #2ba7fc; margin-bottom: 1rem; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700;">Coming Soon to Your Area!</h3>
+          <p style="font-size: 1.2rem; color: #666; line-height: 1.6; margin-bottom: 0; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 500;">We're not in this state just yet — but we're on our way! Our team is working to bring Valtera's services to your area soon.</p>
+        </div>
+      `;
+    }
+
+    // Scroll to commitment section at top of page
+    function scrollToCommitment() {
+      const section = document.getElementById('valtera-commitment');
+      if (section) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+      }
+    }
+
+    // Scroll to RESPA section at top of page
+    function scrollToRespa() {
+      const section = document.getElementById('what-is-respa');
+      if (section) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+      }
+    }
+
+    // Scroll to ABA section at top of page
+    function scrollToABA() {
+      const section = document.getElementById('affiliated-business');
+      if (section) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+      }
+    }
+
+    // Scroll to Market section at top of page
+    function scrollToMarket() {
+      const section = document.getElementById('consumer-protection');
+      if (section) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+      }
+    }
+
+    // Scroll to Risk section at top of page
+    function scrollToRisk() {
+      const section = document.getElementById('abas-at-risk');
+      if (section) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+      }
+    }
+
+    // Track scroll position and update TOC
+    function updateTOCOnScroll() {
+      const sections = [
+        { id: 'what-is-respa', linkId: 'toc-link-respa' },
+        { id: 'affiliated-business', linkId: 'toc-link-aba' },
+        { id: 'consumer-protection', linkId: 'toc-link-market' },
+        { id: 'abas-at-risk', linkId: 'toc-link-risk' },
+        { id: 'valtera-commitment', linkId: 'toc-link-commitment' }
+      ];
+
+      const navbarHeight = document.querySelector('.navbar').offsetHeight;
+      const scrollPosition = window.pageYOffset + navbarHeight + 100; // Offset for better triggering
+
+      let currentSection = null;
+
+      // Find which section we're currently in
+      sections.forEach(section => {
+        const element = document.getElementById(section.id);
+        if (element) {
+          const sectionTop = element.offsetTop;
+          const sectionBottom = sectionTop + element.offsetHeight;
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            currentSection = section.linkId;
+          }
+        }
+      });
+
+      // Update TOC link styles
+      sections.forEach(section => {
+        const link = document.getElementById(section.linkId);
+        if (link) {
+          if (section.linkId === currentSection) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        }
+      });
+    }
+
+    // Initialize mobile menu handlers
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+      }
+
+      const mobileMenuBtnArticle = document.getElementById('mobile-menu-btn-article');
+      if (mobileMenuBtnArticle) {
+        mobileMenuBtnArticle.addEventListener('click', toggleMobileMenuArticle);
+      }
+
+      // Populate states
+      populateStates();
+
+      // Add scroll listener for TOC tracking (only on article page)
+      window.addEventListener('scroll', function() {
+        const articlePage = document.getElementById('articlePage');
+        if (articlePage && articlePage.style.display !== 'none') {
+          updateTOCOnScroll();
+        }
+      });
+
+      // Initial TOC update when navigating to article page
+      const articlePage = document.getElementById('articlePage');
+      if (articlePage && articlePage.style.display !== 'none') {
+        updateTOCOnScroll();
+      }
+
+      // Scroll reveal for mission section on mobile
+      function revealMissionSection() {
+        const missionSection = document.getElementById('mission-content');
+        const isMobile = window.innerWidth <= 768;
+        
+        if (!isMobile) {
+          // On desktop, always show the section
+          missionSection.style.opacity = '1';
+          missionSection.style.transform = 'translateY(0)';
+          return;
+        }
+
+        const sectionTop = missionSection.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        // Reveal when section is 200px from bottom of viewport
+        if (sectionTop < windowHeight - 200) {
+          missionSection.style.opacity = '1';
+          missionSection.style.transform = 'translateY(0)';
+        }
+      }
+
+      // Check on page load
+      revealMissionSection();
+
+      // Check on scroll
+      window.addEventListener('scroll', revealMissionSection);
+
+      // Check on resize (in case user rotates device or resizes window)
+      window.addEventListener('resize', revealMissionSection);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9af81f0ca4a12b06',t:'MTc2NTk5MjM0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
