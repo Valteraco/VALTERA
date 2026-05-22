@@ -593,17 +593,18 @@
       border-radius: 9999px;
       font-size: 1.1rem;
       cursor: pointer;
-      background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc);
-      background-size: 200% auto;
+      background-color: black;
+      background-image: none;
       transition: all 0.3s ease-in-out;
-      box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4);
+      box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
       font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     .connect-btn:hover {
-      background-color: #111827;
+      color: black;
+      background-color: white;
       background-image: none;
-      box-shadow: 0 6px 20px 0 rgba(17, 24, 39, 0.4);
+      box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.12);
       transform: translateY(-2px);
     }
 
@@ -1412,7 +1413,7 @@
      <li class="nav-dropdown"><a href="javascript:void(0)" onclick="toggleResultsDropdownArticle()" style="display: flex; align-items: center; gap: 0.5rem;"> Resources 
        <svg class="nav-dropdown-arrow" id="resultsDropdownArrowArticle" style="width: 16px; height: 16px; transition: transform 0.3s ease;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline>
        </svg></a>
-      <div class="nav-dropdown-menu" id="resultsDropdownMenuArticle" style="position: absolute; top: calc(100% + 24px); left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; display: none; min-width: 300px; padding: 0.5rem 0;"><a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100); toggleResultsDropdownArticle();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Our Mission</a> <a href="javascript:void(0)" onclick="scrollToTop(); toggleResultsDropdownArticle();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a>
+      <div class="nav-dropdown-menu" id="resultsDropdownMenuArticle" style="position: absolute; top: calc(100% + 24px); left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; display: none; min-width: 300px; padding: 0.5rem 0;"><a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100); toggleResultsDropdownArticle();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Our Mission</a> <a href="javascript:void(0)" onclick="scrollToTop(); toggleResultsDropdownArticle();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="navigateToContentPage(); toggleResultsDropdownArticle();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Additional Resources</a>
       </div></li>
     <li><a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" class="nav-cta-btn">FIND A LENDER</a></li>
     </ul>
@@ -1420,7 +1421,7 @@
     </div>
    </nav><!-- Mobile Menu for Article Page -->
   <div id="mobile-menu-article" class="mobile-menu" onclick="handleMobileMenuArticleClick(event)">
-  <nav style="width: 100%; padding: 0 0 2rem 0; display: flex; flex-direction: column;"><a href="javascript:void(0)" onclick="closeMobileMenuArticle(); articleNavPartnerHandler()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Partner With Us</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Our Mission</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); scrollToTop()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); navigateToHomePage(); scrollToTop()" style="width: calc(100% - 4rem); padding: 1rem 2.5rem; margin: 0.5rem 2rem 0 2rem; border-radius: 9999px; text-align: center; display: block; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; color: white; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); transition: all 0.3s ease-in-out;">FIND A LENDER</a>
+  <nav style="width: 100%; padding: 0 0 2rem 0; display: flex; flex-direction: column;"><a href="javascript:void(0)" onclick="closeMobileMenuArticle(); articleNavPartnerHandler()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Partner With Us</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Our Mission</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); scrollToTop()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); navigateToContentPage()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Additional Resources</a> <a href="javascript:void(0)" onclick="closeMobileMenuArticle(); navigateToHomePage(); scrollToTop()" style="width: calc(100% - 4rem); padding: 1rem 2.5rem; margin: 0.5rem 2rem 0 2rem; border-radius: 9999px; text-align: center; display: block; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; color: white; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); transition: all 0.3s ease-in-out;">FIND A LENDER</a>
   </nav>
    </div><!-- Article Hero -->
    <section class="article-hero" style="background: #2ba7fc;">
@@ -1483,20 +1484,346 @@
       <p class="content-font">We work with real estate brokerages and lenders of all types to ensure that transparency and consumer choice remain at the center of the process. Our platform bridges the gap—making it simple for real estate brokerages and lenders to demonstrate integrity and for buyers to explore multiple lending options with clarity and confidence. The result is a stronger, more transparent and cost-effective lending experience that empowers consumers to secure a loan that truly fits their needs.</p>
      </section>
     </main>
-   </div><!-- Footer -->
-  <footer id="connect-article" class="footer" style="background: transparent; margin-top: 4rem;">
-   <div class="footer-content" style="margin-top: 4rem;">
-    <div class="footer-logo brand-font" onclick="navigateToHomePage(); scrollToTop()" style="color: white; cursor: pointer;">
-    VALTERA
+    </div><!-- article-container -->
+
+    <!-- Article Page Footer (copy of Additional Resources footer) -->
+    <footer id="footer-article" style="background: transparent; margin-top: 8rem; text-align: center; padding: 0;">
+     <div class="footer-content" style="max-width: 1000px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center;">
+      <div class="footer-logo brand-font" onclick="navigateToHomePage(); scrollToTop()" style="margin-top: 2rem; color: white; cursor: pointer;">
+      VALTERA
+      </div>
+      <p class="footer-tagline content-font" style="color: white; margin-top: -0.5rem;">Connecting Buyers With Quality Lenders</p>
+      <div class="footer-links content-font" style="margin-bottom: 0.2rem;"><a href="javascript:void(0)" onclick="articleNavPartnerHandler()" style="color: white;">Partner With Us</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="color: white;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" style="color: white;">Find A Lender</a>
+      </div>
+      <div class="footer-divider" style="background: linear-gradient(90deg, transparent, white, transparent); width: 100%; max-width: 600px;"></div>
+      <p class="footer-copyright content-font" style="color: white; margin-bottom: 10rem;">© 2026 Valtera. All rights reserved.</p>
+     </div>
+    </footer>
+
+   </div><!-- articlePage -->
+
+  <div id="contentPage" style="display: none;"><!-- Navbar for Content Page -->
+  <nav class="navbar"><a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" class="logo brand-font">VALTERA</a>
+   <ul class="nav-links content-font">
+   <li><a href="javascript:void(0)" onclick="contentNavPartnerHandler()">Partner With Us</a></li>
+     <li class="nav-dropdown"><a href="javascript:void(0)" onclick="toggleResultsDropdownContent()" style="display: flex; align-items: center; gap: 0.5rem;"> Resources 
+       <svg class="nav-dropdown-arrow" id="resultsDropdownArrowContent" style="width: 16px; height: 16px; transition: transform 0.3s ease;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline>
+       </svg></a>
+      <div class="nav-dropdown-menu" id="resultsDropdownMenuContent" style="position: absolute; top: calc(100% + 24px); left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; display: none; min-width: 300px; padding: 0.5rem 0;"><a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100); toggleResultsDropdownContent();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToRespaPage(); toggleResultsDropdownContent();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="navigateToContentPage(); toggleResultsDropdownContent();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Additional Resources</a>
+      </div></li>
+    <li><a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" class="nav-cta-btn">FIND A LENDER</a></li>
+    </ul>
+    <div class="mobile-menu-btn"><button id="mobile-menu-btn-content" class="hamburger focus:outline-none"> <span class="hamburger-top"></span> <span class="hamburger-middle"></span> <span class="hamburger-bottom"></span> </button>
     </div>
-    <p class="footer-tagline content-font" style="color: white; margin-top: -0.5rem;">Connecting Buyers With Quality Lenders</p>
-   <div class="footer-links content-font"><a href="javascript:void(0)" onclick="navigateHomeThenAlignStripe()" style="color: white;">Partner With Us</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="color: white;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" style="color: white;">Find A Lender</a>
+   </nav><!-- Mobile Menu for Content Page -->
+  <div id="mobile-menu-content" class="mobile-menu" onclick="handleMobileMenuContentClick(event)">
+  <nav style="width: 100%; padding: 0 0 2rem 0; display: flex; flex-direction: column;"><a href="javascript:void(0)" onclick="closeMobileMenuContent(); contentNavPartnerHandler()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Partner With Us</a> <a href="javascript:void(0)" onclick="closeMobileMenuContent(); navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Our Mission</a> <a href="javascript:void(0)" onclick="closeMobileMenuContent(); navigateToRespaPage()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="closeMobileMenuContent(); navigateToContentPage()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Additional Resources</a> <a href="javascript:void(0)" onclick="closeMobileMenuContent(); navigateToHomePage(); scrollToTop()" style="width: calc(100% - 4rem); padding: 1rem 2.5rem; margin: 0.5rem 2rem 0 2rem; border-radius: 9999px; text-align: center; display: block; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; color: white; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); transition: all 0.3s ease-in-out;">FIND A LENDER</a>
+  </nav>
+   </div><!-- Content Page Hero -->
+    <main style="padding: 4rem 2rem 0 2rem;">
+      <div style="max-width: 1000px; margin: 0 auto;">
+      <h1 class="brand-font" style="text-align: center; color: black; font-size: 3.5rem; margin: 3.5rem 0 4.5rem 0;">Additional Resources</h1>
+      </div>
+
+     <section class="aba-bg-section" style="background: white; width: 100%; box-sizing: border-box; padding: 48px 0 36px; margin-top: 24px; border-radius: 12px; overflow: hidden;">
+      <div class="elegant-background-wrapper" aria-hidden="true"></div>
+      <div style="max-width: 1000px; margin: 0 auto; position: relative; z-index: 1;">
+       <style>
+        /* Scoped elegant background for the ABA section (adapted from provided design) */
+        .aba-bg-section { position: relative; overflow: hidden; font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .aba-bg-section * { font-family: inherit; }
+        .aba-bg-section .elegant-background-wrapper { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        .aba-bg-section .elegant-background-wrapper::before {
+          content: "";
+          position: absolute;
+          top: -70%;
+          left: -50%;
+          right: -20%;
+          bottom: -50%;
+          background-image: 
+            repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0,0,0,0.15) 50px, rgba(0,0,0,0.15) 51px),
+            repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(0,0,0,0.15) 50px, rgba(0,0,0,0.15) 51px),
+            repeating-linear-gradient(45deg, transparent, transparent 25px, rgba(0,0,0,0.08) 25px, rgba(0,0,0,0.08) 26px),
+            repeating-linear-gradient(-45deg, transparent, transparent 25px, rgba(0,0,0,0.08) 25px, rgba(0,0,0,0.08) 26px),
+            repeating-radial-gradient(circle at 100% 0%, transparent, transparent 80px, rgba(0,0,0,0.12) 80px, rgba(0,0,0,0.12) 81px);
+          transform-origin: top right;
+          transform: translateY(-20%) rotateX(35deg) rotateY(-45deg) rotateZ(5deg);
+          -webkit-mask-image: radial-gradient(circle at 10% 90%, transparent 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,1) 85%);
+          mask-image: radial-gradient(circle at 10% 90%, transparent 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,1) 85%);
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        /* ABA component styles (kept global class names for compatibility) */
+  .aba-search-container {
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Nunito', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #333;
+  }
+  
+  .aba-search-header {
+    margin-bottom: 24px;
+  }
+
+  .aba-search-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 8px;
+  }
+
+  /* Search Input Styling */
+  .aba-search-input-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .aba-search-input {
+    width: 100%;
+    padding: 18px 48px 18px 24px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.3s ease;
+  }
+  
+  .aba-search-input:focus {
+    outline: none;
+    border-color: #4b5563;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .aba-search-input::placeholder {
+    color: #6b7280;
+  }
+
+  /* Search Icon Styling */
+  .aba-search-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
+  /* Results Styling */
+  .aba-results-container {
+    margin-top: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .aba-results-container.has-results {
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  }
+  
+  .aba-result-item {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #374151;
+  }
+
+  .aba-result-item:last-child {
+    border-bottom: none;
+  }
+  
+  .aba-main-title {
+    margin-bottom: 16px;
+  }
+  
+  .aba-main-title strong {
+    color: #111827;
+    font-weight: 600;
+  }
+
+  /* Loan Officers Styling */
+  .loan-officers-section {
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 2px solid #f3f4f6;
+  }
+
+  .loan-officers-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .loan-officer-info {
+    font-size: 15px;
+    color: #4b5563;
+    margin-bottom: 6px;
+  }
+
+  .loan-officer-info:last-child {
+    margin-bottom: 0;
+  }
+  
+  .no-results {
+    padding: 24px;
+    color: #6b7280;
+    text-align: center;
+    font-style: italic;
+  }
+       </style>
+
+  <div class="aba-search-container">
+    <div class="aba-search-header">
+      <h2>Search Affiliated Business Arrangements (ABAs)</h2>
     </div>
-    <div class="footer-divider" style="background: linear-gradient(90deg, transparent, white, transparent);"></div>
-    <p class="footer-copyright content-font" style="color: white; margin-bottom: 3rem;">© 2026 Valtera. All rights reserved.</p>
+    
+    <div class="aba-search-input-wrapper">
+      <input 
+        type="text" 
+        id="abaSearchInput" 
+        class="aba-search-input" 
+        placeholder="Search by Real Estate Brokerage or Mortgage Lender..."
+      >
+      <svg class="aba-search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    
+    <div id="abaResults" class="aba-results-container">
+      </div>
+    <img id="abaEHOLogo" src="assets/Equal%20Housing%20Opportunity/EqualHousingOpportunity-BlackLogo.png" alt="Equal Housing Opportunity" style="position:absolute; right:24px; bottom:18px; height:48px; object-fit:contain; display:none; z-index:2; transform: translateX(48px);" />
+  </div>
+
+  <script>
+    /* * DATABASE SETUP:
+     * Keep expanding this list. Real Estate in "brokerage", Mortgage in "mortgage",
+     * and an array of "loanOfficers" for the individuals under that ABA.
+     */
+    const abaDatabase = [
+      {
+        brokerage: "Horizon Realty Group",
+        mortgage: "BlueStone Mortgage",
+        nmls: "—",
+        loanOfficers: [
+          { name: "Patricia Thomas", phone: "(555) 456-7890", email: "patricia.thomas@bluestone.com", nmls: "—" },
+          { name: "James Caldwell", phone: "(555) 456-7891", email: "james.caldwell@bluestone.com", nmls: "—" }
+        ]
+      },
+      {
+        brokerage: "Vanguard Property Associates",
+        mortgage: "First Choice Lending",
+        nmls: "—",
+        loanOfficers: [
+          { name: "Sarah Jenkins", phone: "(555) 234-5678", email: "s.jenkins@firstchoice.com", nmls: "—" },
+          { name: "Marcus Webb", phone: "(555) 234-5679", email: "m.webb@firstchoice.com", nmls: "—" }
+        ]
+      },
+      {
+        brokerage: "Sterling Real Estate",
+        mortgage: "Beacon Home Funding",
+        nmls: "—",
+        loanOfficers: [
+          { name: "Elena Rodriguez", phone: "(555) 876-5432", email: "elena.r@beaconfunding.com", nmls: "—" },
+          { name: "David Chen", phone: "(555) 876-5433", email: "david.c@beaconfunding.com", nmls: "—" }
+        ]
+      }
+    ];
+
+    const searchInput = document.getElementById('abaSearchInput');
+    const resultsContainer = document.getElementById('abaResults');
+
+    function renderResults(results) {
+      resultsContainer.innerHTML = ''; 
+
+      if (results.length === 0) {
+        resultsContainer.classList.remove('has-results');
+        resultsContainer.innerHTML = '<div class="no-results">No ABAs found matching your search.</div>';
+        const eho = document.getElementById('abaEHOLogo'); if (eho) eho.style.display = 'none';
+        return;
+      }
+
+      resultsContainer.classList.add('has-results');
+      const eho = document.getElementById('abaEHOLogo'); if (eho) eho.style.display = 'block';
+
+      results.forEach(item => {
+        // Create the main wrapper for the result
+        const resultDiv = document.createElement('div');
+        resultDiv.className = 'aba-result-item';
+        
+        // Build the primary ABA heading string
+        let innerHTMLContent = `
+          <div class="aba-main-title">
+            <strong>${item.brokerage}</strong> (Real Estate Services) - <strong>${item.mortgage}</strong> (Mortgage Services) NMLS# ${item.nmls}
+          </div>
+          <div class="loan-officers-section">
+            <div class="loan-officers-title">Loan Officers</div>
+        `;
+
+        // Loop through and build the string for each loan officer
+        item.loanOfficers.forEach(officer => {
+          innerHTMLContent += `
+            <div class="loan-officer-info">
+              ${officer.name} | ${officer.phone} | ${officer.email} | NMLS: ${officer.nmls}
+            </div>
+          `;
+        });
+
+        // Close out the HTML tags
+        innerHTMLContent += `</div>`;
+        
+        // Apply the generated HTML to the div
+        resultDiv.innerHTML = innerHTMLContent;
+        resultsContainer.appendChild(resultDiv);
+      });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      
+      if (searchTerm === "") {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('has-results');
+        const eho = document.getElementById('abaEHOLogo'); if (eho) eho.style.display = 'none';
+        return; 
+      }
+
+      const filteredData = abaDatabase.filter(item => {
+        const matchBrokerage = item.brokerage.toLowerCase().includes(searchTerm);
+        const matchMortgage = item.mortgage.toLowerCase().includes(searchTerm);
+        
+        return matchBrokerage || matchMortgage; 
+      });
+
+      renderResults(filteredData);
+    });
+  </script>
+      </div>
+     </section>
+     </main>
+    <!-- Content Page Footer -->
+    <footer id="footer-content-page" style="background: transparent; margin-top: 14rem; text-align: center; padding: 0;">
+     <div class="footer-content" style="max-width: 1000px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center;">
+      <div class="footer-logo brand-font" onclick="navigateToHomePage(); scrollToTop()" style="margin-top: 2rem; color: white; cursor: pointer;">
+       VALTERA
+      </div>
+      <p class="footer-tagline content-font" style="color: white; margin-top: -0.5rem;">Connecting Buyers With Quality Lenders</p>
+      <div class="footer-links content-font" style="margin-bottom: 0.2rem;"><a href="javascript:void(0)" onclick="contentNavPartnerHandler()" style="color: white;">Partner With Us</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); setTimeout(() => scrollToMissionBoxes(), 100)" style="color: white;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToHomePage(); scrollToTop()" style="color: white;">Find A Lender</a>
+      </div>
+      <div class="footer-divider" style="background: linear-gradient(90deg, transparent, white, transparent); width: 100%; max-width: 600px;"></div>
+      <p class="footer-copyright content-font" style="color: white; margin-bottom: 10rem;">© 2026 Valtera. All rights reserved.</p>
+     </div>
+    </footer>
    </div>
-  </footer>
-  </div><!-- Main Home Page -->
   <div id="homePage"><!-- Navbar -->
   <nav class="navbar"><a href="javascript:void(0)" onclick="closeMobileMenu(); navigateToHomePage(); scrollToTop()" class="logo brand-font">VALTERA</a>
     <ul class="nav-links content-font">
@@ -1504,7 +1831,7 @@
      <li class="nav-dropdown"><a href="javascript:void(0)" onclick="toggleResultsDropdown()" style="display: flex; align-items: center; gap: 0.5rem;"> Resources 
        <svg class="nav-dropdown-arrow" id="resultsDropdownArrow" style="width: 16px; height: 16px; transition: transform 0.3s ease;" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline>
        </svg></a>
-      <div class="nav-dropdown-menu" id="resultsDropdownMenu" style="position: absolute; top: calc(100% + 24px); left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; display: none; min-width: 300px; padding: 0.5rem 0;"><a href="javascript:void(0)" onclick="scrollToSection('mission-content'); toggleResultsDropdown();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToRespaPage(); toggleResultsDropdown();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a>
+      <div class="nav-dropdown-menu" id="resultsDropdownMenu" style="position: absolute; top: calc(100% + 24px); left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 1000; display: none; min-width: 300px; padding: 0.5rem 0;"><a href="javascript:void(0)" onclick="scrollToSection('mission-content'); toggleResultsDropdown();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Our Mission</a> <a href="javascript:void(0)" onclick="navigateToRespaPage(); toggleResultsDropdown();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="navigateToContentPage(); toggleResultsDropdown();" style="display: block; padding: 0.75rem 1rem; color: var(--dark-gray); text-decoration: none; transition: all 0.3s ease; border-radius: 4px; margin: 0 0.5rem;">Additional Resources</a>
       </div></li>
     <li><a href="javascript:void(0)" onclick="goToHeroWithPadding()" class="nav-cta-btn">FIND A LENDER</a></li>
     </ul>
@@ -1512,7 +1839,7 @@
     </div>
    </nav><!-- Mobile Menu -->
   <div id="mobile-menu" class="mobile-menu" onclick="handleMobileMenuClick(event)">
-  <nav style="width: 100%; padding: 0 0 2rem 0; display: flex; flex-direction: column;"><a href="javascript:void(0)" onclick="closeMobileMenu(); goToPartner()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Partner With Us</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); scrollToSection('mission-content')" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Our Mission</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); navigateToRespaPage()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); goToHeroWithPadding()" style="width: calc(100% - 4rem); padding: 1rem 2.5rem; margin: 0.5rem 2rem 0 2rem; border-radius: 9999px; text-align: center; display: block; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; color: white; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); transition: all 0.3s ease-in-out;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)'; this.style.transform='translateY(0)';">FIND A LENDER</a>
+  <nav style="width: 100%; padding: 0 0 2rem 0; display: flex; flex-direction: column;"><a href="javascript:void(0)" onclick="closeMobileMenu(); goToPartner()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Partner With Us</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); scrollToSection('mission-content')" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Our Mission</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); navigateToRespaPage()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Understanding RESPA, ABAs, and How We Protect Consumer Choice</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); navigateToContentPage()" style="width: 100%; padding: 1.5rem 2rem; background: transparent; border-radius: 0; text-align: left; display: block;">Additional Resources</a> <a href="javascript:void(0)" onclick="closeMobileMenu(); goToHeroWithPadding()" style="width: calc(100% - 4rem); padding: 1rem 2.5rem; margin: 0.5rem 2rem 0 2rem; border-radius: 9999px; text-align: center; display: block; background-image: linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc); background-size: 200% auto; color: white; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 15px 0 rgba(43, 167, 252, 0.4); transition: all 0.3s ease-in-out;" onmouseover="this.style.backgroundImage='none'; this.style.backgroundColor='#111827'; this.style.boxShadow='0 6px 20px 0 rgba(17, 24, 39, 0.4)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.backgroundImage='linear-gradient(to right, #2ba7fc, #46affa, #2ba7fc)'; this.style.backgroundColor=''; this.style.boxShadow='0 4px 15px 0 rgba(43, 167, 252, 0.4)'; this.style.transform='translateY(0)';">FIND A LENDER</a>
    </nav>
    </div><!-- Hero Section -->
    <main>
@@ -1785,33 +2112,269 @@
         <!-- END: Mission carousel -->
 
         <h3 class="special-section-font" style="font-size: 2rem; font-weight: 700; color: #000000; margin-bottom: 1.5rem;">A Shared Mission</h3>
-        <p class="special-section-font mission-text" style="font-size: 1.4rem; color: #666; line-height: 1.6; margin-bottom: 2rem;">Whether you're an agent, brokerage, or lender, our mission is shared: to build trust, foster collaboration, and align our efforts toward <strong style="color: transparent; background: linear-gradient(to right, #000000, #2ba7fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">a single purpose—delivering better outcomes for the buyer.</strong></p>
+        <p class="special-section-font mission-text" style="font-size: 1.4rem; color: #666; line-height: 1.6; margin-bottom: 3.5rem;">Whether you're an agent, brokerage, or lender, our mission is shared: to build trust, foster collaboration, and align our efforts toward <strong style="color: #000000;">a single purpose—delivering better outcomes for the buyer.</strong></p>
+        <style>
+          .empowering-buyer-layout {
+            display: grid;
+            grid-template-columns: 1fr minmax(280px, 500px);
+            gap: 2rem;
+            align-items: start;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+          }
 
-        <div class="empowering-buyer-box" style="background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); padding: 2rem; max-width: 600px; margin: 0 auto; text-align: center;">
-         <h4 class="special-section-font" style="font-size: 2rem; font-weight: 700; color: #2ba7fc; margin: 0;">One mission, one focus: empowering the buyer.</h4>
+          .empowering-buyer-layout .empowering-buyer-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: left;
+            max-width: 100%;
+          }
+
+          .empowering-buyer-layout .empowering-buyer-box h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2ba7fc;
+            margin: 0;
+            line-height: 1.2;
+          }
+
+          .empowering-buyer-layout .empowering-buyer-image {
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          .empowering-buyer-layout .empowering-buyer-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            margin-top: -3rem;
+          }
+
+          @media (max-width: 900px) {
+            .empowering-buyer-layout {
+              grid-template-columns: 1fr;
+            }
+            .empowering-buyer-layout .empowering-buyer-image {
+              justify-content: center;
+            }
+            .empowering-buyer-layout .empowering-buyer-image img {
+              margin-top: 0;
+              max-width: 100%;
+            }
+          }
+        </style>
+
+        <div class="empowering-buyer-layout">
+          <div class="empowering-buyer-box">
+            <h4 class="special-section-font">One mission, one focus: empowering the buyer.</h4>
+          </div>
+          <div class="empowering-buyer-image">
+            <img src="assets/SmilingMan/SmilingMan.png" alt="Smiling man" />
+          </div>
         </div>
        </div>
       </div>
      </div>
-    </section><!-- Footer -->
-    <footer id="connect" class="footer" style="background: transparent; margin-top: 4rem;">
-     <div class="footer-divider" style="background: linear-gradient(90deg, transparent, black, transparent); width: 100%; height: 1px; margin: 0 0 3rem 0;"></div>
-     <div class="footer-connect-box" style="margin-top: 7rem; border-radius: 25px; max-width: 1000px;">
-      <h2 class="section-title brand-font" style="color: #333; text-align: center; font-size: 2rem; margin-bottom: 2rem;">Help Your Buyers</h2>
-      <p style="font-size: 1.1rem; margin-bottom: 1rem; text-align: center;" class="content-font">Are you a Real Estate Broker or Mortgage Lender who meets our high standards?<br>
-        See if you qualify to join our network of approved partners.</p>
-      <div style="text-align: center;"><button class="connect-btn dynamic-btn" onclick="window.open('https://qualtricsxm6qnzs6dft.qualtrics.com/jfe/form/SV_bd3yvuc12hARwPQ', '_blank')">Partner With Us</button>
+    </section>
+
+    <!-- Valtera Premium Section -->
+    <style>
+      /* Premium, airy wrapper */
+      .valtera-premium-section {
+        background-color: #ffffff;
+        padding: 60px 20px;
+        font-family: inherit; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 25px;
+        margin: 5rem auto 0 auto;
+        max-width: 1200px;
+      }
+
+      /* Elegant, subtle subtitle approach */
+      .valtera-subhead {
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        font-size: 0.85rem;
+        color: #888888;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      /* The Smashed Word */
+      .valtera-hero-word {
+        font-size: 6rem;
+        font-weight: 900;
+        letter-spacing: -2px;
+        margin: 0;
+        line-height: 1;
+      }
+
+      .valtera-hero-word .val { color: #2ba7fc; }
+      .valtera-hero-word .tera { color: #111111; }
+
+      /* Delicate, architectural connecting lines */
+      .valtera-connector-svg {
+        width: 100%;
+        max-width: 600px;
+        height: 60px;
+        margin-top: 5px;
+        opacity: 0.5; 
+      }
+
+      /* Clean, grid-like definitions */
+      .valtera-def-grid {
+        display: flex;
+        justify-content: center;
+        gap: 120px;
+        margin-top: 10px;
+        margin-bottom: 70px;
+      }
+
+      .valtera-def-item {
+        text-align: center;
+        max-width: 280px;
+      }
+
+      .valtera-def-item:first-child {
+        position: relative;
+        left: -1.75rem;
+      }
+
+      .valtera-def-item:last-child {
+        position: relative;
+        left: 1.25rem;
+      }
+
+      .valtera-def-item h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 0 5px 0;
+      }
+
+      .valtera-def-item .val-title { color: #2ba7fc; }
+      .valtera-def-item .tera-title { color: #111111; }
+
+      .valtera-def-item .latin-tag {
+        display: block;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #aaaaaa;
+        margin-bottom: 12px;
+      }
+
+      .valtera-def-item p {
+        font-size: 1.15rem;
+        color: #555555;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* Sleek, white mission card - Widened to fit text on one line */
+      .valtera-mission-card {
+        background-color: #ffffff; 
+        border-radius: 10px;
+        padding: 24px 50px; 
+        width: 100%;
+        max-width: 1100px; 
+        box-sizing: border-box;
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.08); 
+        border-top: 4px solid #2ba7fc; 
+        text-align: center;
+      }
+
+      .valtera-mission-card p {
+        font-size: 1.2rem; 
+        line-height: 1.6;
+        color: #888888; 
+        margin: 0;
+        font-weight: 500;
+      }
+
+      /* Mobile scaling */
+      @media (max-width: 1024px) {
+        .valtera-def-grid { gap: 60px; }
+      }
+
+      @media (max-width: 768px) {
+        .valtera-premium-section { padding: 60px 20px; }
+        .valtera-hero-word { font-size: 4rem; letter-spacing: -1px; }
+        .valtera-def-grid { gap: 40px; margin-bottom: 50px; flex-direction: column; align-items: center; }
+        .valtera-def-item { max-width: 100%; left: 0; }
+        .valtera-def-item h3 { font-size: 1.8rem; }
+        .valtera-connector-svg { display: none; }
+        .valtera-mission-card { padding: 20px 25px; } 
+        .valtera-mission-card p { font-size: 1.1rem; }
+      }
+    </style>
+
+    <div class="valtera-premium-section">
+    
+     <div class="valtera-subhead">The Meaning Behind</div>
+    
+     <div class="valtera-hero-word">
+       <span class="val">VAL</span><span class="tera">TERA</span>
+     </div>
+
+
+     <svg class="valtera-connector-svg" preserveAspectRatio="none">
+       <line x1="38%" y1="0" x2="20%" y2="100%" stroke="#2ba7fc" stroke-width="1.5" />
+       <line x1="62%" y1="0" x2="80%" y2="100%" stroke="#111111" stroke-width="1.5" />
+     </svg>
+
+
+     <div class="valtera-def-grid">
+       <div class="valtera-def-item">
+         <h3 class="val-title">Valeo</h3>
+         <span class="latin-tag">Latin Verb</span>
+         <p>"To be strong or healthy."</p>
+       </div>
+      
+       <div class="valtera-def-item">
+         <h3 class="tera-title">Terra</h3>
+         <span class="latin-tag">Latin Noun</span>
+         <p>"Earth," "land," or "soil."</p>
+       </div>
+     </div>
+
+
+     <div class="valtera-mission-card">
+       <p>
+         We united these words to reflect our core goal for the buyer:<br>
+         to secure real estate purchases that are financially healthy and enduringly strong.
+       </p>
+     </div>
+
+
+   </div>
+
+
+   </div>
+
+    <!-- Footer -->
+    <footer id="connect" class="footer" style="background: transparent; margin-top: 15rem; padding: 0;">
+     <div class="connect-hero" style="width: 100vw; max-width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); background-image: url('assets/BackgroundImageBlueGreyDot/BlueBackgroundGreyDots.png'); background-size: cover; background-position: center; padding: 80px 0;">
+      <div style="max-width: 1000px; width: min(100%, 1000px); margin: 0 0 0 6rem; text-align: left; color: white; padding-right: 1.5rem;">
+       <h2 class="section-title brand-font" style="color: #fff; text-align: left; font-size: 4rem; margin-bottom: 1rem;">Help Your Buyers</h2>
+       <p style="font-size: 1.1rem; margin-bottom: 1.5rem; text-align: left;" class="content-font">Are you a Real Estate Broker or Mortgage Lender who meets our high standards?<br>See if you qualify to join our network of approved partners.</p>
+       <div style="text-align: left;"><button class="connect-btn dynamic-btn" onclick="window.open('https://qualtricsxm6qnzs6dft.qualtrics.com/jfe/form/SV_bd3yvuc12hARwPQ', '_blank')">Partner With Us</button></div>
       </div>
      </div>
      <div class="footer-content">
-      <div class="footer-logo brand-font" onclick="scrollToSection('hero')" style="margin-top: 6rem; color: white; cursor: pointer;">
+      <div class="footer-logo brand-font" onclick="scrollToSection('hero')" style="margin-top: 15rem; color: white; cursor: pointer;">
        VALTERA
       </div>
       <p class="footer-tagline content-font" style="color: white; margin-top: -0.5rem;">Connecting Buyers With Quality Lenders</p>
       <div class="footer-links content-font"><a href="javascript:void(0)" onclick="goToPartner()" style="color: white;">Partner With Us</a> <a href="javascript:void(0)" onclick="scrollToSection('mission-content')" style="color: white;">Our Mission</a> <a href="javascript:void(0)" onclick="scrollToSection('hero')" style="color: white;">Find A Lender</a>
       </div>
       <div class="footer-divider" style="background: linear-gradient(90deg, transparent, white, transparent);"></div>
-      <p class="footer-copyright content-font" style="color: white; margin-bottom: 3rem;">© 2026 Valtera. All rights reserved.</p>
+      <p class="footer-copyright content-font" style="color: white; margin-bottom: 10rem;">© 2026 Valtera. All rights reserved.</p>
      </div>
     </footer>
    </main>
@@ -2435,6 +2998,16 @@
         if (resultsDropdownArrowArticle) resultsDropdownArrowArticle.classList.remove('rotated');
       }
 
+      // Close Results dropdown when clicking outside (content page)
+      const resultsDropdownContent = document.querySelector('#contentPage .nav-dropdown');
+      const resultsDropdownMenuContent = document.getElementById('resultsDropdownMenuContent');
+      const resultsDropdownArrowContent = document.getElementById('resultsDropdownArrowContent');
+      
+      if (resultsDropdownContent && !resultsDropdownContent.contains(event.target)) {
+        if (resultsDropdownMenuContent) resultsDropdownMenuContent.style.display = 'none';
+        if (resultsDropdownArrowContent) resultsDropdownArrowContent.classList.remove('rotated');
+      }
+
       // Close mobile menu when clicking outside (home page)
       const mobileMenu = document.getElementById('mobile-menu');
       const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -2456,6 +3029,17 @@
           !mobileMenuBtnArticle.contains(event.target)) {
         mobileMenuArticle.classList.remove('active');
         mobileMenuBtnArticle.classList.remove('open');
+      }
+
+      // Close mobile menu when clicking outside (content page)
+      const mobileMenuContent = document.getElementById('mobile-menu-content');
+      const mobileMenuBtnContent = document.getElementById('mobile-menu-btn-content');
+      
+      if (mobileMenuContent && mobileMenuContent.classList.contains('active') && 
+          !mobileMenuContent.contains(event.target) && 
+          !mobileMenuBtnContent.contains(event.target)) {
+        mobileMenuContent.classList.remove('active');
+        mobileMenuBtnContent.classList.remove('open');
       }
     });
 
@@ -2489,7 +3073,41 @@
     function navigateToRespaPage() {
       document.getElementById('homePage').style.display = 'none';
       document.getElementById('articlePage').style.display = 'block';
+      document.getElementById('contentPage').style.display = 'none';
+      // Hide old home footer and show the article footer only
+      const connectFooter = document.getElementById('connect');
+      const articleFooter = document.getElementById('footer-article');
+      const contentFooter = document.getElementById('footer-content-page');
+      if (connectFooter) connectFooter.style.display = 'none';
+      if (articleFooter) articleFooter.style.display = '';
+      if (contentFooter) contentFooter.style.display = 'none';
+      // Restore navbar on article page
+      const articlePage = document.getElementById('articlePage');
+      if (articlePage) {
+        const navbar = articlePage.querySelector('.navbar');
+        if (navbar) navbar.style.display = '';
+      }
       scrollToTop();
+    }
+
+    function navigateToContentPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('articlePage').style.display = 'none';
+      document.getElementById('contentPage').style.display = 'block';
+      // Hide old home footer and show the content footer only
+      const connectFooter = document.getElementById('connect');
+      const articleFooter = document.getElementById('footer-article');
+      const contentFooter = document.getElementById('footer-content-page');
+      if (connectFooter) connectFooter.style.display = 'none';
+      if (articleFooter) articleFooter.style.display = 'none';
+      if (contentFooter) contentFooter.style.display = '';
+      // Show navbar on Additional Resources page
+      const contentPage = document.getElementById('contentPage');
+      if (contentPage) {
+        const navbar = contentPage.querySelector('.navbar');
+        if (navbar) navbar.style.display = '';
+      }
+      window.scrollTo({ top: 0, behavior: 'auto' });
     }
 
     // Scroll to hero with padding. If already on home and at top, scroll smoothly to show space
@@ -2520,33 +3138,50 @@
 
     function navigateToHomePage() {
       document.getElementById('articlePage').style.display = 'none';
+      document.getElementById('contentPage').style.display = 'none';
       document.getElementById('homePage').style.display = 'block';
+      // Hide page-specific footers and show the home footer
+      const connectFooter = document.getElementById('connect');
+      const articleFooter = document.getElementById('footer-article');
+      const contentFooter = document.getElementById('footer-content-page');
+      if (connectFooter) connectFooter.style.display = '';
+      if (articleFooter) articleFooter.style.display = 'none';
+      if (contentFooter) contentFooter.style.display = 'none';
+      // Restore navbar on home page
+      const homePage = document.getElementById('homePage');
+      if (homePage) {
+        const navbar = homePage.querySelector('.navbar');
+        if (navbar) navbar.style.display = '';
+      }
       scrollToTop();
     }
 
     function goToPartner() {
-      const articlePage = document.getElementById('articlePage');
-      const isDesktop = window.innerWidth > 768;
+      const homePage = document.getElementById('homePage');
+      const isHomeVisible = homePage && homePage.style.display !== 'none';
 
-      if (articlePage && articlePage.style.display !== 'none') {
-        // If coming from article page, navigate home first then align/scroll
-        navigateToHomePage();
-        if (isDesktop) {
-          // allow layout to settle, then align the stripe to top
-          setTimeout(() => {
-            alignStripeToTop();
-          }, 350);
-        } else {
-          setTimeout(() => scrollToSection('connect'), 200);
-        }
+      if (isHomeVisible) {
+        scrollToConnectSection();
       } else {
-        // Already on home page
-        if (isDesktop) {
-          alignStripeToTop();
-        } else {
-          scrollToSection('connect');
-        }
+        navigateHomeThenScrollToConnect();
       }
+    }
+
+    function scrollToConnectSection() {
+      const connectSection = document.getElementById('connect');
+      if (connectSection) {
+        const navbar = document.querySelector('.navbar');
+        const navHeight = navbar ? navbar.offsetHeight : 0;
+        const rect = connectSection.getBoundingClientRect();
+        const offset = 40; // raise the target slightly higher under the navbar
+        const top = Math.max(0, window.pageYOffset + rect.top - navHeight - offset);
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    }
+
+    function navigateHomeThenScrollToConnect() {
+      navigateToHomePage();
+      setTimeout(scrollToConnectSection, 220);
     }
 
     function scrollToConnectBox() {
@@ -2622,12 +3257,38 @@
     }
 
     function articleNavPartnerHandler() {
-      // If the user is at the top of the article page, use the down-scroll behavior.
-      const y = window.pageYOffset || document.documentElement.scrollTop || 0;
-      if (y < 40) {
-        navigateHomeThenScrollBelowStripe();
-      } else {
-        navigateHomeThenAlignStripe();
+      navigateHomeThenScrollToConnect();
+    }
+
+    function contentNavPartnerHandler() {
+      navigateHomeThenScrollToConnect();
+    }
+
+    function toggleResultsDropdownContent() {
+      const menu = document.getElementById('resultsDropdownMenuContent');
+      const arrow = document.getElementById('resultsDropdownArrowContent');
+      menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+      arrow.style.transform = menu.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    function closeMobileMenuContent() {
+      const menu = document.getElementById('mobile-menu-content');
+      const btn = document.getElementById('mobile-menu-btn-content');
+      menu.classList.remove('active');
+      btn.classList.remove('open');
+    }
+
+    function toggleMobileMenuContent() {
+      const menu = document.getElementById('mobile-menu-content');
+      const btn = document.getElementById('mobile-menu-btn-content');
+      menu.classList.toggle('active');
+      btn.classList.toggle('open');
+    }
+
+    function handleMobileMenuContentClick(event) {
+      // Close menu if clicking outside the nav
+      if (event.target.id === 'mobile-menu-content') {
+        closeMobileMenuContent();
       }
     }
 
@@ -2702,6 +3363,41 @@
       
       menu.style.display = isOpen ? 'none' : 'block';
       arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    function toggleResultsDropdownContent() {
+      const menu = document.getElementById('resultsDropdownMenuContent');
+      const arrow = document.getElementById('resultsDropdownArrowContent');
+      const isOpen = menu.style.display === 'block';
+      
+      if (menu && arrow) {
+        menu.style.display = isOpen ? 'none' : 'block';
+        arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      }
+    }
+
+    function toggleMobileMenuContent() {
+      const menu = document.getElementById('mobile-menu-content');
+      const btn = document.getElementById('mobile-menu-btn-content');
+      if (menu && btn) {
+        menu.classList.toggle('active');
+        btn.classList.toggle('open');
+      }
+    }
+
+    function closeMobileMenuContent() {
+      const menu = document.getElementById('mobile-menu-content');
+      const btn = document.getElementById('mobile-menu-btn-content');
+      if (menu && btn) {
+        menu.classList.remove('active');
+        btn.classList.remove('open');
+      }
+    }
+
+    function handleMobileMenuContentClick(event) {
+      if (event.target.id === 'mobile-menu-content') {
+        closeMobileMenuContent();
+      }
     }
 
     // Handle state selection change
@@ -3303,6 +3999,11 @@
       const mobileMenuBtnArticle = document.getElementById('mobile-menu-btn-article');
       if (mobileMenuBtnArticle) {
         mobileMenuBtnArticle.addEventListener('click', toggleMobileMenuArticle);
+      }
+
+      const mobileMenuBtnContent = document.getElementById('mobile-menu-btn-content');
+      if (mobileMenuBtnContent) {
+        mobileMenuBtnContent.addEventListener('click', toggleMobileMenuContent);
       }
 
       // Populate states
