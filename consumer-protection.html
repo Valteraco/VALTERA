@@ -28,7 +28,15 @@
     <nav class="valtera-nav">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">VALTERA.</a>
-            <div class="nav-links">
+            
+            <!-- Premium Hamburger Button -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
                 <a href="partner.html">Partner With Us</a>
                 <a href="consumer-protection.html">Consumer Protection</a>
                 <a href="resources.html">Resources</a>
@@ -132,6 +140,20 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        // Hamburger Menu Engine
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            if(hamburger && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
         });
     </script>
 </body>

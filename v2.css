@@ -59,6 +59,7 @@ html, body {
     color: var(--primary-color);
     text-decoration: none;
     letter-spacing: 2px;
+    z-index: 102; /* Keeps logo above mobile menu */
 }
 
 .nav-links a {
@@ -72,6 +73,25 @@ html, body {
 }
 
 .nav-links a:hover { color: var(--accent-color); }
+
+/* Hamburger Button Styling (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    z-index: 102; /* Keeps button above mobile menu overlay */
+}
+
+.hamburger .bar {
+    display: block;
+    width: 25px;
+    height: 2px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--primary-color);
+}
 
 .btn-primary {
     background-color: var(--primary-color);
@@ -494,26 +514,66 @@ html, body {
     .article-sidebar { position: relative; top: 0; }
     .premium-form-box { padding: 2rem; }
     
-    /* Fixes layout for Mission and Etymology sections on smaller screens */
     .mission-grid { flex-direction: column; gap: 2rem; }
     .etymology-grid { flex-direction: column; gap: 2rem; }
     .word-divider { width: 100px; height: 2px; }
     
-    /* Scales down massive desktop fonts */
     .hero-title { font-size: 3.5rem; }
     .page-title { font-size: 2.5rem; }
 }
 
 @media (max-width: 768px) {
-    .lender-grid { grid-template-columns: 1fr; } /* Forces a single column so content never bleeds off screen */
+    .lender-grid { grid-template-columns: 1fr; }
     .lender-grid.list-layout .premium-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .lender-grid.list-layout .btn-outline-primary { width: 100%; }
     
-    /* Navigation: gracefully stacks links on mobile without requiring JavaScript hamburger menus */
-    .nav-container { flex-direction: column; gap: 1rem; padding: 1.5rem 1rem; }
-    .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
-    .nav-links a { margin-left: 0; font-size: 0.9rem; }
+    /* Mobile Navigation & Hamburger Mechanics */
+    .nav-container { padding: 1.25rem 2rem; position: relative; }
+    .hamburger { display: block; } /* Shows the button on mobile */
     
+    /* Nav Links transform into a sleek drop-down panel */
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #ffffff;
+        flex-direction: column;
+        text-align: center;
+        border-top: 1px solid #EAEAEA;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        padding: 0;
+        
+        /* The hiding/sliding mechanic */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+    }
+    
+    /* When active, the panel expands smoothly */
+    .nav-links.active {
+        max-height: 300px; 
+    }
+    
+    .nav-links a {
+        display: block;
+        margin: 0;
+        padding: 1.5rem;
+        border-bottom: 1px solid #EAEAEA;
+        font-size: 1.1rem;
+    }
+    
+    /* The Hamburger "X" Morph Animation */
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
     /* Hero adjustments */
     .hero-title { font-size: 2.5rem; }
     .hero-subtitle { font-size: 1.1rem; }
@@ -536,12 +596,9 @@ html, body {
 }
 
 @media (max-width: 500px) {
-    /* Form fields stack on mobile */
     .form-row { grid-template-columns: 1fr; gap: 0; }
     
-    /* Final font scaling for tiny phones */
     .hero-title { font-size: 2.2rem; }
-    .nav-links { flex-direction: column; align-items: center; gap: 0.75rem; }
     .search-input-group { padding: 0.5rem; }
     .premium-dropdown { font-size: 1rem; }
 }
