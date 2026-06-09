@@ -29,7 +29,6 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">VALTERA.</a>
             
-            <!-- Premium Hamburger Button -->
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -59,9 +58,14 @@
             </div>
 
             <div class="aba-results-container" id="abaResults">
+                <!-- UPDATED HTML FOR POINT 8 -->
                 <div class="aba-card">
                     <div class="aba-card-header">
-                        <h3>Horizon Realty Group <span>(Real Estate Services)</span> - BlueStone Mortgage <span>(Mortgage Services)</span></h3>
+                        <h3>
+                            <span class="aba-entity">Horizon Realty Group <span>(Real Estate Services)</span></span>
+                            <span class="aba-hyphen"> - </span>
+                            <span class="aba-entity">BlueStone Mortgage <span>(Mortgage Services)</span></span>
+                        </h3>
                         <span class="nmls-badge">NMLS #123456</span>
                     </div>
                     <div class="aba-officers">
@@ -74,7 +78,11 @@
                 </div>
                 <div class="aba-card">
                     <div class="aba-card-header">
-                        <h3>Vanguard Property Associates <span>(Real Estate Services)</span> - First Choice Lending <span>(Mortgage Services)</span></h3>
+                        <h3>
+                            <span class="aba-entity">Vanguard Property Associates <span>(Real Estate Services)</span></span>
+                            <span class="aba-hyphen"> - </span>
+                            <span class="aba-entity">First Choice Lending <span>(Mortgage Services)</span></span>
+                        </h3>
                         <span class="nmls-badge">NMLS #654321</span>
                     </div>
                     <div class="aba-officers">
@@ -87,7 +95,11 @@
                 </div>
                 <div class="aba-card">
                     <div class="aba-card-header">
-                        <h3>Sterling Real Estate <span>(Real Estate Services)</span> - Beacon Home Funding <span>(Mortgage Services)</span></h3>
+                        <h3>
+                            <span class="aba-entity">Sterling Real Estate <span>(Real Estate Services)</span></span>
+                            <span class="aba-hyphen"> - </span>
+                            <span class="aba-entity">Beacon Home Funding <span>(Mortgage Services)</span></span>
+                        </h3>
                         <span class="nmls-badge">NMLS #987654</span>
                     </div>
                     <div class="aba-officers">
@@ -125,6 +137,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger Menu Engine & Click Outside to Close
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            if(hamburger && navLinks) {
+                hamburger.addEventListener('click', function(event) {
+                    event.stopPropagation(); 
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    }
+                });
+                
+                navLinks.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            }
+
             const searchInput = document.getElementById('abaSearchInput');
             const abaCards = document.querySelectorAll('.aba-card');
             const noResultsMsg = document.getElementById('noResultsMsg');
@@ -160,35 +195,6 @@
                     abaEhoContainer.style.display = 'flex'; 
                 }
             });
-        });
-    </script>
-    <script>
-        // Hamburger Menu Engine & Click Outside to Close
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('navLinks');
-
-            if(hamburger && navLinks) {
-                // Toggle menu
-                hamburger.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Prevents instant bubbling
-                    hamburger.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                });
-
-                // Close menu if clicking anywhere outside of it
-                document.addEventListener('click', function(event) {
-                    if (navLinks.classList.contains('active') && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
-                        hamburger.classList.remove('active');
-                        navLinks.classList.remove('active');
-                    }
-                });
-                
-                // Keep menu open if clicking inside the links container
-                navLinks.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-            }
         });
     </script>
 </body>

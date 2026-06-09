@@ -29,7 +29,6 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">VALTERA.</a>
             
-            <!-- Premium Hamburger Button -->
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -138,8 +137,9 @@
                     <p>"Earth, land, or soil."</p>
                 </div>
             </div>
+            <!-- UPDATED TEXT: Removed the <br> line break to match Point 1 -->
             <p class="etymology-conclusion text-center">
-                We united these words to reflect our core goal for the buyer:<br>to secure real estate purchases that are financially healthy and enduringly strong.
+                We united these words to reflect our core goal for the buyer: to secure real estate purchases that are financially healthy and enduringly strong.
             </p>
         </div>
     </section>
@@ -176,6 +176,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger Menu Engine & Click Outside to Close
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            if(hamburger && navLinks) {
+                hamburger.addEventListener('click', function(event) {
+                    event.stopPropagation(); 
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    }
+                });
+                
+                navLinks.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            }
+
             const stateDropdown = document.getElementById('stateDropdown');
             const lenderSection = document.querySelector('.lender-results-section');
             const lenderGrid = document.getElementById('lenderGrid');
@@ -459,35 +482,6 @@
                     document.body.style.overflow = 'auto';
                 }
             });
-        });
-    </script>
-    <script>
-        // Hamburger Menu Engine & Click Outside to Close
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('navLinks');
-
-            if(hamburger && navLinks) {
-                // Toggle menu
-                hamburger.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Prevents instant bubbling
-                    hamburger.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                });
-
-                // Close menu if clicking anywhere outside of it
-                document.addEventListener('click', function(event) {
-                    if (navLinks.classList.contains('active') && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
-                        hamburger.classList.remove('active');
-                        navLinks.classList.remove('active');
-                    }
-                });
-                
-                // Keep menu open if clicking inside the links container
-                navLinks.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-            }
         });
     </script>
 </body>
