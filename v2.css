@@ -19,9 +19,6 @@ html, body {
    background-color: var(--bg-light);
    color: var(--text-dark);
    line-height: 1.6;
-   /* ADD THESE TWO LINES TO PREVENT MOBILE CUTOFF */
-   width: 100%;
-   overflow-x: hidden;
 }
 
 
@@ -809,9 +806,15 @@ html, body {
 }
 
 
-/* --- NEW MOBILE FIXES --- */
+/* --- ISOLATED MOBILE FIXES --- */
 @media (max-width: 768px) {
     
+    /* FIX 4: Lock horizontal scroll strictly on mobile so desktop sticky works */
+    html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+    }
+
     /* FIX 1: Center search subtitle */
     .search-subtitle {
         white-space: normal !important; 
@@ -831,57 +834,65 @@ html, body {
         font-size: 0.85rem !important;
     }
 
-    /* FIX 3: Fully visible placeholder text in the search bar */
+    /* FIX 3: Shrink placeholder text so it fully fits inside the bar */
     .aba-search-input::placeholder {
-        font-size: clamp(0.55rem, 2.5vw, 0.85rem) !important; 
+        font-size: 11px !important; 
     }
 
-    /* FIX 5: Three mission boxes side-by-side simultaneously */
+    /* FIX 5: Compact vertical stacking for mission boxes */
     .mission-grid {
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        overflow-x: visible !important; 
-        gap: 0.25rem !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        overflow-x: hidden !important;
     }
     .mission-card {
-        flex: 1 1 0 !important; 
-        padding: 0.5rem !important; 
-        min-width: 0 !important; 
-    }
-    .mission-card h3 {
-        font-size: 0.65rem !important; 
-        white-space: normal !important;
-        margin-bottom: 0.5rem !important;
-    }
-    .mission-card p {
-        font-size: 0.55rem !important;
-        line-height: 1.4 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        padding: 1.25rem !important;
+        gap: 1rem !important;
+        flex: auto !important;
     }
     .mission-icon {
-        margin-bottom: 0.5rem !important;
+        margin-bottom: 0 !important;
+        font-size: 1.75rem !important;
+        flex-shrink: 0 !important;
     }
-    .mission-icon svg {
-        width: 18px !important;
-        height: 18px !important;
-    }
-
-    /* FIX 6: Lock grid view to exactly 2 columns on mobile */
-    .lender-grid:not(.list-layout) {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 0.5rem !important;
-    }
-    .lender-grid:not(.list-layout) .premium-card {
-        padding: 0.75rem !important; 
-    }
-    .lender-grid:not(.list-layout) .lender-name {
-        font-size: 0.85rem !important;
+    .mission-card h3 {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.25rem !important;
         white-space: normal !important;
     }
-    .lender-grid:not(.list-layout) .expandable-text {
-        font-size: 0.75rem !important;
+    .mission-card p {
+        font-size: 0.9rem !important;
+        margin-bottom: 0 !important;
+    }
+
+    /* FIX 6: Force list view on mobile and hide toggle buttons */
+    .view-toggle-container {
+        display: none !important; 
+    }
+    .lender-grid:not(.list-layout) {
+        grid-template-columns: 1fr !important;
+    }
+    .lender-grid:not(.list-layout) .premium-card {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+        padding: 1.5rem !important;
+    }
+    .lender-grid:not(.list-layout) .lender-header {
+        margin-bottom: 0 !important;
+        min-height: auto !important;
+        width: 100% !important;
+    }
+    .lender-grid:not(.list-layout) .expandable-wrapper {
+        margin-bottom: 0 !important;
+        width: 100% !important;
     }
     .lender-grid:not(.list-layout) .btn-outline-primary {
-        font-size: 0.7rem !important;
-        padding: 0.5rem 0.25rem !important;
+        width: 100% !important;
+        margin-top: 0 !important;
     }
 }
