@@ -806,13 +806,70 @@ html, body {
 }
 
 
-/* --- ISOLATED MOBILE FIXES --- */
+/* --- ISOLATED MOBILE FIXES V2 --- */
 @media (max-width: 768px) {
     
-    /* FIX 4: Lock horizontal scroll strictly on mobile so desktop sticky works */
+    /* FIX 4: Prevent text from sliding off the edge on all pages (including Partner With Us) */
     html, body {
         overflow-x: hidden !important;
         width: 100% !important;
+    }
+    .container {
+        padding: 0 1.25rem !important; /* Gives the text a bit more breathing room */
+        box-sizing: border-box !important;
+    }
+    .partner-intro, .standard-item p, h1, h2, h3, h4, p, span {
+        overflow-wrap: break-word !important; /* Forces long text to break instead of pushing off screen */
+        word-wrap: break-word !important;
+        max-width: 100% !important;
+    }
+    
+    /* FIX 3: Shrink placeholder text further AND give the search bar more room inside */
+    .search-bar-wrapper {
+        padding: 0.25rem 0.75rem !important; 
+    }
+    .aba-search-input {
+        padding: 0.5rem !important;
+    }
+    .aba-search-input::placeholder {
+        font-size: 9px !important; 
+        letter-spacing: -0.2px !important;
+    }
+
+    /* FIX 5: Layout Mission boxes using Grid to put Icon left, Title right, Description under Title */
+    .mission-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .mission-card {
+        display: grid !important;
+        grid-template-columns: auto 1fr !important; /* Icon gets column 1, Text gets column 2 */
+        grid-template-rows: auto auto !important; /* Title gets row 1, Description gets row 2 */
+        column-gap: 1rem !important;
+        row-gap: 0.25rem !important;
+        text-align: left !important;
+        padding: 1.25rem !important;
+        align-items: start !important;
+    }
+    .mission-icon {
+        grid-column: 1 !important;
+        grid-row: 1 / span 2 !important; /* Makes the icon stretch down alongside both rows of text */
+        margin-bottom: 0 !important;
+        font-size: 1.75rem !important;
+    }
+    .mission-card h3 {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 0 !important;
+        white-space: normal !important;
+    }
+    .mission-card p {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 0 !important;
     }
 
     /* FIX 1: Center search subtitle */
@@ -832,41 +889,6 @@ html, body {
         display: block !important; 
         margin-top: 0.2rem !important;
         font-size: 0.85rem !important;
-    }
-
-    /* FIX 3: Shrink placeholder text so it fully fits inside the bar */
-    .aba-search-input::placeholder {
-        font-size: 11px !important; 
-    }
-
-    /* FIX 5: Compact vertical stacking for mission boxes */
-    .mission-grid {
-        flex-direction: column !important;
-        gap: 1rem !important;
-        overflow-x: hidden !important;
-    }
-    .mission-card {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: flex-start !important;
-        text-align: left !important;
-        padding: 1.25rem !important;
-        gap: 1rem !important;
-        flex: auto !important;
-    }
-    .mission-icon {
-        margin-bottom: 0 !important;
-        font-size: 1.75rem !important;
-        flex-shrink: 0 !important;
-    }
-    .mission-card h3 {
-        font-size: 1.1rem !important;
-        margin-bottom: 0.25rem !important;
-        white-space: normal !important;
-    }
-    .mission-card p {
-        font-size: 0.9rem !important;
-        margin-bottom: 0 !important;
     }
 
     /* FIX 6: Force list view on mobile and hide toggle buttons */
