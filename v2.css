@@ -809,7 +809,7 @@ html, body {
 @media (max-width: 768px) {
     
     html, body {
-        overflow-x: hidden !important;
+        overflow-x: clip !important;
         width: 100% !important;
         position: relative !important;
     }
