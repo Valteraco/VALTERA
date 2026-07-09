@@ -1,3 +1,3 @@
-# VALTERA
+# VALTERA.
 Connecting Buyers With Quality Lenders
 
