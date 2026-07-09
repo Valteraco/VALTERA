@@ -44,7 +44,7 @@
     <main class="partner-section">
         <div class="container partner-grid">
             <div class="partner-info-side">
-                <span class="hero-kicker" style="color: var(--accent-color);">Network Alignment</span>
+                <span class="hero-kicker" style="color: var(--accent-color);">Platform Alignment</span>
                 <h1 class="partner-headline">Uniting<br>for the Buyer</h1>
                 <p class="partner-intro">Valtera connects independent home buyers with highly rated, vetted lenders who value transparency and have local market expertise.</p>
                 
@@ -68,8 +68,8 @@
 
             <div class="partner-form-side">
                 <div class="premium-form-box">
-                    <h3>Application for Network Inclusion</h3>
-                    <p class="form-instructions">Please provide your details below. Our compliance and relations team will review your inquiry and contact you accordingly.</p>
+                    <h3>Application for Platform Inclusion</h3>
+                    <p class="form-instructions" id="formInstructions">Please provide your details below. Our relations team will review your inquiry and contact you accordingly.</p>
                     
                     <form id="partnerApplicationForm" action="https://formspree.io/f/mjgqpynl" method="POST">
                         <div class="form-group">
@@ -112,8 +112,7 @@
                     <div id="formSuccessMessage" class="form-success-message" style="display: none;">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                         <h4>Application Received</h4>
-                        <p style="color: var(--text-muted); margin-bottom: 2rem;">Thank you for your interest in joining the Valtera network. Our compliance and relations team will review your details and reach out shortly.</p>
-                        <button type="button" class="btn-outline-primary" id="submitAnotherBtn">Submit Another Application</button>
+                        <p style="color: var(--text-muted); margin-bottom: 2rem;">Thank you for your interest in joining the Valtera platform. Our relations team will review your details and reach out shortly.</p>
                     </div>
                     
                 </div>
@@ -130,7 +129,12 @@
                 <a href="consumer-protection.html">Consumer Protection</a>
                 <a href="resources.html">Resources</a>
             </div>
-            <p class="footer-copyright">© 2026 Valtera. All rights reserved.</p>
+            <p class="footer-copyright">
+                © 2026 Valtera. All rights reserved. &nbsp;|&nbsp; 
+                <a href="terms.html" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#1A1A1A'" onmouseout="this.style.color='inherit'">Terms of Service</a> 
+                &nbsp;|&nbsp; 
+                <a href="privacy.html" style="color: inherit; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#1A1A1A'" onmouseout="this.style.color='inherit'">Privacy Policy</a>
+            </p>
         </div>
     </footer>
     
@@ -163,7 +167,7 @@
             const partnerForm = document.getElementById('partnerApplicationForm');
             const successMessage = document.getElementById('formSuccessMessage');
             const submitBtn = document.getElementById('submitBtn');
-            const submitAnotherBtn = document.getElementById('submitAnotherBtn');
+            const formInstructions = document.getElementById('formInstructions');
 
             if (partnerForm) {
                 partnerForm.addEventListener('submit', async function(event) {
@@ -186,9 +190,10 @@
                         });
 
                         if (response.ok) {
-                            // Clear form, hide form, show success message
+                            // Clear form, hide form and instructions, show success message
                             partnerForm.reset();
                             partnerForm.style.display = 'none';
+                            if (formInstructions) formInstructions.style.display = 'none';
                             successMessage.style.display = 'block';
                             
                             // Scroll back to top of form box smoothly
@@ -203,14 +208,6 @@
                         submitBtn.innerHTML = originalBtnText;
                         submitBtn.disabled = false;
                     }
-                });
-            }
-
-            // --- Allow them to submit another application if needed ---
-            if (submitAnotherBtn) {
-                submitAnotherBtn.addEventListener('click', function() {
-                    successMessage.style.display = 'none';
-                    partnerForm.style.display = 'block';
                 });
             }
         });
