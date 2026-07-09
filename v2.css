@@ -1010,3 +1010,11 @@ html, body {
         margin-top: 0 !important;
     }
 }
+
+/* --- FOOTER MOBILE ONE-LINE FIX --- */
+@media (max-width: 768px) {
+    .footer-copyright {
+        font-size: clamp(0.45rem, 2.5vw, 0.7rem) !important;
+        white-space: nowrap !important;
+    }
+}
