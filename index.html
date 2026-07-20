@@ -463,12 +463,12 @@
                const modalContainer = document.querySelector('.modal-container');
                modalContainer.innerHTML = `
                    <style>
-                       /* Google Maps-style Bottom Sheet for Mobile */
+                       /* Google Maps-style Bottom Sheet Overlay for Mobile */
                        @media (max-width: 991px) {
                            .modal-container {
                                padding: 0 !important;
                                width: 100% !important;
-                               height: 100vh !important; /* Expands modal to full screen */
+                               height: 100vh !important;
                                max-height: 100vh !important;
                                border-radius: 0 !important;
                                overflow: hidden !important;
@@ -485,7 +485,7 @@
                                top: 0 !important;
                                left: 0 !important;
                                width: 100% !important;
-                               height: 50vh !important; /* Map takes top half */
+                               height: 45vh !important; /* Map positioned perfectly in the background top section */
                                margin: 0 !important;
                            }
                            #utah-map {
@@ -495,25 +495,26 @@
                            }
                            .modal-left {
                                position: absolute !important;
-                               top: 45vh !important; /* Sheet starts here, overlapping the map slightly */
+                               top: 40vh !important; /* Slid up natively over the map view */
                                bottom: 0 !important;
                                left: 0 !important;
                                width: 100% !important;
                                background: #FFFFFF !important;
                                z-index: 10 !important;
                                border-radius: 24px 24px 0 0 !important;
-                               box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
+                               box-shadow: 0 -6px 25px rgba(0,0,0,0.12) !important;
                                overflow-y: auto !important;
                                padding: 35px 20px 30px 20px !important;
+                               -webkit-overflow-scrolling: touch;
                            }
-                           /* Bottom sheet drag handle (visual aesthetic) */
+                           /* Interactive drag handle pill */
                            .modal-left::before {
                                content: '';
                                position: absolute;
                                top: 12px;
                                left: 50%;
                                transform: translateX(-50%);
-                               width: 40px;
+                               width: 45px;
                                height: 5px;
                                background: #D1D1D1;
                                border-radius: 10px;
@@ -526,7 +527,16 @@
                                height: 40px !important;
                                font-size: 1.5rem !important;
                                z-index: 9999 !important;
-                               background: rgba(255, 255, 255, 0.9) !important; /* Slight transparency like maps */
+                               background: rgba(255, 255, 255, 0.95) !important;
+                           }
+                           /* Precise application of premium desktop active states to mobile view */
+                           .officer-item.active {
+                               background-color: #FAF8F5 !important; /* Warm ivory background */
+                               border: 1px solid #DFBA73 !important; /* Soft champagne gold outline */
+                               border-radius: 14px !important;
+                               padding: 18px !important;
+                               margin-bottom: 2rem !important;
+                               transition: all 0.3s ease;
                            }
                        }
                    </style>
@@ -644,15 +654,15 @@
                            });
                            
                            layer.on('click', function() {
-                               currentActiveRegion = layer.options.regionId;
-                               refreshMapStyles();
-                               
-                               const targetScrollItem = highlightLoanOfficers(currentActiveRegion);
-                               // Explicitly restricting auto-scroll to desktop so mobile views don't aggressively snap
-                               if (targetScrollItem && activeState !== 'Arkansas' && window.innerWidth >= 992) {
-                                   scrollContainer.scrollTo({ top: targetScrollItem.offsetTop - 40, behavior: 'smooth' });
-                               }
-                           });
+    currentActiveRegion = layer.options.regionId;
+    refreshMapStyles();
+    
+    const targetScrollItem = highlightLoanOfficers(currentActiveRegion);
+    // Programmatic scrolling activated universally across both desktop layout views and mobile bottom-sheet views
+    if (targetScrollItem && activeState !== 'Arkansas') {
+        scrollContainer.scrollTo({ top: targetScrollItem.offsetTop - 40, behavior: 'smooth' });
+    }
+});
                        }
                    }).addTo(leafletMap);
 
