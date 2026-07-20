@@ -462,7 +462,7 @@
 
                const modalContainer = document.querySelector('.modal-container');
                
-               /* FIX 1: Lock background body scroll to stop scroll bleed behind the modal */
+               /* Lock background body scroll to stop scroll bleed behind the modal */
                document.body.style.setProperty('overflow', 'hidden', 'important'); 
 
                modalContainer.innerHTML = `
@@ -481,7 +481,7 @@
                                margin: 0 !important;
                                padding: 0 !important;
                                overflow-y: auto !important;
-                               overscroll-behavior: contain !important; /* Forces scroll events to stay inside the modal */
+                               overscroll-behavior: contain !important;
                                z-index: 999999 !important;
                                background: #FFFFFF !important;
                                -webkit-overflow-scrolling: touch;
@@ -533,7 +533,7 @@
                            .drag-handle-zone {
                                position: absolute;
                                top: 0; left: 0; right: 0;
-                               height: 50px;
+                               height: 45px;
                                z-index: 10;
                            }
                            #closeModalBtn {
@@ -547,7 +547,6 @@
                                background: rgba(255, 255, 255, 0.95) !important;
                                box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
                            }
-                           /* Unwanted layout CSS removed entirely to protect your native design */
                        }
                    </style>
                    <button id="closeModalBtn" style="position: absolute; top: 30px; right: 40px; z-index: 9999; font-size: 2rem; background: #FFFFFF; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #1A1A1A;">&times;</button>
@@ -581,22 +580,21 @@
                        window.originalOfficers = Array.from(officerItems);
                    }
 
-                   // 1. Gesture Tracking (Google Maps native pull mechanics)
+                   // 1. Gesture Tracking (Google Maps pull mechanics fixed)
                    let startY = 0;
                    let startH = 0;
                    let dragging = false;
-                   let lastDiff = 0;
+                   let isHandle = false;
 
                    mLeft.addEventListener('touchstart', function(e) {
                        const touchY = e.touches[0].clientY;
                        const rect = mLeft.getBoundingClientRect();
-                       const isHandleTouch = (touchY - rect.top) < 60;
+                       isHandle = (touchY - rect.top) < 45;
 
-                       if (mContainer.scrollTop <= 5 || isHandleTouch) {
+                       if (mContainer.scrollTop <= 5 || isHandle) {
                            startY = touchY;
                            startH = mRight.offsetHeight;
                            dragging = true;
-                           lastDiff = 0;
                            mRight.style.transition = 'none';
                        }
                    }, { passive: true });
@@ -604,28 +602,27 @@
                    mContainer.addEventListener('touchmove', function(e) {
                        if (!dragging) return;
                        const currentY = e.touches[0].clientY;
-                       lastDiff = currentY - startY;
-                       const minH = window.innerHeight * 0.40; 
+                       const diff = currentY - startY;
 
-                       if (lastDiff < 0 && startH <= (minH + 10)) {
+                       // If not dragging the handle, and pulling list up, let native scroll take over
+                       if (!isHandle && diff < 0) {
                            dragging = false;
+                           mRight.style.transition = 'height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
                            return;
                        }
 
-                       // Prevent default browser scroll specifically when dragging the sheet down
-                       if (lastDiff > 0 && startH >= minH) {
-                           if (e.cancelable) e.preventDefault();
+                       if (e.cancelable && (isHandle || diff > 0)) {
+                           e.preventDefault();
                        }
 
-                       let newH = startH + lastDiff;
+                       let newH = startH + diff;
                        const maxH = window.innerHeight * 0.75; 
+                       const minH = window.innerHeight * 0.20; // Allow sheet to be pulled much higher up
 
                        if (newH > maxH) newH = maxH;
                        if (newH < minH) newH = minH;
 
-                       if (lastDiff > 0 || mRight.offsetHeight > minH) {
-                           mRight.style.setProperty('height', newH + 'px', 'important');
-                       }
+                       mRight.style.setProperty('height', newH + 'px', 'important');
                    }, { passive: false });
 
                    document.addEventListener('touchend', function() {
@@ -633,19 +630,16 @@
                        dragging = false;
                        
                        mRight.style.transition = 'height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
-                       
-                       if (lastDiff < -20) {
-                           mRight.style.setProperty('height', '40vh', 'important');
-                           mContainer.scrollTo({ top: 0, behavior: 'smooth' }); 
-                       } else if (lastDiff > 20) {
+                       const currentH = mRight.offsetHeight;
+                       const vh = window.innerHeight;
+
+                       // Snap thresholds 
+                       if (currentH > vh * 0.55) {
                            mRight.style.setProperty('height', '75vh', 'important');
+                       } else if (currentH < vh * 0.30) {
+                           mRight.style.setProperty('height', '20vh', 'important');
                        } else {
-                           if (mRight.offsetHeight > window.innerHeight * 0.55) {
-                               mRight.style.setProperty('height', '75vh', 'important');
-                           } else {
-                               mRight.style.setProperty('height', '40vh', 'important');
-                               mContainer.scrollTo({ top: 0, behavior: 'smooth' });
-                           }
+                           mRight.style.setProperty('height', '40vh', 'important');
                        }
                        
                        setTimeout(() => {
@@ -670,15 +664,12 @@
 
                                setTimeout(() => {
                                    officerItems.forEach(opt => {
-                                       const isActiveMatch = opt.classList.contains('active') || opt.querySelector('.active') || opt.getAttribute('data-region') === region;
+                                       const isLinda = opt.textContent.includes('Linda Lopez');
+                                       const isMatch = opt.getAttribute('data-region') === region || isLinda;
                                        
-                                       // FIX 2: Vigorously strip the `.active` class to protect your original layout
-                                       opt.classList.remove('active');
-                                       const innerActive = opt.querySelector('.active');
-                                       if (innerActive) innerActive.classList.remove('active');
-
-                                       if (isActiveMatch) {
-                                           opt.style.setProperty('display', 'block', 'important');
+                                       // Restores natural layout instead of breaking it with custom rules
+                                       if (isMatch) {
+                                           opt.style.removeProperty('display'); 
                                        } else {
                                            opt.style.setProperty('display', 'none', 'important');
                                        }
@@ -686,22 +677,10 @@
                                    
                                    const linda = Array.from(officerItems).find(el => el.textContent.includes('Linda Lopez'));
                                    if (linda && window.officerParent) {
-                                       linda.style.setProperty('display', 'block', 'important'); 
                                        window.officerParent.appendChild(linda);
                                    }
 
-                                   setTimeout(() => {
-                                       const gap = 15;
-                                       const itemRect = item.getBoundingClientRect();
-                                       const mapRect = mRight.getBoundingClientRect();
-                                       const scrollAmount = itemRect.top - mapRect.bottom - gap;
-                                       mContainer.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                                       
-                                       if (typeof leafletMap !== 'undefined' && leafletMap && typeof geojsonLayer !== 'undefined') {
-                                           leafletMap.invalidateSize();
-                                           try { leafletMap.fitBounds(geojsonLayer.getBounds(), { padding: [45, 45] }); } catch(e){}
-                                       }
-                                   }, 50);
+                                   // Scroll up logic completely removed here
                                    
                                    let clearBtn = document.getElementById('clearCountyFilter');
                                    if (!clearBtn) {
@@ -729,10 +708,7 @@
                                                }
 
                                                officerItems.forEach(opt => {
-                                                   opt.style.setProperty('display', 'block', 'important');
-                                                   opt.classList.remove('active');
-                                                   const innerAct = opt.querySelector('.active');
-                                                   if (innerAct) innerAct.classList.remove('active');
+                                                   opt.style.removeProperty('display');
                                                });
                                                clearBtn.remove();
                                            });
@@ -856,7 +832,6 @@
     
     if (window.innerWidth < 992) {
         const mRight = document.querySelector('.modal-right');
-        const mContainer = document.querySelector('.modal-container');
         if (mRight) {
             mRight.style.transition = 'height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
             mRight.style.setProperty('height', '40vh', 'important');
@@ -866,15 +841,11 @@
             const officerItems = document.querySelectorAll('.officer-item');
             
             officerItems.forEach(item => {
-                const isActiveMatch = item.classList.contains('active') || item.querySelector('.active');
+                const isLinda = item.textContent.includes('Linda Lopez');
+                const isMatch = item.getAttribute('data-region') === currentActiveRegion || isLinda;
                 
-                // FIX 2: Strip the active class to stop layout breakage
-                item.classList.remove('active');
-                const innerActive = item.querySelector('.active');
-                if (innerActive) innerActive.classList.remove('active');
-
-                if (isActiveMatch) {
-                    item.style.setProperty('display', 'block', 'important');
+                if (isMatch) {
+                    item.style.removeProperty('display');
                 } else {
                     item.style.setProperty('display', 'none', 'important');
                 }
@@ -882,26 +853,11 @@
             
             const linda = Array.from(officerItems).find(el => el.textContent.includes('Linda Lopez'));
             if (linda && window.officerParent) {
-                linda.style.setProperty('display', 'block', 'important'); 
                 window.officerParent.appendChild(linda);
             }
 
-            if (targetScrollItem && mContainer && mRight) {
-                setTimeout(() => {
-                    const gap = 15;
-                    const itemRect = targetScrollItem.getBoundingClientRect();
-                    const mapRect = mRight.getBoundingClientRect();
-                    const scrollAmount = itemRect.top - mapRect.bottom - gap;
-                    mContainer.scrollBy({ top: scrollAmount, behavior: 'smooth' });
-                    
-                    if (typeof leafletMap !== 'undefined' && leafletMap && typeof geojsonLayer !== 'undefined') {
-                        leafletMap.invalidateSize();
-                        try { leafletMap.fitBounds(geojsonLayer.getBounds(), { padding: [45, 45] }); } catch(e){}
-                    }
-                }, 50);
-            } else if (mContainer) {
-                mContainer.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            // Scroll up logic completely removed here
+
         }, 35);
         
         let clearBtn = document.getElementById('clearCountyFilter');
@@ -931,10 +887,7 @@
 
                     const officerItems = document.querySelectorAll('.officer-item');
                     officerItems.forEach(item => {
-                        item.style.setProperty('display', 'block', 'important');
-                        item.classList.remove('active');
-                        const innerActive = item.querySelector('.active');
-                        if (innerActive) innerActive.classList.remove('active');
+                        item.style.removeProperty('display');
                     });
                     clearBtn.remove();
                 });
