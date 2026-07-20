@@ -19,6 +19,8 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
    <link rel="stylesheet" href="v3.css">
 </head>
 <body>
@@ -81,7 +83,7 @@
                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                </div>
                <h3>Coming Soon to Your Area!</h3>
-               <p>We're not in this state just yet — but we're on our way!<br>Our team is working to bring Valtera's services to your area soon.</p>
+               <p>We're not in this state just yet — but we're on our way!<br>Our team is working to bring Valtera's services to your area&nbsp;soon.</p>
            </div>
        </div>
    </section>
@@ -221,7 +223,7 @@
                        officers: [
                            { name: "Aaron Fritz", nmls: "NMLS #47246", region: "Northern Utah Region", photo: "MomentumLoans/UtahMomentumLoans/AaronFritz.jpg", bio: "Whether you’re buying, selling, refinancing, or building your dream home, you have a lot riding on your decision. Market conditions and mortgage programs change frequently, and I welcome the opportunity to serve your needs with quick and accurate real estate financing advice. I have the expertise and knowledge to help you determine the absolute best loan program to meet your objectives. Ensuring that you make the right choice for you and your family is my ultimate goal.", phone: "(801) 791-5266", email: "afritz@momentumloans.com", profileUrl: "https://www.momentumloans.com/loan_officer/aaron-fritz/" },
                            { name: "Tanner Gatchell", nmls: "NMLS #1514890", region: "Southern Utah Region", photo: "MomentumLoans/UtahMomentumLoans/TannerGatchell.jpg", bio: "Tanner grew up in St. George, Utah and enjoys anything sports and outdoors related. He and his family also love going for drives and spend most of their free time at the lake or in the mountains enjoying beautiful Southern Utah. He attended both Southern Utah University and Utah State University. Tanner sold Real Estate for several years and marketed for a title company before entering the Mortgage side of the industry.", phone: "(435) 669-7872", email: "tgatchell@momentumloans.com", profileUrl: "https://www.momentumloans.com/loan_officer/tanner-gatchell/" },
-                           { name: "Linda Lopez", nmls: "NMLS #2584759", region: "Statewide Coverage (Habla Español)", photo: "MomentumLoans/UtahMomentumLoans/LindaLopez.jpg", bio: "Whether you’re buying, selling, refinancing, or building your dream home, you have a lot riding on your decision. Market conditions and mortgage programs change frequently, and I welcome the opportunity to serve your needs with quick and accurate real estate financing advice. I have the expertise and knowledge to help you determine the absolute best loan program to meet your objectives. Ensuring that you make the right choice for you and your family is my ultimate goal.", phone: "(801) 850-7072", email: "llopez@momentumloans.com", profileUrl: "https://www.momentumloans.com/loan_officer/linda-lopez/" },
+                           { name: "Linda Lopez", nmls: "NMLS #2584759", region: "Statewide Coverage (Español)", photo: "MomentumLoans/UtahMomentumLoans/LindaLopez.jpg", bio: "Whether you’re buying, selling, refinancing, or building your dream home, you have a lot riding on your decision. Market conditions and mortgage programs change frequently, and I welcome the opportunity to serve your needs with quick and accurate real estate financing advice. I have the expertise and knowledge to help you determine the absolute best loan program to meet your objectives. Ensuring that you make the right choice for you and your family is my ultimate goal.", phone: "(801) 850-7072", email: "llopez@momentumloans.com", profileUrl: "https://www.momentumloans.com/loan_officer/linda-lopez/" },
                            { name: "JT Lindsay", nmls: "NMLS #1447979", region: "Utah County and Central Region", photo: "MomentumLoans/UtahMomentumLoans/JTLindsay.jpg", bio: "Whether you’re buying, selling, refinancing, or building your dream home, you have a lot riding on your decision. Market conditions and mortgage programs change frequently, and I welcome the opportunity to serve your needs with quick and accurate real estate financing advice. I have the expertise and knowledge to help you determine the absolute best loan program to meet your objectives. Ensuring that you make the right choice for you and your family is my ultimate goal.", phone: "(801) 717-8038", email: "jlindsay@momentumloans.com", profileUrl: "https://www.momentumloans.com/loan_officer/jt-lindsay/" },
                            { name: "Brayden Ramsay", nmls: "NMLS #1997195", region: "Salt Lake & Summit Counties", photo: "MomentumLoans/UtahMomentumLoans/BraydenRamsay.jpg", bio: "Whether you’re buying, selling, refinancing, or building your dream home, you have a lot riding on your decision. Market conditions and mortgage programs change frequently, and I welcome the opportunity to serve your needs with quick and accurate real estate financing advice. I have the expertise and knowledge to help you determine the absolute best loan program to meet your objectives. Ensuring that you make the right choice for you and your family is my ultimate goal.", phone: "(801) 703-1803", email: "bramsay@momentumloans.com", profileUrl: "https://www.momentumloans.com/loan_officer/brayden-ramsay/" }
                        ]
@@ -331,23 +333,65 @@
                checkOverflows(lenderGrid);
            }
 
+           // Global variables for the Leaflet Map engine
+           let leafletMap = null;
+           let geojsonLayer = null;
+           let allCountiesData = null; // Stores all counties globally
+           let currentActiveRegion = null;
+           let hoveredRegionId = null;
+
+           // Silently fetch exact US county boundaries in the background
+           fetch('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json')
+               .then(res => res.json())
+               .then(data => {
+                   allCountiesData = data.features;
+               });
+
+           // Mapping individual Utah county FIPS codes to your specific LO regions
+           const countyDataMap = {
+               "49003": { region: "northern" }, "49005": { region: "northern" }, "49033": { region: "northern" }, "49057": { region: "northern" }, "49011": { region: "northern" }, "49029": { region: "northern" }, 
+               "49035": { region: "slc" }, "49043": { region: "slc" }, 
+               "49049": { region: "central" }, "49045": { region: "central" }, "49023": { region: "central" }, "49039": { region: "central" }, "49027": { region: "central" }, "49041": { region: "central" }, "49007": { region: "central" }, "49015": { region: "central" }, "49051": { region: "central" }, "49013": { region: "central" }, "49047": { region: "central" }, "49009": { region: "central" }, 
+               "49001": { region: "southern" }, "49031": { region: "southern" }, "49055": { region: "southern" }, "49021": { region: "southern" }, "49017": { region: "southern" }, "49037": { region: "southern" }, "49053": { region: "southern" }, "49025": { region: "southern" }, "49019": { region: "southern" }
+           };
+
            function openModal(lender) {
-               const modalHeader = document.querySelector('.modal-header');
+               document.body.style.overflow = 'hidden';
+               currentActiveRegion = null;
+               hoveredRegionId = null;
+
+               // Robust State Selection check (handles 'AR', 'Arkansas', values, or text options)
+               const stateDropdown = document.getElementById('stateDropdown');
+               let activeState = 'Utah';
+               if (stateDropdown) {
+                   const val = stateDropdown.value.toLowerCase();
+                   const text = stateDropdown.options[stateDropdown.selectedIndex]?.text.toLowerCase() || '';
+                   if (val === 'ar' || val.includes('arkansas') || text.includes('arkansas')) {
+                       activeState = 'Arkansas';
+                   }
+               }
+               const targetFipsPrefix = activeState === 'Arkansas' ? '05' : '49'; // 05 = AR, 49 = UT
+
+               // Proportionally balanced logo sizing (Momentum balanced down to match First Colony visual weight)
+               const isMomentum = lender.name && lender.name.toLowerCase().includes('momentum');
+               const logoHeight = isMomentum ? '55px' : '65px';
+
                const logoInner = lender.logo
-                   ? `<img src="${lender.logo}" alt="${lender.name}" style="max-height: 40px; margin-bottom: 10px; width: auto;">`
-                   : `<h3 class="modal-lender-name" style="margin-bottom: 10px;">${lender.name}</h3>`;
+                   ? `<img src="${lender.logo}" alt="${lender.name}" style="height: ${logoHeight}; max-width: 100%; margin-bottom: 15px; width: auto; object-fit: contain;">`
+                   : `<h3 class="modal-lender-name" style="margin-bottom: 15px;">${lender.name}</h3>`;
               
                const logoHtml = lender.website
                    ? `<a href="${lender.website}" target="_blank" style="text-decoration: none; color: inherit;">${logoInner}</a>`
                    : logoInner;
 
-               modalHeader.innerHTML = `
-                   ${logoHtml}
-                   <div class="premium-rating">★★★★★ <span class="rating-number">${lender.rating}</span></div>
+               let leftHtml = `
+                   <div class="modal-header">
+                       ${logoHtml}
+                       <div class="premium-rating">★★★★★ <span class="rating-number">${lender.rating}</span></div>
+                   </div>
+                   <h4 class="modal-subtitle">Loan Officers</h4>
+                   <div id="modalOfficersContainer">
                `;
-
-               const officersContainer = document.getElementById('modalOfficersContainer');
-               officersContainer.innerHTML = '';
 
                lender.officers.forEach((officer, index) => {
                    const avatarImg = officer.photo
@@ -371,8 +415,16 @@
                    const isLast = index === lender.officers.length - 1;
                    const borderStyle = isLast ? 'border-bottom: none; margin-bottom: 0; padding-bottom: 0;' : 'border-bottom: 1px solid #EAEAEA; margin-bottom: 2.5rem; padding-bottom: 2.5rem;';
 
-                   officersContainer.innerHTML += `
-                       <div class="officer-profile" style="${borderStyle}">
+                   let regionId = "";
+                   if (officer.region === "Northern Utah Region") regionId = "northern";
+                   else if (officer.region === "Salt Lake & Summit Counties") regionId = "slc";
+                   else if (officer.region === "Utah County and Central Region") regionId = "central";
+                   else if (officer.region === "Southern Utah Region") regionId = "southern";
+                   else if (officer.region === "Statewide Coverage (Español)" || officer.region === "Statewide Coverage") regionId = "statewide";
+                   else regionId = officer.region ? officer.region.toLowerCase().replace(/[^a-z0-9]/g, '') : "unmapped";
+
+                   leftHtml += `
+                       <div class="officer-profile officer-item" data-index="${index}" data-region="${regionId}" style="${borderStyle}">
                            ${avatarHtml}
                            <div class="officer-info" style="width: 100%;">
                                <div class="officer-header-mobile">
@@ -397,20 +449,186 @@
                    `;
                });
 
-               officersContainer.innerHTML += `
+               leftHtml += `</div>
                    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid #EAEAEA;">
                        <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">${lender.lenderNmls}</span>
                        <img src="VALTERA/EqualHousingO-BlackLogo.png" alt="Equal Housing Opportunity" style="height: 35px; width: auto; opacity: 0.8;">
                    </div>
                `;
 
+               const rightHtml = `
+                   <button id="closeModalBtn" style="position: absolute; top: 30px; right: 40px; z-index: 9999; font-size: 2rem; background: #FFFFFF; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #1A1A1A;">&times;</button>
+                   <div id="utah-map" style="width: 100%; height: 100%; min-height: 400px;"></div>
+               `;
+
+               const modalContainer = document.querySelector('.modal-container');
+               modalContainer.innerHTML = `
+                   <div class="modal-split-layout">
+                       <div class="modal-left" id="modalLeftScroll">${leftHtml}</div>
+                       <div class="modal-right">${rightHtml}</div>
+                   </div>
+               `;
+
+               const modalOverlay = document.getElementById('officerModal');
                modalOverlay.classList.add('active');
-               document.body.style.overflow = 'hidden';
+
+               // The window.innerWidth >= 992 condition has been removed to allow mobile rendering
+               const officerItems = document.querySelectorAll('.officer-item');
+               const scrollContainer = document.getElementById('modalLeftScroll');
+
+               if (leafletMap) {
+                   leafletMap.remove();
+               }
+
+               const mapCenter = activeState === 'Arkansas' ? [34.8, -92.2] : [39.32, -111.09];
+               
+               leafletMap = L.map('utah-map', {
+                   zoomControl: false, dragging: false, doubleClickZoom: false,
+                   scrollWheelZoom: false, touchZoom: false, attributionControl: false,
+                   zoomSnap: 0 
+               }).setView(mapCenter, 6);
+
+               function highlightLoanOfficers(regionId) {
+                   officerItems.forEach(i => i.classList.remove('active'));
+                   
+                   if (activeState === 'Arkansas') {
+                       officerItems.forEach(i => i.classList.add('active'));
+                       return officerItems[0];
+                   }
+
+                   if (!regionId || regionId === "unmapped") return null;
+
+                   const primaryItem = document.querySelector(`.officer-item[data-region="${regionId}"]`);
+                   const statewideItem = document.querySelector(`.officer-item[data-region="statewide"]`);
+
+                   if (primaryItem) primaryItem.classList.add('active');
+                   if (statewideItem && regionId !== "statewide") statewideItem.classList.add('active');
+
+                   return primaryItem || statewideItem;
+               }
+
+               function refreshMapStyles() {
+                   if (!geojsonLayer) return;
+
+                   const mapRegionToShow = hoveredRegionId !== null ? hoveredRegionId : currentActiveRegion;
+
+                   geojsonLayer.eachLayer(layer => {
+                       const countyInfo = countyDataMap[layer.feature.id] || { name: "" };
+                       
+                       const isHighlighted = activeState === 'Arkansas' ? 
+                           (mapRegionToShow !== null) : 
+                           (mapRegionToShow === "statewide" || (layer.options.regionId === mapRegionToShow && mapRegionToShow !== "unmapped"));
+                       
+                       if (isHighlighted) {
+                           layer.setStyle({
+                               fillColor: '#1E3F33', 
+                               color: '#FFFFFF',
+                               weight: 2
+                           });
+                           layer.bringToFront();
+                           if(layer.getTooltip() && layer.getTooltip().getElement()) {
+                               layer.getTooltip().getElement().classList.add('active-label');
+                           }
+                       } else {
+                           layer.setStyle({
+                               fillColor: '#EAEAEA',
+                               color: '#FFFFFF',
+                               weight: 1.5
+                           });
+                           if(layer.getTooltip() && layer.getTooltip().getElement()) {
+                               layer.getTooltip().getElement().classList.remove('active-label');
+                           }
+                       }
+                   });
+               }
+
+               if (allCountiesData) {
+                   const stateCountiesData = allCountiesData.filter(feature => feature.id.startsWith(targetFipsPrefix));
+
+                   geojsonLayer = L.geoJSON(stateCountiesData, {
+                       style: function() { return { fillColor: '#EAEAEA', weight: 1.5, color: '#FFFFFF', fillOpacity: 1 }; },
+                       onEachFeature: function(feature, layer) {
+                           const mappedData = countyDataMap[feature.id] || { region: "unmapped" };
+                           const countyName = feature.properties ? feature.properties.NAME : "County";
+                           layer.options.regionId = mappedData.region;
+
+                           if (countyName) {
+                               layer.bindTooltip(countyName, {
+                                   permanent: true, direction: "center", className: "county-label"
+                               });
+                           }
+
+                           layer.on('mouseover', function() {
+                               const mapRegionToShow = hoveredRegionId !== null ? hoveredRegionId : currentActiveRegion;
+                               const isHighlighted = activeState === 'Arkansas' ? 
+                                   (mapRegionToShow !== null) : 
+                                   (mapRegionToShow === "statewide" || (layer.options.regionId === mapRegionToShow && mapRegionToShow !== "unmapped"));
+                               
+                               if (!isHighlighted) { layer.setStyle({ fillColor: '#D1D1D1', color: '#FFFFFF' }); }
+                           });
+                           layer.on('mouseout', function() {
+                               const mapRegionToShow = hoveredRegionId !== null ? hoveredRegionId : currentActiveRegion;
+                               const isHighlighted = activeState === 'Arkansas' ? 
+                                   (mapRegionToShow !== null) : 
+                                   (mapRegionToShow === "statewide" || (layer.options.regionId === mapRegionToShow && mapRegionToShow !== "unmapped"));
+                               
+                               if (!isHighlighted) { layer.setStyle({ fillColor: '#EAEAEA', color: '#FFFFFF' }); }
+                           });
+                           
+                           layer.on('click', function() {
+                               currentActiveRegion = layer.options.regionId;
+                               refreshMapStyles();
+                               
+                               const targetScrollItem = highlightLoanOfficers(currentActiveRegion);
+                               // Explicitly restricting auto-scroll to desktop so mobile views don't aggressively snap
+                               if (targetScrollItem && activeState !== 'Arkansas' && window.innerWidth >= 992) {
+                                   scrollContainer.scrollTo({ top: targetScrollItem.offsetTop - 40, behavior: 'smooth' });
+                               }
+                           });
+                       }
+                   }).addTo(leafletMap);
+
+                   setTimeout(() => {
+                       leafletMap.invalidateSize();
+                       leafletMap.fitBounds(geojsonLayer.getBounds(), { padding: [45, 45] }); 
+                   }, 100);
+               }
+
+               officerItems.forEach(item => {
+                   item.addEventListener('mouseenter', function() {
+                       hoveredRegionId = this.getAttribute('data-region');
+                       refreshMapStyles();
+                   });
+                   item.addEventListener('mouseleave', function() {
+                       hoveredRegionId = null;
+                       refreshMapStyles();
+                   });
+                   item.addEventListener('click', function() {
+                       currentActiveRegion = this.getAttribute('data-region');
+                       highlightLoanOfficers(currentActiveRegion);
+                       refreshMapStyles();
+                   });
+               });
+
+               document.getElementById('closeModalBtn').addEventListener('click', function() {
+                   modalOverlay.classList.remove('active');
+                   document.body.style.overflow = '';
+               });
 
                setTimeout(() => {
-                   modalContainer.scrollTop = 0;
+                   document.getElementById('modalLeftScroll').scrollTop = 0;
                    checkOverflows(modalContainer);
                }, 10);
+           }
+
+           window.toggleBio = function(btn) {
+               const bioText = btn.previousElementSibling;
+               bioText.classList.toggle('truncated');
+               if(bioText.classList.contains('truncated')) {
+                   btn.innerHTML = '&#8964;';
+               } else {
+                   btn.innerHTML = '&#8963;';
+               }
            }
 
            stateDropdown.addEventListener('change', function() {
