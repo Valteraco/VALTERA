@@ -481,7 +481,7 @@
                                margin: 0 !important;
                                padding: 0 !important;
                                overflow-y: auto !important;
-                               overscroll-behavior: contain !important;
+                               overscroll-behavior: none !important; /* Stop background stretching */
                                z-index: 999999 !important;
                                background: #FFFFFF !important;
                                -webkit-overflow-scrolling: touch;
@@ -489,7 +489,7 @@
                            .modal-split-layout {
                                display: flex !important;
                                flex-direction: column !important;
-                               height: auto !important;
+                               min-height: 100% !important;
                                width: 100% !important;
                            }
                            .modal-right {
@@ -497,10 +497,10 @@
                                position: sticky !important;
                                top: 0 !important;
                                width: 100% !important;
-                               height: 40vh !important;
+                               height: 45vh !important; /* Fixed initial height to completely prevent "pile of words" */
                                margin: 0 !important;
                                z-index: 1 !important;
-                               transition: height 0.05s ease-out;
+                               transition: height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
                            }
                            #utah-map {
                                min-height: 0 !important;
@@ -518,6 +518,7 @@
                                margin-top: -25px !important;
                                box-sizing: border-box !important;
                                height: auto !important;
+                               min-height: 60vh !important;
                            }
                            .modal-left::before {
                                content: '';
@@ -533,7 +534,7 @@
                            .drag-handle-zone {
                                position: absolute;
                                top: 0; left: 0; right: 0;
-                               height: 45px;
+                               height: 50px;
                                z-index: 10;
                            }
                            #closeModalBtn {
@@ -562,7 +563,6 @@
                const modalOverlay = document.getElementById('officerModal');
                modalOverlay.classList.add('active');
                
-               // Restore normal site scrolling when modal is closed
                document.getElementById('closeModalBtn').addEventListener('click', () => {
                    document.body.style.removeProperty('overflow');
                });
@@ -580,74 +580,39 @@
                        window.originalOfficers = Array.from(officerItems);
                    }
 
-                   // 1. Gesture Tracking (Google Maps pull mechanics fixed)
+                   // 1. Gesture Tracking (Pull down expands map, stays large, native scroll handles moving list up)
                    let startY = 0;
-                   let startH = 0;
-                   let dragging = false;
                    let isHandle = false;
 
                    mLeft.addEventListener('touchstart', function(e) {
                        const touchY = e.touches[0].clientY;
                        const rect = mLeft.getBoundingClientRect();
-                       isHandle = (touchY - rect.top) < 45;
+                       isHandle = (touchY - rect.top) < 60;
 
-                       if (mContainer.scrollTop <= 5 || isHandle) {
+                       if (isHandle && mContainer.scrollTop <= 5) {
                            startY = touchY;
-                           startH = mRight.offsetHeight;
-                           dragging = true;
-                           mRight.style.transition = 'none';
                        }
                    }, { passive: true });
 
-                   mContainer.addEventListener('touchmove', function(e) {
-                       if (!dragging) return;
-                       const currentY = e.touches[0].clientY;
-                       const diff = currentY - startY;
+                   mLeft.addEventListener('touchmove', function(e) {
+                       if (!startY) return;
+                       const diff = e.touches[0].clientY - startY;
 
-                       // If not dragging the handle, and pulling list up, let native scroll take over
-                       if (!isHandle && diff < 0) {
-                           dragging = false;
-                           mRight.style.transition = 'height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
-                           return;
-                       }
-
-                       if (e.cancelable && (isHandle || diff > 0)) {
-                           e.preventDefault();
-                       }
-
-                       let newH = startH + diff;
-                       const maxH = window.innerHeight * 0.75; 
-                       const minH = window.innerHeight * 0.20; // Allow sheet to be pulled much higher up
-
-                       if (newH > maxH) newH = maxH;
-                       if (newH < minH) newH = minH;
-
-                       mRight.style.setProperty('height', newH + 'px', 'important');
-                   }, { passive: false });
-
-                   document.addEventListener('touchend', function() {
-                       if (!dragging) return;
-                       dragging = false;
-                       
-                       mRight.style.transition = 'height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
-                       const currentH = mRight.offsetHeight;
-                       const vh = window.innerHeight;
-
-                       // Snap thresholds 
-                       if (currentH > vh * 0.55) {
+                       // If pulled down, permanently expand map to 75vh and stop tracking
+                       if (diff > 25) {
                            mRight.style.setProperty('height', '75vh', 'important');
-                       } else if (currentH < vh * 0.30) {
-                           mRight.style.setProperty('height', '20vh', 'important');
-                       } else {
-                           mRight.style.setProperty('height', '40vh', 'important');
+                           setTimeout(() => {
+                               if (typeof leafletMap !== 'undefined' && leafletMap && typeof geojsonLayer !== 'undefined') {
+                                   leafletMap.invalidateSize();
+                                   try { leafletMap.fitBounds(geojsonLayer.getBounds(), { padding: [45, 45] }); } catch(e){}
+                               }
+                           }, 320);
+                           startY = 0; 
                        }
-                       
-                       setTimeout(() => {
-                           if (typeof leafletMap !== 'undefined' && leafletMap && typeof geojsonLayer !== 'undefined') {
-                               leafletMap.invalidateSize();
-                               try { leafletMap.fitBounds(geojsonLayer.getBounds(), { padding: [45, 45] }); } catch(e){}
-                           }
-                       }, 320);
+                   }, { passive: true });
+
+                   mLeft.addEventListener('touchend', function() {
+                       startY = 0;
                    });
                    
                    // 2. Mobile Officer Click Filtering
@@ -658,30 +623,41 @@
                                currentActiveRegion = region;
                                refreshMapStyles();
                                highlightLoanOfficers(currentActiveRegion);
-                               
-                               mRight.style.transition = 'height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
-                               mRight.style.setProperty('height', '40vh', 'important');
 
                                setTimeout(() => {
                                    officerItems.forEach(opt => {
+                                       // Reset previous inline styles
+                                       opt.style.removeProperty('background-color');
+                                       opt.style.removeProperty('border');
+                                       opt.style.removeProperty('border-radius');
+                                       opt.style.removeProperty('padding');
+                                       opt.style.removeProperty('margin-bottom');
+
                                        const isLinda = opt.textContent.includes('Linda Lopez');
                                        const isMatch = opt.getAttribute('data-region') === region || isLinda;
                                        
-                                       // Restores natural layout instead of breaking it with custom rules
                                        if (isMatch) {
-                                           opt.style.removeProperty('display'); 
+                                           opt.style.removeProperty('display');
+                                           opt.style.setProperty('margin-bottom', '2rem', 'important');
+                                           
+                                           // Apply Ivory & Gold styles only to explicitly clicked officer
+                                           if (opt === item) {
+                                               opt.style.setProperty('background-color', '#FAF8F5', 'important');
+                                               opt.style.setProperty('border', '1px solid #DFBA73', 'important');
+                                               opt.style.setProperty('border-radius', '14px', 'important');
+                                               opt.style.setProperty('padding', '18px', 'important');
+                                           }
                                        } else {
                                            opt.style.setProperty('display', 'none', 'important');
                                        }
                                    });
                                    
+                                   // Pin Linda Lopez directly under the selected officer
                                    const linda = Array.from(officerItems).find(el => el.textContent.includes('Linda Lopez'));
                                    if (linda && window.officerParent) {
                                        window.officerParent.appendChild(linda);
                                    }
 
-                                   // Scroll up logic completely removed here
-                                   
                                    let clearBtn = document.getElementById('clearCountyFilter');
                                    if (!clearBtn) {
                                        const headerEl = [...document.querySelectorAll('.modal-left *')].find(el => el.textContent.trim().startsWith('Loan Officers'));
@@ -709,13 +685,18 @@
 
                                                officerItems.forEach(opt => {
                                                    opt.style.removeProperty('display');
+                                                   opt.style.removeProperty('background-color');
+                                                   opt.style.removeProperty('border');
+                                                   opt.style.removeProperty('border-radius');
+                                                   opt.style.removeProperty('padding');
+                                                   opt.style.removeProperty('margin-bottom');
                                                });
                                                clearBtn.remove();
                                            });
                                            headerEl.appendChild(clearBtn);
                                        }
                                    }
-                               }, 35);
+                               }, 30);
                            }
                        });
                    });
@@ -831,34 +812,43 @@
     const targetScrollItem = highlightLoanOfficers(currentActiveRegion);
     
     if (window.innerWidth < 992) {
-        const mRight = document.querySelector('.modal-right');
-        if (mRight) {
-            mRight.style.transition = 'height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
-            mRight.style.setProperty('height', '40vh', 'important');
-        }
-
         setTimeout(() => {
             const officerItems = document.querySelectorAll('.officer-item');
             
             officerItems.forEach(item => {
+                // Reset previous inline styles
+                item.style.removeProperty('background-color');
+                item.style.removeProperty('border');
+                item.style.removeProperty('border-radius');
+                item.style.removeProperty('padding');
+                item.style.removeProperty('margin-bottom');
+
                 const isLinda = item.textContent.includes('Linda Lopez');
-                const isMatch = item.getAttribute('data-region') === currentActiveRegion || isLinda;
+                const isExplicitMatch = item.getAttribute('data-region') === currentActiveRegion;
+                const isMatch = isExplicitMatch || isLinda;
                 
                 if (isMatch) {
                     item.style.removeProperty('display');
+                    item.style.setProperty('margin-bottom', '2rem', 'important');
+                    
+                    // Apply Ivory & Gold styles strictly to the explicitly matched region
+                    if (isExplicitMatch) {
+                        item.style.setProperty('background-color', '#FAF8F5', 'important');
+                        item.style.setProperty('border', '1px solid #DFBA73', 'important');
+                        item.style.setProperty('border-radius', '14px', 'important');
+                        item.style.setProperty('padding', '18px', 'important');
+                    }
                 } else {
                     item.style.setProperty('display', 'none', 'important');
                 }
             });
             
+            // Pin Linda Lopez directly under the selected officer
             const linda = Array.from(officerItems).find(el => el.textContent.includes('Linda Lopez'));
             if (linda && window.officerParent) {
                 window.officerParent.appendChild(linda);
             }
-
-            // Scroll up logic completely removed here
-
-        }, 35);
+        }, 30);
         
         let clearBtn = document.getElementById('clearCountyFilter');
         if (!clearBtn) {
@@ -888,6 +878,11 @@
                     const officerItems = document.querySelectorAll('.officer-item');
                     officerItems.forEach(item => {
                         item.style.removeProperty('display');
+                        item.style.removeProperty('background-color');
+                        item.style.removeProperty('border');
+                        item.style.removeProperty('border-radius');
+                        item.style.removeProperty('padding');
+                        item.style.removeProperty('margin-bottom');
                     });
                     clearBtn.remove();
                 });
