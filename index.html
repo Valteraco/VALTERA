@@ -411,7 +411,7 @@
 
                    // Create the button ONLY for mobile screens
                    const additionalInfoBtn = (officer.profileUrl && isMobile)
-                       ? `<a href="${officer.profileUrl}" target="_blank" class="btn-outline-primary" style="display: block; text-align: center; margin-top: 1rem; padding: 0.6rem 1rem; text-decoration: none; width: 100%; box-sizing: border-box; font-size: 0.95rem;">Additional Information</a>`
+                       ? `<a href="${officer.profileUrl}" target="_blank" class="btn-outline-primary" style="display: block; text-align: center; margin-top: 1rem; padding: 0.6rem 1rem; text-decoration: none; width: 100%; box-sizing: border-box; font-size: 0.95rem; color: green;">Additional Information</a>`
                        : ``;
 
                    const regionHtml = officer.region 
@@ -627,6 +627,11 @@
                    // 2. Mobile Officer Click Filtering
                    officerItems.forEach(item => {
                        item.addEventListener('click', function(e) {
+                           // Exit immediately if the user clicks the bio, phone, email, or Additional Info button
+                           if (e.target.closest('.expandable-wrapper') || e.target.closest('.officer-contact')) {
+                               return; 
+                           }
+
                            const region = this.getAttribute('data-region');
                            if (region) {
                                currentActiveRegion = region;
