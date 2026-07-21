@@ -397,8 +397,8 @@
 
                if (isMobile) {
                    leftHtml += `<style>
-                       .btn-custom-green { color: #1E3F33 !important; border-color: #1E3F33 !important; }
-                       .btn-custom-green:active { color: #FFFFFF !important; background-color: #1E3F33 !important; }
+                       .btn-custom-green { color: #1E3F33 !important; border-color: #1E3F33 !important; background-color: transparent !important; transition: all 0.3s ease !important; }
+                       .btn-custom-green:hover, .btn-custom-green:active, .btn-custom-green:focus { color: #FFFFFF !important; background-color: #1E3F33 !important; }
                    </style>`;
                }
 
@@ -418,7 +418,7 @@
 
                    // Create the button ONLY for mobile screens
                    const additionalInfoBtn = (officer.profileUrl && isMobile)
-                       ? `<a href="${officer.profileUrl}" target="_blank" class="btn-outline-primary btn-custom-green" style="display: block; text-align: center; margin-top: 1rem; padding: 0.6rem 1rem; text-decoration: none; width: 100%; box-sizing: border-box; font-size: 0.95rem;">Additional Information</a>`
+                       ? `<a href="${officer.profileUrl}" target="_blank" class="btn-outline-primary btn-custom-green" ontouchstart="" style="display: block; text-align: center; margin-top: 1rem; padding: 0.6rem 1rem; text-decoration: none; width: 100%; box-sizing: border-box; font-size: 0.95rem;">Additional Resources</a>`
                        : ``;
 
                    const regionHtml = officer.region 
@@ -659,9 +659,6 @@
                                    }, 320);
                                }
 
-                               // 2. Scroll to the map (top of container) smoothly
-                               mContainer.scrollTo({ top: 0, behavior: 'smooth' });
-
                                setTimeout(() => {
                                    officerItems.forEach(opt => {
                                        // Reset previous inline styles
@@ -689,53 +686,59 @@
                                    });
                                    
                                    // Pin Linda Lopez directly under the selected officer
-                                       const linda = Array.from(officerItems).find(el => el.textContent.includes('Linda Lopez'));
-                                       if (linda && linda.parentNode) {
-                                           linda.parentNode.appendChild(linda);
-                                       }
+                                   const linda = Array.from(officerItems).find(el => el.textContent.includes('Linda Lopez'));
+                                   if (linda && linda.parentNode) {
+                                       linda.parentNode.appendChild(linda);
+                                   }
 
-                                       let clearBtn = document.getElementById('clearCountyFilter');
-                                       if (!clearBtn) {
-                                           const headerEl = [...document.querySelectorAll('.modal-left *')].find(el => el.textContent.trim().startsWith('Loan Officers'));
-                                           if (headerEl) {
-                                               headerEl.style.display = 'flex';
-                                               headerEl.style.justifyContent = 'space-between';
-                                               headerEl.style.alignItems = 'center';
-                                               headerEl.style.width = '100%';
+                                   let clearBtn = document.getElementById('clearCountyFilter');
+                                   if (!clearBtn) {
+                                       const headerEl = [...document.querySelectorAll('.modal-left *')].find(el => el.textContent.trim().startsWith('Loan Officers'));
+                                       if (headerEl) {
+                                           headerEl.style.display = 'flex';
+                                           headerEl.style.justifyContent = 'space-between';
+                                           headerEl.style.alignItems = 'center';
+                                           headerEl.style.width = '100%';
+                                           
+                                           clearBtn = document.createElement('span');
+                                           clearBtn.id = 'clearCountyFilter';
+                                           clearBtn.innerHTML = '&times;';
+                                           clearBtn.style.cssText = 'cursor: pointer; font-size: 1.6rem; color: #999; font-weight: bold; padding: 0 5px;';
+                                           
+                                           clearBtn.addEventListener('click', function(e) {
+                                               e.stopPropagation();
+                                               currentActiveRegion = null;
+                                               refreshMapStyles();
                                                
-                                               clearBtn = document.createElement('span');
-                                               clearBtn.id = 'clearCountyFilter';
-                                               clearBtn.innerHTML = '&times;';
-                                               clearBtn.style.cssText = 'cursor: pointer; font-size: 1.6rem; color: #999; font-weight: bold; padding: 0 5px;';
-                                               
-                                               clearBtn.addEventListener('click', function(e) {
-                                                   e.stopPropagation();
-                                                   currentActiveRegion = null;
-                                                   refreshMapStyles();
-                                                   
-                                                   const parent = officerItems[0].parentNode;
-                                                   Array.from(officerItems)
-                                                       .sort((a, b) => parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index')))
-                                                       .forEach(opt => {
-                                                           parent.appendChild(opt);
-                                                           opt.style.removeProperty('display');
-                                                           opt.style.removeProperty('background-color');
-                                                           opt.style.removeProperty('border');
-                                                           opt.style.removeProperty('border-radius');
-                                                           opt.style.removeProperty('padding');
-                                                           
-                                                           // Restore the separator line styling
-                                                           const isLastItem = opt.getAttribute('data-index') === String(officerItems.length - 1);
-                                                           opt.style.setProperty('border-bottom', isLastItem ? 'none' : '1px solid #EAEAEA', 'important');
-                                                           opt.style.setProperty('margin-bottom', isLastItem ? '0' : '2.5rem', 'important');
-                                                           opt.style.setProperty('padding-bottom', isLastItem ? '0' : '2.5rem', 'important');
-                                                       });
-                                                   clearBtn.remove();
-                                               });
-                                               headerEl.appendChild(clearBtn);
-                                           }
+                                               const parent = officerItems[0].parentNode;
+                                               Array.from(officerItems)
+                                                   .sort((a, b) => parseInt(a.getAttribute('data-index')) - parseInt(b.getAttribute('data-index')))
+                                                   .forEach(opt => {
+                                                       parent.appendChild(opt);
+                                                       opt.style.removeProperty('display');
+                                                       opt.style.removeProperty('background-color');
+                                                       opt.style.removeProperty('border');
+                                                       opt.style.removeProperty('border-radius');
+                                                       opt.style.removeProperty('padding');
+                                                       
+                                                       // Restore the separator line styling
+                                                       const isLastItem = opt.getAttribute('data-index') === String(officerItems.length - 1);
+                                                       opt.style.setProperty('border-bottom', isLastItem ? 'none' : '1px solid #EAEAEA', 'important');
+                                                       opt.style.setProperty('margin-bottom', isLastItem ? '0' : '2.5rem', 'important');
+                                                       opt.style.setProperty('padding-bottom', isLastItem ? '0' : '2.5rem', 'important');
+                                                   });
+                                               clearBtn.remove();
+                                           });
+                                           headerEl.appendChild(clearBtn);
                                        }
-                               }, 30);
+                                   }
+
+                                   // 2. Scroll smoothly AFTER all the other elements are safely hidden
+                                   const mContainer = document.querySelector('.modal-container');
+                                   if (mContainer) {
+                                       mContainer.scrollTo({ top: 0, behavior: 'smooth' });
+                                   }
+                               }, 50);
                            }
                        });
                    });
