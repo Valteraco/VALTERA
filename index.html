@@ -654,13 +654,11 @@
                                            opt.style.removeProperty('display');
                                            opt.style.setProperty('margin-bottom', '2rem', 'important');
                                            
-                                           // Apply Ivory & Gold styles only to explicitly clicked officer
-                                           if (opt === item) {
-                                               opt.style.setProperty('background-color', '#FAF8F5', 'important');
-                                               opt.style.setProperty('border', '1px solid #DFBA73', 'important');
-                                               opt.style.setProperty('border-radius', '14px', 'important');
-                                               opt.style.setProperty('padding', '18px', 'important');
-                                           }
+                                           // Apply Ivory & Gold styles to BOTH the clicked officer and Linda Lopez
+                                           opt.style.setProperty('background-color', '#FAF8F5', 'important');
+                                           opt.style.setProperty('border', '1px solid #DFBA73', 'important');
+                                           opt.style.setProperty('border-radius', '14px', 'important');
+                                           opt.style.setProperty('padding', '18px', 'important');
                                        } else {
                                            opt.style.setProperty('display', 'none', 'important');
                                        }
@@ -866,13 +864,11 @@
                                                item.style.removeProperty('display');
                                                item.style.setProperty('margin-bottom', '2rem', 'important');
                                                
-                                               // Apply Ivory & Gold styles strictly to the explicitly matched region
-                                               if (isExplicitMatch) {
-                                                   item.style.setProperty('background-color', '#FAF8F5', 'important');
-                                                   item.style.setProperty('border', '1px solid #DFBA73', 'important');
-                                                   item.style.setProperty('border-radius', '14px', 'important');
-                                                   item.style.setProperty('padding', '18px', 'important');
-                                               }
+                                               // Apply Ivory & Gold styles to BOTH the regional officer and Linda Lopez
+                                               item.style.setProperty('background-color', '#FAF8F5', 'important');
+                                               item.style.setProperty('border', '1px solid #DFBA73', 'important');
+                                               item.style.setProperty('border-radius', '14px', 'important');
+                                               item.style.setProperty('padding', '18px', 'important');
                                            } else {
                                                item.style.setProperty('display', 'none', 'important');
                                            }
