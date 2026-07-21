@@ -393,18 +393,26 @@
                    <div id="modalOfficersContainer">
                `;
 
+               const isMobile = window.innerWidth < 992;
+
                lender.officers.forEach((officer, index) => {
                    const avatarImg = officer.photo
                        ? `<img src="${officer.photo}" alt="${officer.name}" class="officer-avatar" style="object-fit: cover;">`
                        : `<div class="officer-avatar" style="display:flex; align-items:center; justify-content:center; background:#EAEAEA; font-size:1.5rem; font-family:var(--font-serif); color:var(--primary-color);">${officer.name.charAt(0)}</div>`;
 
-                   const avatarHtml = officer.profileUrl
+                   // Only apply links if it is NOT a mobile screen
+                   const avatarHtml = (officer.profileUrl && !isMobile)
                        ? `<a href="${officer.profileUrl}" target="_blank" style="text-decoration:none;">${avatarImg}</a>`
                        : avatarImg;
 
-                   const nameHtml = officer.profileUrl
+                   const nameHtml = (officer.profileUrl && !isMobile)
                        ? `<a href="${officer.profileUrl}" target="_blank" style="text-decoration:none; color:inherit;"><h5 class="officer-name" style="margin-bottom:0.1rem;">${officer.name}</h5></a>`
                        : `<h5 class="officer-name" style="margin-bottom:0.1rem;">${officer.name}</h5>`;
+
+                   // Create the button ONLY for mobile screens
+                   const additionalInfoBtn = (officer.profileUrl && isMobile)
+                       ? `<a href="${officer.profileUrl}" target="_blank" class="btn-outline-primary" style="display: block; text-align: center; margin-top: 1rem; padding: 0.6rem 1rem; text-decoration: none; width: 100%; box-sizing: border-box; font-size: 0.95rem;">Additional Information</a>`
+                       : ``;
 
                    const regionHtml = officer.region 
                        ? `<p style="font-size: 0.85rem; color: #1A1A1A; margin-bottom: 0.2rem; font-weight: 600;">${officer.region}</p>`
@@ -443,6 +451,7 @@
                                <div class="officer-contact">
                                    <a href="tel:${officer.phone.replace(/\D/g,'')}">${officer.phone}</a>
                                    <a href="mailto:${officer.email}">${officer.email}</a>
+                                   ${additionalInfoBtn}
                                </div>
                            </div>
                        </div>
