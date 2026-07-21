@@ -280,6 +280,295 @@
 
            function checkOverflows(container) {
                setTimeout(() => {
+                   container.querySelectorAll('.expandable-wrapper').forEach(wrapper => {
+                       const textEl = wrapper.querySelector('.expandable-text');
+                       if (textEl && textEl.scrollHeight > textEl.clientHeight + 2) {
+                           wrapper.classList.add('has-overflow');
+                           if (!wrapper.dataset.listenerAttached) {
+                               wrapper.addEventListener('click', function() {
+                                   wrapper.classList.toggle('expanded');
+                               });
+                               wrapper.dataset.listenerAttached = 'true';
+                           }
+                       }
+                   });
+               }, 50);
+           }
+
+           function renderGrid(state) {
+               lenderGrid.innerHTML = '';
+               lenderData[state].forEach((lender, index) => {
+                   const logoInner = lender.logo
+                       ? `<img src="${lender.logo}" alt="${lender.name}" style="max-height: 45px; margin-bottom: 10px; width: auto; display: block; cursor: pointer;">`
+                       : `<h3 class="lender-name" style="cursor: pointer;">${lender.name}</h3>`;
+                  
+                   const logoHtml = `<div class="grid-logo-trigger" data-state="${state}" data-index="${index}" style="display: inline-block;">${logoInner}</div>`;
+
+                   const card = document.createElement('div');
+                   card.className = 'premium-card';
+                   card.innerHTML = `
+                       <div class="lender-header">
+                           ${logoHtml}
+                           <div class="premium-rating">★★★★★ <span class="rating-number">${lender.rating}</span></div>
+                       </div>
+                       <div class="expandable-wrapper" title="Click to read more">
+                           <div class="expandable-text">${lender.details}</div>
+                           <div class="expandable-toggle-btn">
+                               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                           </div>
+                       </div>
+                       <button class="btn-outline-primary" data-state="${state}" data-index="${index}">View Loan Officers</button>
+                   `;
+                   lenderGrid.appendChild(card);
+               });
+
+               document.querySelectorAll('.btn-outline-primary, .grid-logo-trigger').forEach(button => {
+                   button.addEventListener('click', function() {
+                       const st = this.getAttribute('data-state');
+                       const idx = this.getAttribute('data-index');
+                       openModal(lenderData[st][idx]);
+                   });
+               });
+
+               checkOverflows(lenderGrid);
+           }
+
+           // Global variables for the Leaflet Map engine
+           let leafletMap = null;
+           let geojsonLayer = null;
+           let allCountiesData = null; // Stores all counties globally
+           let currentActiveRegion = null;
+           let hoveredRegionId = null;
+
+           // Silently fetch exact US county boundaries in the background
+           fetch('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json')
+               .then(res => res.json())
+               .then(data => {
+                   allCountiesData = data.features;
+               });
+
+           // Mapping individual Utah county FIPS codes to your specific LO regions
+           const countyDataMap = {
+               "49003": { region: "northern" }, "49005": { region: "northern" }, "49033": { region: "northern" }, "49057": { region: "northern" }, "49011": { region: "northern" }, "49029": { region: "northern" }, 
+               "49035": { region: "slc" }, "49043": { region: "slc" }, 
+               "49049": { region: "central" }, "49045": { region: "central" }, "49023": { region: "central" }, "49039": { region: "central" }, "49027": { region: "central" }, "49041": { region: "central" }, "49007": { region: "central" }, "49015": { region: "central" }, "49051": { region: "central" }, "49013": { region: "central" }, "49047": { region: "central" }, "49009": { region: "central" }, 
+               "49001": { region: "southern" }, "49031": { region: "southern" }, "49055": { region: "southern" }, "49021": { region: "southern" }, "49017": { region: "southern" }, "49037": { region: "southern" }, "49053": { region: "southern" }, "49025": { region: "southern" }, "49019": { region: "southern" }
+           };
+
+           function openModal(lender) {
+               document.body.style.overflow = 'hidden';
+               currentActiveRegion = null;
+               hoveredRegionId = null;
+
+               // Robust State Selection check (handles 'AR', 'Arkansas', values, or text options)
+               const stateDropdown = document.getElementById('stateDropdown');
+               let activeState = 'Utah';
+               if (stateDropdown) {
+                   const val = stateDropdown.value.toLowerCase();
+                   const text = stateDropdown.options[stateDropdown.selectedIndex]?.text.toLowerCase() || '';
+                   if (val === 'ar' || val.includes('arkansas') || text.includes('arkansas')) {
+                       activeState = 'Arkansas';
+                   }
+               }
+               const targetFipsPrefix = activeState === 'Arkansas' ? '05' : '49'; // 05 = AR, 49 = UT
+
+               // Proportionally balanced logo sizing (Momentum balanced down to match First Colony visual weight)
+               const isMomentum = lender.name && lender.name.toLowerCase().includes('momentum');
+               const logoHeight = isMomentum ? '55px' : '65px';
+
+               const logoInner = lender.logo
+                   ? `<img src="${lender.logo}" alt="${lender.name}" style="height: ${logoHeight}; max-width: 100%; margin-bottom: 15px; width: auto; object-fit: contain;">`
+                   : `<h3 class="modal-lender-name" style="margin-bottom: 15px;">${lender.name}</h3>`;
+              
+               const logoHtml = lender.website
+                   ? `<a href="${lender.website}" target="_blank" style="text-decoration: none; color: inherit;">${logoInner}</a>`
+                   : logoInner;
+
+               let leftHtml = `
+                   <div class="modal-header">
+                       ${logoHtml}
+                       <div class="premium-rating">★★★★★ <span class="rating-number">${lender.rating}</span></div>
+                   </div>
+                   <h4 class="modal-subtitle">Loan Officers</h4>
+                   <div id="modalOfficersContainer">
+               `;
+
+               lender.officers.forEach((officer, index) => {
+                   const avatarImg = officer.photo
+                       ? `<img src="${officer.photo}" alt="${officer.name}" class="officer-avatar" style="object-fit: cover;">`
+                       : `<div class="officer-avatar" style="display:flex; align-items:center; justify-content:center; background:#EAEAEA; font-size:1.5rem; font-family:var(--font-serif); color:var(--primary-color);">${officer.name.charAt(0)}</div>`;
+
+                   const avatarHtml = officer.profileUrl
+                       ? `<a href="${officer.profileUrl}" target="_blank" style="text-decoration:none;">${avatarImg}</a>`
+                       : avatarImg;
+
+                   const nameHtml = officer.profileUrl
+                       ? `<a href="${officer.profileUrl}" target="_blank" style="text-decoration:none; color:inherit;"><h5 class="officer-name" style="margin-bottom:0.1rem;">${officer.name}</h5></a>`
+                       : `<h5 class="officer-name" style="margin-bottom:0.1rem;">${officer.name}</h5>`;
+
+                   const regionHtml = officer.region 
+                       ? `<p style="font-size: 0.85rem; color: #1A1A1A; margin-bottom: 0.2rem; font-weight: 600;">${officer.region}</p>`
+                       : ``;
+
+                   const nmlsHtml = `<p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem; font-weight: 500; letter-spacing: 0.5px;">${officer.nmls}</p>`;
+
+                   const isLast = index === lender.officers.length - 1;
+                   const borderStyle = isLast ? 'border-bottom: none; margin-bottom: 0; padding-bottom: 0;' : 'border-bottom: 1px solid #EAEAEA; margin-bottom: 2.5rem; padding-bottom: 2.5rem;';
+
+                   let regionId = "";
+                   if (officer.region === "Northern Utah Region") regionId = "northern";
+                   else if (officer.region === "Salt Lake & Summit Counties") regionId = "slc";
+                   else if (officer.region === "Utah County and Central Region") regionId = "central";
+                   else if (officer.region === "Southern Utah Region") regionId = "southern";
+                   else if (officer.region === "Statewide Coverage (Español)" || officer.region === "Statewide Coverage") regionId = "statewide";
+                   else regionId = officer.region ? officer.region.toLowerCase().replace(/[^a-z0-9]/g, '') : "unmapped";
+
+                   leftHtml += `
+                       <div class="officer-profile officer-item" data-index="${index}" data-region="${regionId}" style="${borderStyle}">
+                           ${avatarHtml}
+                           <div class="officer-info" style="width: 100%;">
+                               <div class="officer-header-mobile">
+                                   ${nameHtml}
+                                   ${regionHtml}
+                                   ${nmlsHtml}
+                               </div>
+                               
+                               <div class="expandable-wrapper mobile-bio-wrapper" title="Click to read more" style="margin-bottom: 1.5rem;">
+                                   <div class="expandable-text">${officer.bio}</div>
+                                   <div class="expandable-toggle-btn">
+                                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                   </div>
+                               </div>
+
+                               <div class="officer-contact">
+                                   <a href="tel:${officer.phone.replace(/\D/g,'')}">${officer.phone}</a>
+                                   <a href="mailto:${officer.email}">${officer.email}</a>
+                               </div>
+                           </div>
+                       </div>
+                   `;
+               });
+
+               leftHtml += `</div>
+                   <div style="display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid #EAEAEA;">
+                       <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">${lender.lenderNmls}</span>
+                       <img src="VALTERA/EqualHousingO-BlackLogo.png" alt="Equal Housing Opportunity" style="height: 35px; width: auto; opacity: 0.8;">
+                   </div>
+               `;
+
+               const rightHtml = `
+                   <div id="utah-map" style="width: 100%; height: 100%; min-height: 400px; z-index: 1;"></div>
+               `;
+
+               const modalContainer = document.querySelector('.modal-container');
+               
+               /* Lock background body scroll to stop scroll bleed behind the modal */
+               document.body.style.setProperty('overflow', 'hidden', 'important'); 
+
+               modalContainer.innerHTML = `
+                   <style>
+                       @media (max-width: 991px) {
+                           .modal-container {
+                               position: fixed !important;
+                               top: 0 !important;
+                               left: 0 !important;
+                               right: 0 !important;
+                               width: 100% !important;
+                               max-width: 100vw !important;
+                               height: 100dvh !important;
+                               max-height: 100dvh !important;
+                               border-radius: 0 !important;
+                               margin: 0 !important;
+                               padding: 0 !important;
+                               overflow-y: auto !important;
+                               overscroll-behavior: none !important; /* Stop background stretching */
+                               z-index: 999999 !important;
+                               background: #FFFFFF !important;
+                               -webkit-overflow-scrolling: touch;
+                           }
+                           .modal-split-layout {
+                               display: flex !important;
+                               flex-direction: column !important;
+                               min-height: 100% !important;
+                               width: 100% !important;
+                           }
+                           .modal-right {
+                               display: block !important;
+                               position: sticky !important;
+                               top: 0 !important;
+                               width: 100% !important;
+                               height: 45vh !important; /* Fixed initial height to completely prevent "pile of words" */
+                               margin: 0 !important;
+                               z-index: 1 !important;
+                               transition: height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+                           }
+                           #utah-map {
+                               min-height: 0 !important;
+                               height: 100% !important;
+                               border-radius: 0 !important;
+                           }
+                           .modal-left {
+                               position: relative !important;
+                               width: 100% !important;
+                               background: #FFFFFF !important;
+                               z-index: 2 !important;
+                               border-radius: 24px 24px 0 0 !important;
+                               box-shadow: 0 -12px 30px rgba(0,0,0,0.15) !important;
+                               padding: 35px 20px 60px 20px !important;
+                               margin-top: -25px !important;
+                               box-sizing: border-box !important;
+                               height: auto !important;
+                               min-height: 60vh !important;
+                           }
+                           .modal-left::before {
+                               content: '';
+                               position: absolute;
+                               top: 12px;
+                               left: 50%;
+                               transform: translateX(-50%);
+                               width: 45px;
+                               height: 5px;
+                               background: #D1D1D1;
+                               border-radius: 10px;
+                           }
+                           .drag-handle-zone {
+                               position: absolute;
+                               top: 0; left: 0; right: 0;
+                               height: 50px;
+                               z-index: 10;
+                           }
+                           #closeModalBtn {
+                               position: fixed !important;
+                               top: 16px !important;
+                               right: 16px !important;
+                               width: 42px !important;
+                               height: 42px !important;
+                               font-size: 1.6rem !important;
+                               z-index: 99999999 !important;
+                               background: rgba(255, 255, 255, 0.95) !important;
+                               box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+                           }
+                       }
+                   </style>
+                   <button id="closeModalBtn" style="position: absolute; top: 30px; right: 40px; z-index: 9999; font-size: 2rem; background: #FFFFFF; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #1A1A1A;">&times;</button>
+                   <div class="modal-split-layout">
+                       <div class="modal-right">${rightHtml}</div>
+                       <div class="modal-left" id="modalLeftScroll">
+                           <div class="drag-handle-zone"></div>
+                           ${leftHtml}
+                       </div>
+                   </div>
+               `;
+
+               const modalOverlay = document.getElementById('officerModal');
+               modalOverlay.classList.add('active');
+               
+               document.getElementById('closeModalBtn').addEventListener('click', () => {
+                   document.body.style.removeProperty('overflow');
+               });
+
+               /* Google Maps Gesture Tracking & Mobile Behaviors */
+               setTimeout(() => {
                    const mLeft = document.querySelector('.modal-left');
                    const mRight = document.querySelector('.modal-right');
                    const mContainer = document.querySelector('.modal-container');
